@@ -1,8 +1,8 @@
-/* 한국어 보기용 번역(대표님이 내용을 확인하기 위한 것). 기준은 일본어 화면이다. */
+/* 한국어판(한국인 학습자용). 부탁하는 글과 예시도 한국어로 쓴다. */
 (function () {
   'use strict';
   var cb = window.COURSE.copybox;
-  var JA_PROMPT = window.COURSE.starter;
+  var KO_PROMPT = '당신은 여행 플래너입니다. 둘이서 가는 교토 1박 2일 여행 일정표를 만들어 주세요. 예산은 전부 60만 원입니다. 시간대별 표로 만들어 주세요.';
 
   window.COURSE_KO = {
     title: 'AI 입문',
@@ -20,7 +20,7 @@
               '<div class="card goal"><b>목표</b><br>AI에게 일정표를 만들게 하고, 조건을 더해 고칠 수 있게 된다.</div>' +
               '<div class="card"><dl class="facts">' +
               '<dt>걸리는 시간</dt><dd>약 20분</dd>' +
-              '<dt>쓰는 것</dt><dd>AI 앱(폰·태블릿·PC 어느 것이든 OK)</dd>' +
+              '<dt>쓰는 것</dt><dd>Claude(claude.ai). 무료 계정으로 OK. 폰·태블릿·PC 어느 것이든 쓸 수 있습니다</dd>' +
               '<dt>설치</dt><dd>필요 없음</dd>' +
               '</dl></div>' +
               '<h2><span class="tag sample">견본</span>완성된 모습</h2>' +
@@ -45,19 +45,19 @@
             ]
           },
           s2: {
-            tag: '실제 조작', title: '준비: AI 앱을 열자',
+            tag: '실제 조작', title: '준비: Claude를 열자',
             html:
-              '<p>여기서부터는 진짜 AI 앱을 사용합니다.</p>' +
+              '<p>여기서부터는 진짜 AI "Claude(클로드)"를 사용합니다. 무료 계정으로 할 수 있습니다.</p>' +
               '<ol>' +
-              '<li>평소 쓸 수 있는 AI 앱(또는 웹사이트)을 엽니다.</li>' +
-              '<li>로그인하고, 글자를 넣는 곳(입력란)이 보이는 화면으로 만듭니다.</li>' +
+              '<li>브라우저(Chrome, Safari 등)에서 <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer">claude.ai</a>를 엽니다.</li>' +
+              '<li>로그인합니다. 계정이 없으면 직접 만듭니다(Google 계정이나 이메일로, 무료입니다).</li><li>글자를 넣는 곳(입력란)이 보이는 화면으로 만듭니다.</li>' +
               '<li>"새 대화"를 시작합니다.</li>' +
               '</ol>' +
               '<p class="note warn">이름·주소·전화번호 같은 진짜 개인정보는 넣지 않습니다. 이 연습은 전부 "지어낸 이야기"로 괜찮습니다.</p>' +
-              '<p class="note dev">사용할 AI 앱의 이름은 아직 정해지지 않았습니다. 정해지면 여기에 화면이 있는 순서를 넣습니다.</p>',
+              '<p class="note">무료 계정으로도 쓸 수 있습니다. 쓸 수 있는 양에는 제한이 걸릴 수 있습니다.</p>',
             help: [
-              { q: 'AI 앱이 없어요', a: '먼저 무료로 쓸 수 있는 AI 앱을 하나 정한 뒤에 진행합니다. (시험판에서는 아직 정해지지 않았습니다.)' },
-              { q: '로그인이 안 돼요', a: '비밀번호를 잊었을 때는 그 앱의 "비밀번호를 잊었어요"에서 다시 만들 수 있습니다. 이 수업에서 비밀번호를 묻는 일은 없습니다.' }
+              { q: '계정을 만드는 것이 불안해요', a: '계정 만들기는 본인이 직접 합니다. 이 교재가 대신 입력하는 일은 없습니다. 비밀번호는 Claude 로그인 화면에만 입력합니다.' },
+              { q: '로그인이 안 돼요', a: '비밀번호를 잊었을 때는 로그인 화면의 "비밀번호를 잊었어요"에서 다시 만들 수 있습니다. 이 수업에서 비밀번호를 묻는 일은 없습니다.' }
             ]
           },
           s3: {
@@ -67,7 +67,7 @@
               '<ul class="parts">' +
               '<li><b>① 역할</b>"당신은 여행 플래너입니다"<br><span>AI가 어떤 사람이 되어 주길 바라는지</span></li>' +
               '<li><b>② 목적지와 일수</b>"교토 1박 2일"<br><span>언제, 어디로 가는지</span></li>' +
-              '<li><b>③ 예산</b>"전부 6만 엔"<br><span>돈의 한도</span></li>' +
+              '<li><b>③ 예산</b>"전부 60만 원"<br><span>돈의 한도</span></li>' +
               '<li><b>④ 형식</b>"시간대별 표"<br><span>어떤 모양으로 답해 주길 바라는지</span></li>' +
               '</ul>' +
               '<p>부족한 부분은 나중에 더해서 고칠 수 있습니다. 처음부터 완벽하게 쓰지 않아도 괜찮습니다.</p>',
@@ -80,18 +80,17 @@
             html:
               '<ol>' +
               '<li>아래의 "복사" 버튼을 누릅니다.</li>' +
-              '<li>AI 앱의 입력란을 눌러서 붙여 넣습니다.</li>' +
+              '<li>Claude의 입력란을 눌러서 붙여 넣습니다.</li>' +
               '<li>전송 버튼을 누르고 답을 기다립니다.</li>' +
               '</ol>' +
-              cb(JA_PROMPT, null, '복사') +
-              '<p class="note">뜻: "당신은 여행 플래너입니다. 둘이서 가는 교토 1박 2일 여행 일정표를 만들어 주세요. 예산은 전부 6만 엔입니다. 시간대별 표로 만들어 주세요."</p>' +
-              '<p class="note">붙여 넣는 법: iPad·iPhone은 입력란을 길게 눌러서 "붙여넣기". Windows는 Ctrl 키를 누른 채 V 키.</p>' +
+              cb(KO_PROMPT, null, '복사') +
+              '<p class="note">붙여 넣는 법: iPad·iPhone은 입력란을 길게 눌러서 "붙여넣기". Windows는 Ctrl 키를 누른 채 V 키. Mac은 ⌘(Command) 키를 누른 채 V 키.</p>' +
               '<p>답이 나올 때까지 몇 초에서 1분 정도 걸립니다.</p>',
             help: [
               { q: '복사가 안 돼요', a: '문장을 손가락으로 길게 눌러(PC에서는 드래그) 선택한 뒤, 메뉴의 "복사"를 누르세요.' },
               { q: '붙여넣기가 안 돼요', a: '입력란을 한 번 눌러서 커서가 나온 뒤에 다시 해 보세요.' },
               { q: '전송 버튼이 안 눌려요', a: '입력란에 글자가 들어 있는지 확인하세요. 글자가 없으면 버튼이 안 눌리는 앱이 있습니다.' },
-              { q: '영어로 답이 왔어요', a: '"일본어로 대답해 주세요"라고 보내세요.' }
+              { q: '다른 언어로 답이 왔어요', a: '"한국어로 대답해 주세요"라고 보내세요.' }
             ]
           },
           s5: {
@@ -116,18 +115,17 @@
             html:
               '<p>조건을 자기가 좋아하는 것으로 바꿔서, 한 번 더 부탁해 봅시다. 아래 4가지를 고르면 부탁하는 글이 자동으로 만들어집니다.</p>' +
               '<div class="form-grid">' +
-              '<label>목적지<input id="f-dest" type="text" placeholder="예: 오키나와, 홋카이도(일본어로 입력)" autocomplete="off"></label>' +
-              '<label>일수<select id="f-days"><option value="日帰り">당일치기</option><option value="1泊2日" selected>1박 2일</option><option value="2泊3日">2박 3일</option></select></label>' +
-              '<label>예산<input id="f-budget" type="text" placeholder="예: 5万円(5만 엔)" autocomplete="off"></label>' +
-              '<label>누구와<select id="f-who"><option value="ひとりで">혼자</option><option value="2人で" selected>둘이서</option><option value="家族で">가족과</option><option value="友だちと">친구와</option></select></label>' +
+              '<label>목적지<input id="f-dest" type="text" placeholder="예: 제주도, 부산" autocomplete="off"></label>' +
+              '<label>일수<select id="f-days"><option>당일치기</option><option selected>1박 2일</option><option>2박 3일</option></select></label>' +
+              '<label>예산<input id="f-budget" type="text" placeholder="예: 50만 원" autocomplete="off"></label>' +
+              '<label>누구와<select id="f-who"><option>혼자</option><option selected>둘이서</option><option>가족과 함께</option><option>친구와</option></select></label>' +
               '</div>' +
               cb('', 'gen-form', '복사') +
-              '<p class="note" id="gloss"></p>' +
-              '<p>다 되면 "복사"를 눌러 AI 앱에 붙여 넣어 보냅니다.</p>' +
+              '<p>다 되면 "복사"를 눌러 Claude에 붙여 넣어 보냅니다.</p>' +
               '<p class="note warn">목적지는 실제로 갈 예정인 곳이 아니어도 됩니다. 이름이나 주소는 넣지 않습니다.</p>',
             help: [
-              { q: '뭘 넣어야 할지 모르겠어요', a: '가 보고 싶은 곳을 생각나는 대로 넣으세요. 정해지지 않았다면 "北海道" "沖縄"처럼 큰 지역도 괜찮습니다.' },
-              { q: '문장이 이상해졌어요', a: '예산을 "5万円"처럼 짧게 써 보세요.' }
+              { q: '뭘 넣어야 할지 모르겠어요', a: '가 보고 싶은 곳을 생각나는 대로 넣으세요. 정해지지 않았다면 "제주도" "부산"처럼 큰 지역도 괜찮습니다.' },
+              { q: '문장이 이상해졌어요', a: '예산을 "50만 원"처럼 짧게 써 보세요.' }
             ]
           },
           s7: {
@@ -143,7 +141,6 @@
               '<p>더하고 싶은 조건을 아래에서 고릅니다(몇 개든 OK).</p>' +
               '<div class="chips" id="chip-list"></div>' +
               cb('', 'gen-chips', '복사') +
-              '<p class="note" id="gloss"></p>' +
               '<p class="note">버튼은 예시입니다. 자기 말로 조건을 써도 괜찮습니다.</p>',
             help: [
               { q: '앞의 일정표를 무시했어요', a: '"아까 일정표를 바탕으로 고쳐 주세요"라고 보내세요.' },

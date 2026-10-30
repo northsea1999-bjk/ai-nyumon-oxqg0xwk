@@ -14,6 +14,14 @@
       '<span class="msg" aria-live="polite"></span></div></div>';
   }
 
+  /* OSで内容を分ける小さな部品（Windows用／Mac用）。見えるほうだけが表示される。 */
+  function os(win, mac) {
+    return '<span class="os-win">' + win + '</span><span class="os-mac">' + mac + '</span>';
+  }
+  function osBlock(win, mac) {
+    return '<div class="os-win">' + win + '</div><div class="os-mac">' + mac + '</div>';
+  }
+
   var STARTER = 'あなたは旅行プランナーです。2人で行く京都の1泊2日の旅行の予定表を作ってください。予算は全部で6万円です。時間ごとの表にしてください。';
 
   var lesson0 = {
@@ -31,7 +39,7 @@
           '<div class="card goal"><b>ゴール</b><br>AIに予定表を作ってもらい、条件を足して直せるようになる。</div>' +
           '<div class="card"><dl class="facts">' +
           '<dt>かかる時間</dt><dd>約20分</dd>' +
-          '<dt>つかうもの</dt><dd>AIアプリ（スマホ・タブレット・PCのどれでもOK）</dd>' +
+          '<dt>つかうもの</dt><dd>Claude（claude.ai）。無料のアカウントでOK。スマホ・タブレット・PCのどれでも使えます</dd>' +
           '<dt>インストール</dt><dd>いりません</dd>' +
           '</dl></div>' +
           '<h2><span class="tag sample">見本</span>できあがりのイメージ</h2>' +
@@ -56,19 +64,19 @@
         ]
       },
       {
-        id: 's2', kind: 'real', tag: '実際の操作', title: '準備：AIアプリを開こう',
+        id: 's2', kind: 'real', tag: '実際の操作', title: '準備：Claudeを開こう',
         html:
-          '<p>ここからは、本物のAIアプリを使います。</p>' +
+          '<p>ここからは、本物のAI「Claude（クロード）」を使います。無料のアカウントで、できます。</p>' +
           '<ol>' +
-          '<li>ふだん使えるAIアプリ（またはウェブサイト）を開きます。</li>' +
-          '<li>ログインして、文字を入れる場所（入力欄）が見える画面にします。</li>' +
+          '<li>ブラウザ（Safari、Chromeなど）で、<a href="https://claude.ai/" target="_blank" rel="noopener noreferrer">claude.ai</a> を開きます。</li>' +
+          '<li>ログインします。アカウントがなければ、ご自分で作ります（Googleアカウントまたはメールアドレスで、無料です）。</li><li>文字を入れる場所（入力欄）が見える画面にします。</li>' +
           '<li>「新しい会話」を始めます。</li>' +
           '</ol>' +
           '<p class="note warn">名前・住所・電話番号など、本当の個人情報は入れません。この練習は、ぜんぶ「作り話」で大丈夫です。</p>' +
-          '<p class="note dev">使うAIアプリの名前は、まだ決まっていません。決まったら、ここに画面つきの手順を入れます。</p>',
+          '<p class="note">無料のアカウントでも使えます。使える量には、制限がかかることがあります。</p>',
         help: [
-          { q: 'AIアプリを持っていません', a: '先に、無料で使えるAIアプリを1つ決めてから進みます。（試作版では、まだ決まっていません。）' },
-          { q: 'ログインできません', a: 'パスワードを忘れたときは、そのアプリの「パスワードを忘れた」から作り直せます。この授業で、パスワードを聞くことはありません。' }
+          { q: 'アカウントを作るのが、不安です', a: 'アカウントの作成は、ご自分で行います。この教材が、代わりに入力することはありません。パスワードは、Claudeのログイン画面にだけ入力します。' },
+          { q: 'ログインできません', a: 'パスワードを忘れたときは、ログイン画面の「パスワードを忘れた」から作り直せます。この授業で、パスワードを聞くことはありません。' }
         ]
       },
       {
@@ -91,11 +99,11 @@
         html:
           '<ol>' +
           '<li>下の「コピー」ボタンを押します。</li>' +
-          '<li>AIアプリの入力欄を押して、貼り付けます。</li>' +
+          '<li>Claudeの入力欄を押して、貼り付けます。</li>' +
           '<li>送信ボタンを押して、答えを待ちます。</li>' +
           '</ol>' +
           copybox(STARTER) +
-          '<p class="note">貼り付け方：iPad・iPhoneは、入力欄を長押しして「ペースト」。WindowsはCtrlキーを押しながらVキー。</p>' +
+          '<p class="note">貼り付け方：iPad・iPhoneは、入力欄を長押しして「ペースト」。WindowsはCtrlキーを押しながらVキー。Macは、⌘（Command）キーを押しながらVキー。</p>' +
           '<p>答えが出るまで、数秒から1分ほどかかります。</p>',
         help: [
           { q: 'コピーできません', a: '文を指で長押し（PCではドラッグ）して選び、メニューの「コピー」を押してください。' },
@@ -133,7 +141,7 @@
           '<label>だれと<select id="f-who"><option>ひとりで</option><option selected>2人で</option><option>家族で</option><option>友だちと</option></select></label>' +
           '</div>' +
           copybox('', 'gen-form') +
-          '<p>できたら「コピー」を押して、AIアプリに貼り付けて送ります。</p>' +
+          '<p>できたら「コピー」を押して、Claudeに貼り付けて送ります。</p>' +
           '<p class="note warn">行き先は、実際に行く予定の場所でなくてもかまいません。名前や住所は入れません。</p>',
         help: [
           { q: '何を入れたらいいかわかりません', a: '行ってみたい場所を、思いつくままに入れてください。決まっていなければ「北海道」「沖縄」など、大きな場所でも大丈夫です。' },
@@ -195,6 +203,8 @@
     subtitle: 'はじめてでも、ひとりで進められるAIの授業',
     lessons: [lesson0].concat(future),
     starter: STARTER,
-    copybox: copybox
+    copybox: copybox,
+    os: os,
+    osBlock: osBlock
   };
 })();

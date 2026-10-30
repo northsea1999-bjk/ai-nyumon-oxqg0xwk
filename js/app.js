@@ -4,6 +4,7 @@
 
   var KEY = 'ainyumon.progress.v1';
   var LANG_KEY = 'ainyumon.lang.v1';
+  var OS_KEY = 'ainyumon.os.v1';
   var C = window.COURSE;
   var K = window.COURSE_KO || { lessons: {} };
   var app = document.getElementById('app');
@@ -11,17 +12,29 @@
   var crumb = document.getElementById('crumb');
   var fill = document.getElementById('progress-fill');
   var langBtn = document.getElementById('btn-lang');
+  var osBtn = document.getElementById('btn-os');
   var mem = {};
   var storageOK = true;
 
   /* 言語ボタンは常に表示。はじめは日本語。選んだ言語はこの端末のブラウザに覚えておく。
      古い ?ko=1 のアドレスで開いたときは、はじめから韓国語にする。 */
-  var koAllowed = true;
   var lang = 'ja';
   var saved = null;
   try { saved = localStorage.getItem(LANG_KEY); } catch (e) { saved = null; }
   if (saved === 'ko' || saved === 'ja') lang = saved;
   else if (/[?&]ko=1(&|$)/.test(location.search)) lang = 'ko';
+
+  /* OSボタン：はじめは、ブラウザが教えてくれるOSで決める（iPadは、Windowsのほうの表示にする）。 */
+  var os = 'win';
+  var savedOs = null;
+  try { savedOs = localStorage.getItem(OS_KEY); } catch (e) { savedOs = null; }
+  if (savedOs === 'win' || savedOs === 'mac') {
+    os = savedOs;
+  } else {
+    var isMac = /Mac/.test(navigator.platform || '') || /Macintosh/.test(navigator.userAgent || '');
+    var touch = (navigator.maxTouchPoints || 0) > 1;
+    os = (isMac && !touch) ? 'mac' : 'win';
+  }
 
   /* 画面まわりの短い文言 */
   var UI = {
@@ -43,7 +56,7 @@
       doneBtn: '完了にする', doneDone: '完了しました',
       checkNote: 'これは、自分で確認する方式です。アプリが自動でチェックしているわけではありません。',
       doneCard: '<b>レッスン0　完了です。おつかれさまでした。</b><br>次は、レッスン1に進みます。レッスン1からは、PCが必要になります。',
-      langBtn: '한국어', koBanner: ''
+      langBtn: '한국어', osLabel: 'OS（パソコンの種類）を切りかえる'
     },
     ko: {
       toc: '목차', tocBack: '← 목차', tocTo: '목차로', tocReturn: '목차로 돌아가기',
@@ -63,14 +76,14 @@
       doneBtn: '완료로 하기', doneDone: '완료했습니다',
       checkNote: '이것은 스스로 확인하는 방식입니다. 앱이 자동으로 검사하는 것은 아닙니다.',
       doneCard: '<b>레슨0　완료입니다. 수고하셨습니다.</b><br>다음은 레슨1로 진행합니다. 레슨1부터는 PC가 필요합니다.',
-      langBtn: '日本語',
-      koBanner: '<p class="note dev">한국어 보기입니다. 일본어 화면의 뜻을 옮긴 것이며, 기준은 일본어입니다. 부탁하는 글은 AI에 붙여 넣을 때 일본어 그대로 쓰입니다.</p>'
+      langBtn: '日本語', osLabel: 'OS(컴퓨터 종류) 바꾸기'
     }
   };
   function t(key) { return UI[lang][key]; }
 
-  var KO_WHO = { 'ひとりで': '혼자', '2人で': '둘이서', '家族で': '가족과', '友だちと': '친구와' };
-  var KO_DAYS = { '日帰り': '당일치기', '1泊2日': '1박 2일', '2泊3日': '2박 3일' };
+  /* 旅行プランのフォーム用の言葉（言語ごと）。選んだ位置（番号）で保存するので、言語を切りかえても保てる。 */
+  var DAYS = { ja: ['日帰り', '1泊2日', '2泊3日'], ko: ['당일치기', '1박 2일', '2박 3일'] };
+  var WHO = { ja: ['ひとりで', '2人で', '家族で', '友だちと'], ko: ['혼자', '둘이서', '가족과 함께', '친구와'] };
 
   /* ---------- 進み具合の保存 ---------- */
   function load() {
@@ -85,7 +98,7 @@
     catch (e) { storageOK = false; }
   }
   function lp(id) {
-    if (!mem.lessons[id]) mem.lessons[id] = { step: 1, done: false, checks: [], form: null, chips: [] };
+    if (!mem.lessons[id]) mem.lessons[id] = { step: 1, stepId: null, done: false, checks: [], form: null, chips: [] };
     return mem.lessons[id];
   }
 
@@ -102,14 +115,20 @@
     ['料金', 'りょうきん'], ['信頼', 'しんらい'], ['架空', 'かくう'], ['支払い', 'しはらい'],
     ['取扱説明書', 'とりあつかいせつめいしょ'], ['家計簿', 'かけいぼ'], ['合計', 'ごうけい'],
     ['金額', 'きんがく'], ['一覧', 'いちらん'], ['上書き', 'うわがき'], ['予定', 'よてい'],
-    ['電卓', 'でんたく'], ['計算', 'けいさん']
+    ['電卓', 'でんたく'], ['計算', 'けいさん'], ['画面', 'がめん'], ['表示', 'ひょうじ'],
+    ['言語', 'げんご'], ['編集', 'へんしゅう'], ['要件', 'ようけん']
   ];
   var SKIP = /^(PRE|TEXTAREA|INPUT|SELECT|OPTION|BUTTON|RUBY|RT|SCRIPT)$/;
 
   function skipNode(n) {
     for (var p = n.parentNode; p && p !== document.body; p = p.parentNode) {
       if (SKIP.test(p.nodeName)) return true;
-      if (p.classList && p.classList.contains('noruby')) return true;
+      if (p.classList) {
+        if (p.classList.contains('noruby')) return true;
+        /* いまのOSでは見えない部分は、ふりがなの対象にしない */
+        if (p.classList.contains('os-win') && os !== 'win') return true;
+        if (p.classList.contains('os-mac') && os !== 'mac') return true;
+      }
     }
     return false;
   }
@@ -134,6 +153,16 @@
     parent.insertBefore(after, node);
     parent.removeChild(node);
     rubyNode(after, seen);
+  }
+  /* Macでは、キーの名前を「Return」に直す（見えている文章だけ。コマンドの箱は、そのまま） */
+  function fixKeys(root) {
+    if (os !== 'mac') return;
+    var nodes = [];
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    while (w.nextNode()) { if (!skipNode(w.currentNode)) nodes.push(w.currentNode); }
+    nodes.forEach(function (n) {
+      if (/Enter(?=\s?(キー|키))/.test(n.nodeValue)) n.nodeValue = n.nodeValue.replace(/Enter(?=\s?(キー|키))/g, 'Return');
+    });
   }
   function applyRuby(root) {
     if (lang !== 'ja') return;
@@ -176,17 +205,39 @@
     for (var i = 0; i < C.lessons.length; i++) if (C.lessons[i].id === id) return C.lessons[i];
     return null;
   }
+  /* いまのOSで見える画面だけ（only: 'win' / 'mac' が付いた画面は、そのOSだけ） */
+  function vis(L) {
+    return L.steps.filter(function (s) { return !s.only || s.only === os; });
+  }
+  function idxOf(L, id) {
+    var v = vis(L);
+    for (var i = 0; i < v.length; i++) if (v[i].id === id) return i + 1;
+    return 0;
+  }
+  /* 保存してある位置（画面のIDを優先。なければ番号） */
+  function curIndex(L) {
+    var st = lp(L.id), v = vis(L), i = st.stepId ? idxOf(L, st.stepId) : 0;
+    if (!i) i = Math.max(1, Math.min(st.step || 1, v.length));
+    return i;
+  }
   /* いまの言語の表示内容（韓国語がなければ日本語のまま） */
   function koLesson(id) { return (K.lessons && K.lessons[id]) || {}; }
   function view(L, step) {
-    if (lang !== 'ko') return step;
-    var k = (koLesson(L.id).steps || {})[step.id];
-    if (!k) return step;
-    return {
-      id: step.id, kind: step.kind, widget: step.widget, tag: k.tag, title: k.title, html: k.html,
-      help: k.help || step.help, chips: step.chips, chipsKo: k.chips, checks: k.checks || step.checks,
-      required: k.required || step.required, quiz: k.quiz || step.quiz
-    };
+    var out;
+    if (lang !== 'ko') {
+      out = step;
+    } else {
+      var k = (koLesson(L.id).steps || {})[step.id];
+      if (!k) { out = step; }
+      else {
+        out = {
+          id: step.id, kind: step.kind, widget: step.widget, tag: k.tag, title: k.title, html: k.html,
+          help: k.help || step.help, chips: k.chips || step.chips, checks: k.checks || step.checks,
+          required: k.required || step.required, quiz: k.quiz || step.quiz
+        };
+      }
+    }
+    return out;
   }
   function doneCardOf(L) {
     if (lang === 'ko') return koLesson(L.id).doneCard || t('doneCard');
@@ -204,26 +255,32 @@
 
   function widgetForm(L) {
     var st = lp(L.id);
-    var f = st.form || { dest: '', days: '1泊2日', budget: '', who: '2人で' };
+    var f = st.form || {};
     var dest = document.getElementById('f-dest'), days = document.getElementById('f-days'),
         budget = document.getElementById('f-budget'), who = document.getElementById('f-who');
     var box = document.getElementById('gen-form');
     var pre = box.querySelector('pre'), btn = box.querySelector('[data-copy]');
-    var gloss = document.getElementById('gloss');
-    dest.value = f.dest; days.value = f.days; budget.value = f.budget; who.value = f.who;
+    /* 古い保存データ（言葉で保存）にも対応 */
+    var dIdx = typeof f.daysIdx === 'number' ? f.daysIdx : Math.max(0, DAYS.ja.indexOf(f.days));
+    var wIdx = typeof f.whoIdx === 'number' ? f.whoIdx : Math.max(0, WHO.ja.indexOf(f.who));
+    if (!st.form) { dIdx = 1; wIdx = 1; }
+    dest.value = f.dest || ''; budget.value = f.budget || '';
+    days.selectedIndex = dIdx; who.selectedIndex = wIdx;
     function update() {
       var d = dest.value.trim(), b = budget.value.trim();
-      st.form = { dest: d, days: days.value, budget: b, who: who.value };
+      st.form = { dest: d, daysIdx: days.selectedIndex, budget: b, whoIdx: who.selectedIndex };
       save();
-      pre.textContent = 'あなたは旅行プランナーです。' + who.value + '行く' +
-        (d || '（行き先を入れてください）') + 'の' + days.value + 'の旅行の予定表を作ってください。予算は全部で' +
-        (b || '（予算を入れてください）') + 'です。時間ごとの表にしてください。';
-      btn.disabled = !(d && b);
-      if (gloss) {
-        gloss.textContent = '↑ 일본어 부탁글입니다. 뜻: "당신은 여행 플래너입니다. ' + (KO_WHO[who.value] || '') +
-          ' 가는 ' + (d || '(목적지)') + '의 ' + (KO_DAYS[days.value] || '') + ' 여행 일정표를 만들어 주세요. 예산은 전부 ' +
-          (b || '(예산)') + '입니다. 시간대별 표로 만들어 주세요."';
+      var dayWord = DAYS[lang][days.selectedIndex], whoWord = WHO[lang][who.selectedIndex];
+      if (lang === 'ko') {
+        pre.textContent = '당신은 여행 플래너입니다. ' + whoWord + ' 가는 ' + (d || '(목적지를 넣어 주세요)') + '의 ' +
+          dayWord + ' 여행 일정표를 만들어 주세요. 예산은 전부 ' + (b || '(예산을 넣어 주세요)') +
+          '입니다. 시간대별 표로 만들어 주세요.';
+      } else {
+        pre.textContent = 'あなたは旅行プランナーです。' + whoWord + '行く' +
+          (d || '（行き先を入れてください）') + 'の' + dayWord + 'の旅行の予定表を作ってください。予算は全部で' +
+          (b || '（予算を入れてください）') + 'です。時間ごとの表にしてください。';
       }
+      btn.disabled = !(d && b);
     }
     [dest, days, budget, who].forEach(function (el) { el.addEventListener('input', update); });
     update();
@@ -234,19 +291,12 @@
     var list = document.getElementById('chip-list');
     var box = document.getElementById('gen-chips');
     var pre = box.querySelector('pre'), btn = box.querySelector('[data-copy]');
-    var gloss = document.getElementById('gloss');
     var on = st.chips || [];
     step.chips.forEach(function (text, i) {
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'chip';
       b.appendChild(document.createTextNode(text));
-      if (step.chipsKo && step.chipsKo[i]) {
-        var s = document.createElement('small');
-        s.style.cssText = 'display:block;opacity:.8;';
-        s.textContent = step.chipsKo[i];
-        b.appendChild(s);
-      }
       b.setAttribute('aria-pressed', on.indexOf(i) >= 0 ? 'true' : 'false');
       b.addEventListener('click', function () {
         var at = on.indexOf(i);
@@ -263,16 +313,13 @@
       if (!on.length) {
         pre.textContent = t('chipNone');
         btn.disabled = true;
-        if (gloss) gloss.textContent = '';
         return;
       }
-      pre.textContent = 'ありがとうございます。次の条件を足して、予定表を作り直してください。\n' +
-        on.map(function (i) { return '・' + step.chips[i]; }).join('\n');
+      var head = lang === 'ko'
+        ? '감사합니다. 다음 조건을 더해서 일정표를 다시 만들어 주세요.\n'
+        : 'ありがとうございます。次の条件を足して、予定表を作り直してください。\n';
+      pre.textContent = head + on.map(function (i) { return '・' + step.chips[i]; }).join('\n');
       btn.disabled = false;
-      if (gloss && step.chipsKo) {
-        gloss.textContent = '↑ 일본어 부탁글입니다. 뜻: "감사합니다. 다음 조건을 더해서 일정표를 다시 만들어 주세요. ' +
-          on.map(function (i) { return '· ' + step.chipsKo[i]; }).join(' ') + '"';
-      }
     }
     update();
   }
@@ -372,12 +419,13 @@
     var sub = (lang === 'ko' && K.subtitle) || C.subtitle;
     crumb.textContent = title;
     setProgress(0, 1);
-    var html = t('koBanner') + '<h1>' + title + '</h1><p>' + sub + '</p>' + storageNote();
+    var html = '<h1>' + title + '</h1><p>' + sub + '</p>' + storageNote();
     var lastL = mem.last ? lessonById(mem.last.lesson) : null;
     var lastS = lastL ? lp(lastL.id) : null;
-    if (lastL && lastL.steps && lastS && !lastS.done && lastS.step > 1) {
-      html += '<div class="banner"><span>' + t('resume')(lastS.step, lastL.no) + '</span>' +
-        '<button type="button" class="primary" data-go="#/' + lastL.id + '/' + lastS.step + '">' + t('resumeBtn') + '</button></div>';
+    if (lastL && lastL.steps && lastS && !lastS.done && curIndex(lastL) > 1) {
+      var li0 = curIndex(lastL);
+      html += '<div class="banner"><span>' + t('resume')(li0, lastL.no) + '</span>' +
+        '<button type="button" class="primary" data-go="#/' + lastL.id + '/' + li0 + '">' + t('resumeBtn') + '</button></div>';
     }
     html += '<ul class="toc-list">';
     C.lessons.forEach(function (L) {
@@ -386,11 +434,11 @@
           '<span class="tag pc">' + t('pc') + '</span><br>' + t('lesson') + L.no + '　' + lessonTitle(L) +
           '<small>' + t('temp') + '</small></div></li>';
       } else {
-        var ls = lp(L.id);
-        var label = ls.done ? t('done') : (ls.step > 1 ? t('doing')(ls.step, L.steps.length) : t('start'));
+        var ls = lp(L.id), ci = curIndex(L), total = vis(L).length;
+        var label = ls.done ? t('done') : (ci > 1 ? t('doing')(ci, total) : t('start'));
         var devTag = L.needsPc ? '<span class="tag pc">' + t('pcNeed') + '</span>'
                                : '<span class="tag real">' + lessonDevices(L) + t('okOn') + '</span>';
-        html += '<li><button type="button" class="toc-item" data-go="#/' + L.id + '/' + (ls.done ? 1 : ls.step) + '">' +
+        html += '<li><button type="button" class="toc-item" data-go="#/' + L.id + '/' + (ls.done ? 1 : ci) + '">' +
           '<span class="state">' + label + '</span>' +
           devTag + '<br>' + t('lesson') + L.no + '　' + lessonTitle(L) +
           '<small>' + t('about') + L.minutes + t('min') + '　' + lessonShort(L) + '</small></button></li>';
@@ -405,11 +453,12 @@
   function renderStep(id, n) {
     var L = lessonById(id);
     if (!L || !L.steps) { go('#/'); return; }
-    var total = L.steps.length;
+    var v = vis(L), total = v.length;
     n = Math.max(1, Math.min(total, n || 1));
-    var step = view(L, L.steps[n - 1]);
+    var step = view(L, v[n - 1]);
     var st = lp(L.id);
     st.step = n;
+    st.stepId = v[n - 1].id;
     mem.last = { lesson: L.id, step: n };
     save();
 
@@ -417,10 +466,11 @@
     setProgress(n, total);
 
     var tagClass = step.kind === 'real' ? 'real' : (step.kind === 'sample' ? 'sample' : (step.kind === 'pc' ? 'pc' : ''));
-    var html = t('koBanner') + storageNote() + '<span class="tag ' + tagClass + '">' + step.tag + '</span>' +
+    var html = storageNote() + '<span class="tag ' + tagClass + '">' + step.tag + '</span>' +
       '<h1>' + step.title + '</h1>' + step.html;
-    if (step.help && step.help.length) {
-      html += '<div class="helpwrap"><h2>' + t('help') + '</h2>' + step.help.map(function (h) {
+    var helps = (step.help || []).filter(function (h) { return !h.os || h.os === os; });
+    if (helps.length) {
+      html += '<div class="helpwrap"><h2>' + t('help') + '</h2>' + helps.map(function (h) {
         return '<details class="help"><summary>' + h.q + '</summary><div>' + h.a + '</div></details>';
       }).join('') + '</div>';
     }
@@ -447,6 +497,7 @@
       (n < total ? '<button type="button" class="primary" data-go="#/' + L.id + '/' + (n + 1) + '">' + t('next') + '</button>'
                  : '<button type="button" data-go="#/">' + t('tocTo') + '</button>');
 
+    fixKeys(app);
     applyRuby(app);
     window.scrollTo(0, 0);
     app.focus({ preventScroll: true });
@@ -454,8 +505,12 @@
 
   function syncChrome() {
     document.documentElement.lang = lang === 'ko' ? 'ko' : 'ja';
+    document.documentElement.setAttribute('data-os', os);
     document.getElementById('btn-toc').textContent = t('toc');
-    if (koAllowed) { langBtn.hidden = false; langBtn.textContent = t('langBtn'); }
+    langBtn.hidden = false; langBtn.textContent = t('langBtn');
+    osBtn.hidden = false; osBtn.textContent = os === 'mac' ? 'Mac' : 'Windows';
+    osBtn.setAttribute('aria-label', t('osLabel'));
+    osBtn.setAttribute('title', t('osLabel'));
   }
 
   function route() {
@@ -478,6 +533,33 @@
   langBtn.addEventListener('click', function () {
     lang = lang === 'ko' ? 'ja' : 'ko';
     try { localStorage.setItem(LANG_KEY, lang); } catch (e) { /* 保存できなくても動く */ }
+    route();
+  });
+  /* OSを切りかえたとき：同じ画面（ID）にとどまる。その画面がなければ、次に見える画面へ。 */
+  osBtn.addEventListener('click', function () {
+    var m = /^#\/(l\d+b?)\/(\d+)$/.exec(location.hash);
+    var L = m ? lessonById(m[1]) : null, curId = null, fullPos = 0;
+    if (L) {
+      var oldV = vis(L);
+      var cur = oldV[Math.max(0, Math.min(oldV.length - 1, parseInt(m[2], 10) - 1))];
+      curId = cur.id;
+      for (var q = 0; q < L.steps.length; q++) if (L.steps[q].id === curId) { fullPos = q; break; }
+    }
+    os = os === 'mac' ? 'win' : 'mac';
+    try { localStorage.setItem(OS_KEY, os); } catch (e) { /* 保存できなくても動く */ }
+    if (L) {
+      var newV = vis(L), target = 0;
+      for (var a = 0; a < newV.length; a++) if (newV[a].id === curId) { target = a + 1; break; }
+      if (!target) {
+        for (var b = fullPos; b < L.steps.length && !target; b++) {
+          var ix = idxOf(L, L.steps[b].id);
+          if (ix) target = ix;
+        }
+        if (!target) target = newV.length;
+      }
+      var h = '#/' + L.id + '/' + target;
+      if (location.hash !== h) { location.hash = h; return; }
+    }
     route();
   });
   window.addEventListener('hashchange', route);
