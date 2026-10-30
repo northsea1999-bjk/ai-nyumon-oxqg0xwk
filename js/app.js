@@ -14,13 +14,14 @@
   var mem = {};
   var storageOK = true;
 
-  /* 韓国語表示は、アドレスの最後に ?ko=1 を付けたときだけ使える（代表用） */
-  var koAllowed = /[?&]ko=1(&|$)/.test(location.search);
+  /* 言語ボタンは常に表示。はじめは日本語。選んだ言語はこの端末のブラウザに覚えておく。
+     古い ?ko=1 のアドレスで開いたときは、はじめから韓国語にする。 */
+  var koAllowed = true;
   var lang = 'ja';
-  if (koAllowed) {
-    lang = 'ko';
-    try { lang = localStorage.getItem(LANG_KEY) === 'ja' ? 'ja' : 'ko'; } catch (e) { lang = 'ko'; }
-  }
+  var saved = null;
+  try { saved = localStorage.getItem(LANG_KEY); } catch (e) { saved = null; }
+  if (saved === 'ko' || saved === 'ja') lang = saved;
+  else if (/[?&]ko=1(&|$)/.test(location.search)) lang = 'ko';
 
   /* 画面まわりの短い文言 */
   var UI = {
