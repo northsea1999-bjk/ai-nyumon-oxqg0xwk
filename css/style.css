@@ -102,6 +102,12 @@ button.small { min-height: 40px; padding: 4px 14px; font-size: 16px; }
 .copybox .bar { display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--accent-soft); }
 .copybox .bar .msg { font-size: 15px; color: var(--accent); }
 
+.copybox.cmd pre { font-family: Consolas, "Cascadia Mono", "MS Gothic", monospace; font-size: 15px; line-height: 1.7; }
+.term { background: #14181c; color: #e6e9ec; border-radius: var(--radius); margin: 0 0 16px; overflow: hidden; }
+.term-label { background: #2a3138; color: #c9d0d6; font-size: 13px; line-height: 1.4; padding: 4px 12px; }
+.term pre { margin: 0; padding: 12px 14px; font-family: Consolas, "Cascadia Mono", "MS Gothic", monospace; font-size: 14px; line-height: 1.7; white-space: pre-wrap; word-break: break-all; }
+.helpwrap .copybox { margin-top: 8px; }
+a { color: var(--accent); }
 .parts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0; list-style: none; }
 .parts li { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; margin: 0; font-size: 16px; line-height: 1.6; }
 .parts li b { display: block; color: var(--accent); margin-bottom: 4px; }

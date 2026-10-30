@@ -31,7 +31,8 @@
       lesson: 'レッスン', ready: '準備中', pc: 'PCが必要（予定）', temp: '仮の題名です',
       start: 'はじめる', done: '完了',
       doing: function (n, t) { return '進行中 ' + n + '/' + t; },
-      resume: function (n) { return '前回のつづきがあります（ステップ ' + n + '）'; },
+      resume: function (n, no) { return '前回のつづきがあります（レッスン' + no + '・ステップ ' + n + '）'; },
+      pcNeed: 'PCが必要',
       resumeBtn: 'つづきから',
       okOn: 'でOK', about: '約', min: '分',
       copied: 'コピーしました',
@@ -40,7 +41,7 @@
       chipNone: '上のボタンを1つ以上えらんでください。',
       doneBtn: '完了にする', doneDone: '完了しました',
       checkNote: 'これは、自分で確認する方式です。アプリが自動でチェックしているわけではありません。',
-      doneCard: '<b>レッスン0　完了です。おつかれさまでした。</b><br>次は、レッスン1（準備中）です。ここから先は、PCが必要になります。',
+      doneCard: '<b>レッスン0　完了です。おつかれさまでした。</b><br>次は、レッスン1に進みます。レッスン1からは、PCが必要になります。',
       langBtn: '한국어', koBanner: ''
     },
     ko: {
@@ -49,7 +50,8 @@
       lesson: '레슨', ready: '준비 중', pc: 'PC 필요(예정)', temp: '임시 제목입니다',
       start: '시작하기', done: '완료',
       doing: function (n, t) { return '진행 중 ' + n + '/' + t; },
-      resume: function (n) { return '지난번 이어서 하기가 있습니다(단계 ' + n + ')'; },
+      resume: function (n, no) { return '지난번 이어서 하기가 있습니다(레슨' + no + ' · 단계 ' + n + ')'; },
+      pcNeed: 'PC 필요',
       resumeBtn: '이어서 하기',
       okOn: ' 모두 OK', about: '약 ', min: '분',
       copied: '복사했습니다',
@@ -58,7 +60,7 @@
       chipNone: '위 버튼을 1개 이상 고르세요.',
       doneBtn: '완료로 하기', doneDone: '완료했습니다',
       checkNote: '이것은 스스로 확인하는 방식입니다. 앱이 자동으로 검사하는 것은 아닙니다.',
-      doneCard: '<b>레슨0　완료입니다. 수고하셨습니다.</b><br>다음은 레슨1(준비 중)입니다. 여기서부터는 PC가 필요합니다.',
+      doneCard: '<b>레슨0　완료입니다. 수고하셨습니다.</b><br>다음은 레슨1로 진행합니다. 레슨1부터는 PC가 필요합니다.',
       langBtn: '日本語',
       koBanner: '<p class="note dev">한국어 보기입니다. 일본어 화면의 뜻을 옮긴 것이며, 기준은 일본어입니다. 부탁하는 글은 AI에 붙여 넣을 때 일본어 그대로 쓰입니다.</p>'
     }
@@ -89,8 +91,13 @@
   var RUBY = [
     ['個人情報', 'こじんじょうほう'], ['予定表', 'よていひょう'], ['入力欄', 'にゅうりょくらん'],
     ['注文書', 'ちゅうもんしょ'], ['貼り付け', 'はりつけ'], ['作り話', 'つくりばなし'],
+    ['自己紹介', 'じこしょうかい'], ['再起動', 'さいきどう'], ['管理者', 'かんりしゃ'],
+    ['使用許諾', 'しようきょだく'], ['作業環境', 'さぎょうかんきょう'], ['有料', 'ゆうりょう'],
     ['予算', 'よさん'], ['条件', 'じょうけん'], ['完了', 'かんりょう'], ['旅行', 'りょこう'],
-    ['荷物', 'にもつ'], ['会話', 'かいわ'], ['送信', 'そうしん']
+    ['荷物', 'にもつ'], ['会話', 'かいわ'], ['送信', 'そうしん'], ['実行', 'じっこう'],
+    ['起動', 'きどう'], ['許可', 'きょか'], ['移動', 'いどう'], ['保存', 'ほぞん'],
+    ['設定', 'せってい'], ['確認', 'かくにん'], ['手順', 'てじゅん'], ['作業', 'さぎょう'],
+    ['料金', 'りょうきん'], ['信頼', 'しんらい'], ['架空', 'かくう'], ['支払い', 'しはらい']
   ];
   var SKIP = /^(PRE|TEXTAREA|INPUT|SELECT|OPTION|BUTTON|RUBY|RT|SCRIPT)$/;
 
@@ -172,8 +179,13 @@
     if (!k) return step;
     return {
       id: step.id, kind: step.kind, widget: step.widget, tag: k.tag, title: k.title, html: k.html,
-      help: k.help || step.help, chips: step.chips, chipsKo: k.chips, checks: k.checks || step.checks
+      help: k.help || step.help, chips: step.chips, chipsKo: k.chips, checks: k.checks || step.checks,
+      required: k.required || step.required
     };
+  }
+  function doneCardOf(L) {
+    if (lang === 'ko') return koLesson(L.id).doneCard || t('doneCard');
+    return L.doneCard || t('doneCard');
   }
   function lessonTitle(L) { return (lang === 'ko' && koLesson(L.id).title) || L.title; }
   function lessonShort(L) { return (lang === 'ko' && koLesson(L.id).short) || L.short; }
@@ -290,13 +302,14 @@
       return cb;
     });
     function showDone() {
-      msg.innerHTML = '<div class="card goal">' + t('doneCard') + '</div>' +
+      msg.innerHTML = '<div class="card goal">' + doneCardOf(L) + '</div>' +
         '<button type="button" id="to-toc">' + t('tocReturn') + '</button>';
       msg.querySelector('#to-toc').addEventListener('click', function () { go('#/'); });
       applyRuby(msg);
     }
     function refresh() {
-      var all = boxes.every(function (b) { return b.checked; });
+      var need = step.required || boxes.length;
+      var all = boxes.slice(0, need).every(function (b) { return b.checked; });
       btn.disabled = !all || st.done;
       btn.textContent = st.done ? t('doneDone') : t('doneBtn');
       if (st.done) showDone();
@@ -316,10 +329,11 @@
     crumb.textContent = title;
     setProgress(0, 1);
     var html = t('koBanner') + '<h1>' + title + '</h1><p>' + sub + '</p>' + storageNote();
-    var l0 = lp('l0');
-    if (mem.last && !l0.done && l0.step > 1) {
-      html += '<div class="banner"><span>' + t('resume')(l0.step) + '</span>' +
-        '<button type="button" class="primary" data-go="#/l0/' + l0.step + '">' + t('resumeBtn') + '</button></div>';
+    var lastL = mem.last ? lessonById(mem.last.lesson) : null;
+    var lastS = lastL ? lp(lastL.id) : null;
+    if (lastL && lastL.steps && lastS && !lastS.done && lastS.step > 1) {
+      html += '<div class="banner"><span>' + t('resume')(lastS.step, lastL.no) + '</span>' +
+        '<button type="button" class="primary" data-go="#/' + lastL.id + '/' + lastS.step + '">' + t('resumeBtn') + '</button></div>';
     }
     html += '<ul class="toc-list">';
     C.lessons.forEach(function (L) {
@@ -328,10 +342,13 @@
           '<span class="tag pc">' + t('pc') + '</span><br>' + t('lesson') + L.no + '　' + lessonTitle(L) +
           '<small>' + t('temp') + '</small></div></li>';
       } else {
-        var label = l0.done ? t('done') : (l0.step > 1 ? t('doing')(l0.step, L.steps.length) : t('start'));
-        html += '<li><button type="button" class="toc-item" data-go="#/' + L.id + '/' + (l0.done ? 1 : l0.step) + '">' +
+        var ls = lp(L.id);
+        var label = ls.done ? t('done') : (ls.step > 1 ? t('doing')(ls.step, L.steps.length) : t('start'));
+        var devTag = L.needsPc ? '<span class="tag pc">' + t('pcNeed') + '</span>'
+                               : '<span class="tag real">' + lessonDevices(L) + t('okOn') + '</span>';
+        html += '<li><button type="button" class="toc-item" data-go="#/' + L.id + '/' + (ls.done ? 1 : ls.step) + '">' +
           '<span class="state">' + label + '</span>' +
-          '<span class="tag real">' + lessonDevices(L) + t('okOn') + '</span><br>' + t('lesson') + L.no + '　' + lessonTitle(L) +
+          devTag + '<br>' + t('lesson') + L.no + '　' + lessonTitle(L) +
           '<small>' + t('about') + L.minutes + t('min') + '　' + lessonShort(L) + '</small></button></li>';
       }
     });
@@ -355,7 +372,7 @@
     crumb.textContent = t('lesson') + L.no + '　' + n + ' / ' + total;
     setProgress(n, total);
 
-    var tagClass = step.kind === 'real' ? 'real' : (step.kind === 'sample' ? 'sample' : '');
+    var tagClass = step.kind === 'real' ? 'real' : (step.kind === 'sample' ? 'sample' : (step.kind === 'pc' ? 'pc' : ''));
     var html = t('koBanner') + storageNote() + '<span class="tag ' + tagClass + '">' + step.tag + '</span>' +
       '<h1>' + step.title + '</h1>' + step.html;
     if (step.help && step.help.length) {
