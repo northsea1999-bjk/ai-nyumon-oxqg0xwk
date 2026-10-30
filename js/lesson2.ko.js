@@ -176,6 +176,7 @@
         '<li><b>Edit(고치기)</b>파일의 일부만 고친다<br><span>허락 필요</span></li>' +
         '<li><b>Bash(실행)</b>명령어를 실행한다<br><span>허락 필요</span></li>' +
         '</ul>' +
+        '<div class="card"><b>AI의 작업 흐름</b><br>① <b>본다</b>(Read) → ② <b>생각한다</b> → ③ <b>손을 쓴다</b>(Write／Edit／Bash) → ④ <b>결과를 본다</b> → ⑤ 부족하면 <b>되풀이한다</b></div>' +
         '<p class="note">허락이 필요한지는 공식 안내로 확인했습니다. Read 외에는 "해도 될까요?"라고 묻습니다.</p>',
       help: [
         { q: '"Bash"가 뭔가요?', a: 'PC에 명령하는 글자 명령(커맨드)을 실행하는 손입니다. 파일 목록 보기, 복사 등을 할 수 있습니다. 오늘은 안전한 것만 시험합니다.' }
@@ -323,26 +324,27 @@
       ]
     },
     p1: {
-      tag: '알아 두기', title: 'AI는 프로그램도 만들어서 실행할 수 있다',
+      tag: '알아 두기', title: '왜 Python을 설치할까요?',
       html:
-        '<p>지금까지는 글 파일을 읽고, 쓰고, 고쳤습니다. AI는 <b>프로그램</b>도 만들어서 실행할 수 있습니다.</p>' +
+        '<p>AI는 <b>프로그램</b>도 만들 수 있습니다(버튼을 누르면 계산한다, 등). 하지만 프로그램을 "실행"하려면 컴퓨터에 그 말을 읽는 <b>"도구"</b>가 필요합니다. 그 도구가 <b>Python(파이썬)</b>입니다.</p>' +
         '<ul class="parts">' +
-        '<li><b>프로그램</b>컴퓨터에 내리는 "순서서"<br><span>버튼을 누르면 계산한다, 등</span></li>' +
-        '<li><b>Python(파이썬)</b>프로그램을 쓰는 언어 중 하나<br><span>앞으로의 수업에서도 씁니다</span></li>' +
+        '<li><b>DVD</b>프로그램(내용)<br><span>AI가 써 줍니다(Write)</span></li>' +
+        '<li><b>DVD 플레이어</b>Python(실행하는 도구)<br><span>컴퓨터에 한 번 설치해 둡니다</span></li>' +
         '</ul>' +
-        '<p>프로그램을 만들 때는 <b>Write(쓰기)</b>로 프로그램 파일을 만들고, <b>Bash(실행)</b>로 실행합니다.</p>' +
-        '<p>프로그램을 실행하려면 컴퓨터에 "Python"이 들어 있어야 합니다. ' +
-        os('없으면 <b>AI에게 설치하게 할 수 있습니다</b>.', 'Mac에서는 <b>직접</b> 공식 설치 프로그램으로 설치합니다(다다음 화면에서 순서를 안내합니다).') + '</p>' +
-        os('<p class="note">Python 설치 방법은 2026년 10월 30일에 Python 공식 안내로 확인했습니다. Windows의 공식 방법은 "Python install manager"를 쓰는 것입니다.</p>',
-           '<p class="note">Python 설치 방법은 2026년 10월 30일에 Python 공식 안내로 확인했습니다. Mac의 공식 방법은 python.org의 "Python for macOS" 설치 프로그램을 쓰는 것입니다.</p>'),
+        '<p>흐름은 이렇습니다. <b>① AI가 프로그램을 쓴다(Write) → ② Python이 실행한다(Bash) → ③ 창이나 결과가 나온다</b></p>' +
+        '<div class="card goal"><b>설치하는 이유</b><br>·이 레슨의 "계산기"를 실행하기 위해<br>·앞으로의 수업에서도 Python을 쓰기 때문에(사진 가공이나 반복 작업 자동화 등)<br>·<b>무료</b>이고 <b>한 번 설치하면 계속 쓸 수 있습니다</b></div>' +
+        os('<p>Windows에서는 <b>Microsoft Store</b>에서 설치합니다(다다음 화면). 몇 분이면 끝납니다.</p>',
+           '<p>Mac에서는 <b>python.org</b>의 공식 설치 프로그램을 내려받아 설치합니다(다다음 화면). 비밀번호 입력이 필요합니다.</p>') +
+        '<p class="note">Python 설치 방법은 2026년 10월 30일에 Python 공식 안내로 확인했습니다.</p>',
       help: [
-        { q: '프로그램은 어려울 것 같아요', a: '프로그램은 AI가 씁니다. 여러분은 "무엇을 하고 싶은지"를 평범한 말로 부탁하기만 하면 됩니다.' }
+        { q: '프로그램은 어려울 것 같아요', a: '프로그램은 AI가 씁니다. 여러분은 "무엇을 하고 싶은지"를 평범한 말로 부탁하기만 하면 됩니다. Python은 그냥 "설치해 두기"만 하면 됩니다.' },
+        { q: '설치하면 컴퓨터가 느려지지 않나요?', a: 'Python은 쓸 때만 동작하는 작은 도구입니다. 설치해 두어도 평소 동작은 달라지지 않습니다.' }
       ]
     },
     p2: {
       tag: 'PC에서 조작', title: 'Python이 들어 있는지 확인하기',
       html:
-        '<p>터미널에서 확인합니다(' + os('맨 앞이 <b>PS</b>인 것', '끝이 <b>%</b>인 것') + '). Claude Code 대화 안이 아니라 터미널입니다.</p>' +
+        '<p>터미널에서 확인합니다(' + os('맨 앞이 <b>PS</b>인 것', '끝이 <b>%</b>인 것') + '). Claude Code 대화 안이 아니라 일반 터미널입니다.</p>' +
         '<ol>' +
         '<li>Claude Code를 쓰고 있었다면 <b>/exit</b>로 끝냅니다.</li>' +
         '<li>아래 "복사"를 눌러 붙여 넣고 Enter 키를 누릅니다.</li>' +
@@ -350,40 +352,71 @@
         cmdOs('python --version', 'python3 --version') +
         termOs(['PS C:\\Users\\(내이름)\\Desktop\\agent1> python --version', 'Python 3.(숫자)'],
                ['(내이름)@MacBook agent1 % python3 --version', 'Python 3.(숫자)'], '견본(들어 있는 경우)') +
-        '<p><b>어느 결과여도 괜찮습니다.</b> ' + os('없어도 다음 화면에서 AI에게 설치하게 합니다.', '없거나 오래되었으면 다음 화면에서 공식 설치 프로그램으로 설치합니다.') + '</p>',
+        '<p><b>어느 결과여도 괜찮습니다.</b> 숫자가 나오면 들어 있는 것입니다. 안 나오면 다음 화면에서 설치합니다.</p>',
       help: [
-        { os: 'win', q: 'Microsoft Store(스토어) 화면이 열렸어요', a: 'Python이 없을 때 Windows가 스토어를 열 때가 있습니다. 그 화면은 닫아도 됩니다. 다음 화면에서 AI에게 설치하게 합니다.' },
+        { os: 'win', q: 'Microsoft Store(스토어) 화면이 열렸어요', a: 'Python이 없을 때 Windows가 스토어를 열 때가 있습니다. 그 화면은 닫아도 됩니다. 다음 화면에서 설치합니다.' },
         { os: 'win', q: '"인식되지 않습니다"라고 나와요', a: 'Python이 아직 없다는 뜻입니다. 다음 화면에서 설치합니다.' },
         { os: 'mac', q: '"명령줄 개발자 도구" 설치를 권하는 화면이 나왔어요', a: 'Mac에 Python 같은 도구가 없을 때 나올 수 있습니다. 여기서는 "나중에"나 "취소"로 닫아도 됩니다. 다음 화면의 공식 설치 프로그램으로 Python을 설치합니다.' },
         { os: 'mac', q: '"command not found: python3"라고 나와요', a: 'Python이 아직 없다는 뜻입니다. 다음 화면에서 설치합니다.' },
-        { q: '숫자가 나왔어요', a: 'Python이 들어 있습니다. ' + os('그대로 다음 화면으로 진행해도 됩니다.', 'Mac에서는 다음 화면(설치)을 건너뛰어도 됩니다. 다만 python.org 공식 설치 프로그램 버전에는 창을 만드는 부품(tkinter)이 포함되어 있다고 공식 안내에 있습니다.') }
+        { q: '숫자가 나왔어요', a: 'Python이 들어 있습니다. ' + os('다음 화면(설치)은 건너뛰고 그다음 화면으로 진행해도 됩니다.', 'Mac에서는 다음 화면(설치)을 건너뛰어도 됩니다. 다만 python.org 공식 설치 프로그램 버전에는 창을 만드는 부품(tkinter)이 포함되어 있다고 공식 안내에 있습니다.') }
+      ]
+    },
+    p2w: {
+      tag: 'PC에서 조작', title: 'Windows에 Python 설치하기(공식 방법)',
+      html:
+        '<p>2단계로 설치합니다. <b>① 설치 도구(Python Install Manager)를 설치</b> → <b>② Python 본체를 설치</b></p>' +
+        '<h2>① Python Install Manager 설치</h2>' +
+        '<ol>' +
+        '<li>아래 링크를 엽니다(Microsoft Store의 공식 페이지입니다).<br><a href="https://apps.microsoft.com/detail/9NQ7512CXL7T" target="_blank" rel="noopener noreferrer">Python Install Manager (Microsoft Store)</a></li>' +
+        '<li>"받기" 또는 "설치"를 누릅니다.</li>' +
+        '<li>끝날 때까지 기다립니다.</li>' +
+        '</ol>' +
+        '<h2>② Python 본체 설치</h2>' +
+        '<ol>' +
+        '<li>VS Code 터미널을 <b>새로</b> 엽니다(맨 앞이 <b>PS</b>).</li>' +
+        '<li>아래 "복사"를 눌러 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '<li>Python이 하나도 없을 때는 <b>최신 Python이 자동으로 설치됩니다</b>(공식 안내). 몇 분 걸립니다. 화면 안내에 따라 진행합니다.</li>' +
+        '<li>"&gt;&gt;&gt;"가 나오면 Python 안에 있는 것입니다. <b>exit()</b>를 입력하고 Enter 키를 누르면 돌아옵니다.</li>' +
+        '<li>다시 <b>python --version</b>으로 숫자가 나오는지 확인합니다.</li>' +
+        '</ol>' +
+        cmd('python') +
+        '<p class="note">중간에 "PATH에 추가할까요?" 같은 질문이 나오면 어느 쪽을 골라도 괜찮습니다(공식 안내에서는 선택 사항입니다).</p>' +
+        '<p class="note warn">다운로드는 반드시 Microsoft Store나 python.org의 공식 것으로 하세요.</p>',
+      help: [
+        { q: 'Microsoft Store를 쓸 수 없어요(회사 컴퓨터 등)', a: 'python.org의 Windows용 다운로드 페이지에서 "Latest Python install manager"를 내려받아 더블클릭합니다.<br><a href="https://www.python.org/downloads/windows/" target="_blank" rel="noopener noreferrer">python.org/downloads/windows</a>' },
+        { q: '명령어로 설치하고 싶어요', a: '맨 앞이 "PS"인 터미널에 다음 명령어를 붙여 넣고 Enter 키를 누릅니다(공식 안내).' + box('winget install 9NQ7512CXL7T -e --accept-package-agreements --disable-interactivity') },
+        { q: '"python"을 입력해도 스토어가 열려요', a: 'Windows의 "앱 실행 별칭" 설정이 원인일 수 있습니다. 시작 메뉴에서 "앱 실행 별칭 관리"를 입력하고 "Python(기본)"이 켜져 있는지 확인합니다. 켜져 있으면 한 번 껐다가 다시 켜 봅니다(Python 공식 안내).' },
+        { q: '"인식되지 않습니다"라고 나와요', a: 'VS Code를 완전히 닫았다가 다시 열고 새 터미널에서 다시 시험하세요. 그래도 안 되면 스크린샷을 저장해서 상담하세요.' },
+        { q: '시간이 오래 걸려요', a: '몇 분 걸릴 수 있습니다. 화면이 멈춘 것처럼 보여도 기다립니다. 10분 이상 변화가 없으면 일단 멈추고(Ctrl 키와 C 키) 다시 시도하세요.' }
       ]
     },
     p2m: {
       tag: 'PC에서 조작', title: 'Mac에 Python 설치하기(공식 설치 프로그램)',
       html:
-        '<p>Mac의 Python은 <b>직접</b> 공식 설치 프로그램으로 설치합니다. 비밀번호 입력이 필요합니다.</p>' +
+        '<p>Mac의 Python은 <b>python.org</b>의 공식 설치 프로그램으로 설치합니다. <b>비밀번호 입력</b>이 필요합니다.</p>' +
         '<ol>' +
-        '<li>브라우저에서 <a href="https://www.python.org/downloads/macos/" target="_blank" rel="noopener noreferrer">python.org/downloads/macos</a>를 열고 "Python for macOS" 설치 프로그램(<b>.pkg</b>)을 내려받습니다.</li>' +
+        '<li>브라우저에서 <a href="https://www.python.org/downloads/macos/" target="_blank" rel="noopener noreferrer">python.org/downloads/macos</a>를 엽니다.</li>' +
+        '<li>"Python for macOS"의 가장 최신 설치 프로그램(<b>.pkg</b>)을 내려받습니다.</li>' +
         '<li>내려받은 .pkg를 더블클릭합니다.</li>' +
         '<li>"계속"을 눌러 갑니다. 사용 허락 화면에서는 내용을 읽고 동의하면 "동의"를 누릅니다.</li>' +
         '<li>"설치"를 누릅니다. <b>Mac 로그인 비밀번호</b>를 물으면 <b>Mac 화면에만</b> 직접 입력합니다.</li>' +
         '<li>끝나면 "응용 프로그램" 안의 "Python 3.x" 폴더가 열립니다. 그 안의 <b>Install Certificates.command</b>를 더블클릭합니다.</li>' +
         '<li>작은 터미널 창이 열리고 <b>"Successfully installed certifi"</b>와 <b>"update complete"</b>가 나오면 완료입니다. 창을 닫습니다.</li>' +
-        '<li>VS Code 터미널을 <b>새로</b> 열고 <b>python3 --version</b>을 확인합니다.</li>' +
+        '<li>VS Code를 일단 닫았다가 다시 열고 터미널을 <b>새로</b> 엽니다. <b>python3 --version</b>으로 숫자가 나오는지 확인합니다.</li>' +
         '</ol>' +
         '<p class="note warn">비밀번호는 Mac 화면에만 입력합니다. 터미널이나 AI 대화에는 넣지 않습니다.</p>' +
         '<p class="note">여기까지의 절차는 Python 공식 안내(Using Python on macOS)로 확인했습니다.</p>',
       help: [
         { q: '"확인되지 않은 개발자"라고 나와요', a: '공식 사이트(python.org)에서 내려받은 파일인지 확인하세요. 공식 파일은 서명되어 있습니다(공식 안내). 불안하면 여기서 멈춰도 됩니다.' },
         { q: 'Install Certificates.command가 안 보여요', a: 'Finder에서 "응용 프로그램" 폴더의 "Python 3.x" 폴더를 열면 있습니다.' },
-        { q: '비밀번호를 모르겠어요', a: 'Mac에 평소 로그인할 때 쓰는 비밀번호입니다. 관리자(Administrator) 계정이 필요합니다. 모르겠으면 여기서 멈추고 상담하세요.' }
+        { q: '비밀번호를 모르겠어요', a: 'Mac에 평소 로그인할 때 쓰는 비밀번호입니다. 관리자(Administrator) 계정이 필요합니다. 모르겠으면 여기서 멈추고 상담하세요.' },
+        { q: '어느 것을 내려받아야 하나요?', a: 'python.org macOS 페이지의 "Python for macOS" 중 가장 최신 것입니다. Intel Mac도 Apple 실리콘 Mac도 같은 설치 프로그램으로 동작합니다(공식 안내).' }
       ]
     },
     p3: {
       tag: 'PC에서 조작', title: '계산기 프로그램 만들게 하기',
       html:
-        '<p>AI에게 <b>계산기</b> 프로그램을 만들게 합니다. ' + os('Python이 없으면 AI가 설치합니다.', 'Python은 앞 화면에서 설치한 것을 씁니다.') + '</p>' +
+        '<p>AI에게 <b>계산기</b> 프로그램을 만들게 합니다. Python은 앞 화면에서 설치한 것을 씁니다.</p>' +
         '<ol>' +
         '<li>터미널에서 <b>claude</b>를 실행해 대화를 시작합니다.</li>' +
         '<li>아래 "복사"를 눌러 입력란에 붙여 넣고 Enter 키를 누릅니다.</li>' +
@@ -391,21 +424,14 @@
         '<li>작은 계산기 창이 열리면 성공입니다.</li>' +
         '</ol>' +
         osBlock(
-          box('Python이 없으면 이 컴퓨터에 설치해 주세요. 공식 Python install manager를 써 주세요. 그다음 Python의 tkinter를 써서 간단한 계산기 프로그램을 calc.py라는 이름으로 만들어 주세요. 덧셈·뺄셈·곱셈·나눗셈이 되는 버튼 달린 작은 창으로요. 만들었으면 실행해서 보여 주세요.'),
+          box('Python의 tkinter를 써서 간단한 계산기 프로그램을 calc.py라는 이름으로 만들어 주세요. 덧셈·뺄셈·곱셈·나눗셈이 되는 버튼 달린 작은 창으로요. 만들었으면 python으로 실행해서 보여 주세요.'),
           box('Python의 tkinter를 써서 간단한 계산기 프로그램을 calc.py라는 이름으로 만들어 주세요. 덧셈·뺄셈·곱셈·나눗셈이 되는 버튼 달린 작은 창으로요. 만들었으면 python3로 실행해서 보여 주세요.')
         ) +
-        os('<p class="note warn"><b>설치 명령어를 잘 보세요.</b> 공식 방법은 <b>winget install 9NQ7512CXL7T</b> 같은, Python install manager를 설치하는 것입니다(공식 안내). 모르는 사이트에서 내려받는 명령어가 나오면 "아니요(No)"를 고릅니다.</p><p>설치에 몇 분 걸릴 수 있습니다. 기다립니다.</p>',
-           '<p class="note">Python을 AI에게 설치하게 할 필요는 없습니다. 만약 AI가 설치 명령어(brew, sudo 등)를 내놓으면 "아니요(No)"를 고르고 "Python은 이미 설치되어 있습니다"라고 전하세요.</p>'),
+        '<p class="note">Python을 AI에게 설치하게 할 필요는 없습니다. 만약 AI가 설치 명령어(' + os('winget', 'brew, sudo') + ' 등)를 내놓으면 "아니요(No)"를 고르고 "Python은 이미 설치되어 있습니다"라고 전하세요.</p>',
       help: [
         HELP_APPROVE,
-        {
-          os: 'win',
-          q: 'Python을 직접 설치하는 방법',
-          a: 'AI가 잘 못 할 때는 맨 앞이 "PS"인 터미널에 다음 명령어를 붙여 넣고 Enter 키를 누릅니다. 끝나면 VS Code를 닫았다가 다시 열고, 새 터미널에서 <b>python</b>을 입력해 화면 안내대로 진행합니다.' +
-             box('winget install 9NQ7512CXL7T -e --accept-package-agreements --disable-interactivity')
-        },
         { os: 'win', q: '창이 안 열려요／실행이 안 돼요', a: 'Python을 설치한 뒤 터미널이 아직 새 설정을 모를 때가 있습니다. <b>VS Code를 닫았다가 다시 열고</b>, 다시 <b>claude</b>를 실행해서 "calc.py를 실행해 주세요"라고 부탁하세요.' },
-        { os: 'win', q: '"Python을 설치했는데 python을 치면 스토어가 열려요"', a: 'Windows의 "앱 실행 별칭" 설정이 원인일 수 있습니다. 시작 메뉴에서 "앱 실행 별칭 관리"를 입력하고 "Python(기본)"이 켜져 있는지 확인합니다(Python 공식 안내). 모르겠으면 화면을 저장(스크린샷)해서 상담하세요.' },
+        { os: 'win', q: '"No module named tkinter"라고 나와요', a: '창을 만드는 부품(tkinter)을 쓸 수 없을 때 나옵니다. 앞 화면의 공식 방법(Python Install Manager)으로 설치한 Python을 쓰고 있는지 확인하세요. 모르겠으면 화면을 저장(스크린샷)해서 상담하세요.' },
         { os: 'mac', q: '창이 안 열려요／"No module named tkinter"라고 나와요', a: '창을 만드는 부품(tkinter)을 쓸 수 없는 버전의 Python을 쓰고 있을 수 있습니다. 앞 화면의 <b>python.org 공식 설치 프로그램</b>으로 설치한 Python을 쓰세요. 앞 화면부터 다시 해 보세요.' },
         { os: 'mac', q: '"python3"로 다른 Python이 실행되는 것 같아요', a: 'Mac에는 Apple이 준비한 python3도 들어 있습니다. 공식 안내에서는 python.org의 Python을 설치하면 보통 그쪽이 쓰입니다. 터미널을 새로 열고 다시 시험해 보세요.' }
       ]
@@ -436,6 +462,7 @@
         { q: '파일의 일부만 고친다. 어느 "손"?', options: ['Read(읽기)', 'Write(쓰기)', 'Edit(고치기)', 'Bash(실행)'], answer: 2, explain: 'Edit는 여기만 고치는 손입니다.' },
         { q: '파일을 복사한다(명령어를 실행한다). 어느 "손"?', options: ['Read(읽기)', 'Write(쓰기)', 'Edit(고치기)', 'Bash(실행)'], answer: 3, explain: 'Bash는 명령어를 실행하는 손입니다.' },
         { q: 'CLAUDE.md는 언제 읽히나요?', options: ['대화를 시작할 때', 'AI가 답할 때마다 반드시', '읽히지 않는다'], answer: 0, explain: '공식 안내에서는 대화를 시작할 때 읽힙니다.' },
+        { q: '프로그램을 "실행"하기 위해 컴퓨터에 설치해 두는 도구는?', options: ['Python(프로그램을 실행하는 도구)', 'Word', '프린터'], answer: 0, explain: 'DVD를 보려면 DVD 플레이어가 필요하듯, Python 프로그램을 실행하려면 Python이 필요합니다.' },
         { q: 'AI에게 프로그램을 만들어 실행하게 한다. 쓰는 "손"은?', options: ['Read만', 'Write와 Bash', 'Edit만'], answer: 1, explain: '프로그램 파일을 만드는 것이 Write, 실행하는 것이 Bash입니다.' }
       ],
       html: '<p>배운 것을 퀴즈로 확인해 봅시다. 고르면 바로 답이 나옵니다. 점수는 매기지 않습니다.</p>',

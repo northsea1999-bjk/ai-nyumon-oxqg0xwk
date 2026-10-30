@@ -172,6 +172,7 @@
         '<li><b>Edit（直す）</b>ファイルの、一部だけを直す<br><span>許可が必要</span></li>' +
         '<li><b>Bash（実行）</b>コマンドを実行する<br><span>許可が必要</span></li>' +
         '</ul>' +
+        '<div class="card"><b>AIの仕事の流れ</b><br>① <b>見る</b>（Read）→ ② <b>考える</b> → ③ <b>手を使う</b>（Write／Edit／Bash）→ ④ <b>結果を見る</b> → ⑤ 足りなければ、<b>くり返す</b></div>' +
         '<p class="note">許可が必要かどうかは、公式の案内で確認しました。Read以外は、「やってもいいですか？」と聞かれます。</p>',
       help: [
         { q: '「Bash」って、なんですか？', a: 'パソコンに命令する、文字の命令（コマンド）を実行する手です。ファイルの一覧を見る、コピーするなどができます。今日は、安全なものだけを試します。' }
@@ -311,26 +312,27 @@
       ]
     },
     {
-      id: 'p1', kind: 'know', tag: '知っておこう', title: 'AIは、プログラムも作って、動かせる',
+      id: 'p1', kind: 'know', tag: '知っておこう', title: 'なぜ、Pythonを入れるの？',
       html:
-        '<p>ここまでは、文章のファイルを、読んだり、書いたり、直したりしました。AIは、<b>プログラム</b>も、作って、動かせます。</p>' +
+        '<p>AIは、<b>プログラム</b>も作れます（ボタンを押すと計算する、など）。でも、プログラムを「動かす」には、パソコンに、その言葉を読む<b>「道具」</b>が必要です。その道具が、<b>Python（パイソン）</b>です。</p>' +
         '<ul class="parts">' +
-        '<li><b>プログラム</b>パソコンへの「手順書」<br><span>ボタンを押すと、計算する、など</span></li>' +
-        '<li><b>Python（パイソン）</b>プログラムを書く言葉の1つ<br><span>これから先の授業でも、使います</span></li>' +
+        '<li><b>DVD</b>プログラム（中身）<br><span>AIが、書いてくれます（Write）</span></li>' +
+        '<li><b>DVDプレーヤー</b>Python（動かす道具）<br><span>パソコンに、1回入れておきます</span></li>' +
         '</ul>' +
-        '<p>プログラムを作るときは、<b>Write（書く）</b>で、プログラムのファイルを作って、<b>Bash（実行）</b>で、動かします。</p>' +
-        '<p>プログラムを動かすには、パソコンに「Python」が入っている必要があります。' +
-        os('入っていなければ、<b>AIに、入れてもらえます</b>。', 'Macでは、<b>ご自分で</b>、公式のインストーラーで入れます（次の次の画面で、手順を案内します）。') + '</p>' +
-        os('<p class="note">Pythonの入れかたは、2026年10月30日に、Pythonの公式の案内で確認しました。Windowsの公式の方法は、「Python install manager」を使うものです。</p>',
-           '<p class="note">Pythonの入れかたは、2026年10月30日に、Pythonの公式の案内で確認しました。Macの公式の方法は、python.orgの「Python for macOS」インストーラーを使うものです。</p>'),
+        '<p>流れは、こうです。<b>① AIがプログラムを書く（Write） → ② Pythonが動かす（Bash） → ③ 窓や結果が出る</b></p>' +
+        '<div class="card goal"><b>入れる理由</b><br>・このレッスンの「計算機」を動かすため<br>・このあとの授業でも、Pythonを使うため（写真の加工や、くり返し作業の自動化など）<br>・<b>無料</b>で、<b>1回入れれば、ずっと使えます</b></div>' +
+        os('<p>Windowsでは、<b>Microsoft Store</b>から入れます（次の次の画面）。数分で、終わります。</p>',
+           '<p>Macでは、<b>python.org</b>の、公式のインストーラーを、ダウンロードして入れます（次の次の画面）。パスワードの入力が、必要です。</p>') +
+        '<p class="note">Pythonの入れかたは、2026年10月30日に、Pythonの公式の案内で確認しました。</p>',
       help: [
-        { q: 'プログラムなんて、むずかしそうです', a: 'プログラムは、AIが書きます。みなさんは、「何をしたいか」を、ふつうの言葉でお願いするだけです。' }
+        { q: 'プログラムなんて、むずかしそうです', a: 'プログラムは、AIが書きます。みなさんは、「何をしたいか」を、ふつうの言葉でお願いするだけです。Pythonは、ただ「入れておく」だけで大丈夫です。' },
+        { q: '入れると、パソコンが重くなりませんか？', a: 'Pythonは、使うときだけ動く、小さな道具です。入れておいても、ふだんの動きは、変わりません。' }
       ]
     },
     {
       id: 'p2', kind: 'pc', tag: 'PCで操作', title: 'Pythonが入っているか、確かめる',
       html:
-        '<p>ターミナルで確かめます（' + os('先頭が <b>PS</b> のもの', '終わりが <b>%</b> のもの') + '）。Claude Codeの会話の中ではなく、ターミナルです。</p>' +
+        '<p>ターミナルで確かめます（' + os('先頭が <b>PS</b> のもの', '終わりが <b>%</b> のもの') + '）。Claude Codeの会話の中ではなく、ふつうのターミナルです。</p>' +
         '<ol>' +
         '<li>Claude Codeを使っているときは、<b>/exit</b> で終わらせます。</li>' +
         '<li>下の「コピー」を押して、貼り付けて、Enterキーを押します。</li>' +
@@ -338,40 +340,71 @@
         cmdOs('python --version', 'python3 --version') +
         termOs(['PS C:\\Users\\（あなたの名前）\\Desktop\\agent1> python --version', 'Python 3.（数字）'],
                ['（あなたの名前）@MacBook agent1 % python3 --version', 'Python 3.（数字）'], '見本（入っている場合）') +
-        '<p><b>どちらの結果でも、大丈夫です。</b>' + os('入っていなくても、次の画面で、AIに入れてもらいます。', '入っていないときや、古いときは、次の画面で、公式のインストーラーで入れます。') + '</p>',
+        '<p><b>どちらの結果でも、大丈夫です。</b>数字が出れば、入っています。出なければ、次の画面で、入れます。</p>',
       help: [
-        { os: 'win', q: 'Microsoft Store（ストア）の画面が開きました', a: 'Pythonが入っていないときに、Windowsが、ストアを開くことがあります。その画面は、閉じて大丈夫です。次の画面で、AIに入れてもらいます。' },
+        { os: 'win', q: 'Microsoft Store（ストア）の画面が開きました', a: 'Pythonが入っていないときに、Windowsが、ストアを開くことがあります。その画面は、閉じて大丈夫です。次の画面で、入れます。' },
         { os: 'win', q: '「認識されません」と出ました', a: 'Pythonが、まだ入っていない、という意味です。次の画面で、入れます。' },
         { os: 'mac', q: '「コマンドライン・デベロッパ・ツール」のインストールをすすめる画面が出ました', a: 'Macに、Pythonなどの道具が入っていないときに、出ることがあります。ここでは、「あとで」や「キャンセル」で閉じて大丈夫です。次の画面の、公式のインストーラーで、Pythonを入れます。' },
         { os: 'mac', q: '「command not found: python3」と出ました', a: 'Pythonが、まだ入っていない、という意味です。次の画面で、入れます。' },
-        { q: '数字が出ました', a: 'Pythonが入っています。' + os('そのまま、次の画面へ進んで大丈夫です。', 'Macでは、次の画面（インストール）を、飛ばしてもかまいません。ただし、python.orgの公式のインストーラー版のほうが、窓を作る部品（tkinter）が、含まれていると、公式の案内にあります。') }
+        { q: '数字が出ました', a: 'Pythonが入っています。' + os('次の画面（インストール）は、飛ばして、その次の画面へ進んで大丈夫です。', 'Macでは、次の画面（インストール）を、飛ばしてもかまいません。ただし、python.orgの公式のインストーラー版のほうが、窓を作る部品（tkinter）が、含まれていると、公式の案内にあります。') }
+      ]
+    },
+    {
+      id: 'p2w', only: 'win', kind: 'pc', tag: 'PCで操作', title: 'WindowsにPythonを入れる（公式の方法）',
+      html:
+        '<p>2つの手順で、入れます。<b>① 入れる道具（Python Install Manager）を入れる</b> → <b>② Python本体を入れる</b></p>' +
+        '<h2>① Python Install Managerを入れる</h2>' +
+        '<ol>' +
+        '<li>下のリンクを開きます（Microsoft Storeの、公式のページです）。<br><a href="https://apps.microsoft.com/detail/9NQ7512CXL7T" target="_blank" rel="noopener noreferrer">Python Install Manager（Microsoft Store）</a></li>' +
+        '<li>「入手」または「インストール」を押します。</li>' +
+        '<li>終わるまで、待ちます。</li>' +
+        '</ol>' +
+        '<h2>② Python本体を入れる</h2>' +
+        '<ol>' +
+        '<li>VS Codeの、ターミナルを<b>新しく</b>開きます（先頭が <b>PS</b>）。</li>' +
+        '<li>下の「コピー」を押して、貼り付けて、Enterキーを押します。</li>' +
+        '<li>Pythonが、1つも入っていないときは、<b>最新のPythonが、自動でインストールされます</b>（公式の案内）。数分かかります。画面の案内に、そって進めます。</li>' +
+        '<li>「&gt;&gt;&gt;」と出たら、Pythonの中にいます。<b>exit()</b> と入力して、Enterキーを押すと、もどれます。</li>' +
+        '<li>もう一度、<b>python --version</b> で、数字が出るか、確かめます。</li>' +
+        '</ol>' +
+        cmd('python') +
+        '<p class="note">途中で、「PATHに追加しますか？」のような質問が出たら、どちらを選んでも、大丈夫です（公式の案内では、任意です）。</p>' +
+        '<p class="note warn">ダウンロードは、必ず、Microsoft Storeか、python.orgの、公式のものからにしてください。</p>',
+      help: [
+        { q: 'Microsoft Storeが、使えません（会社のパソコンなど）', a: 'python.orgの、Windows用のダウンロードのページで、「Latest Python install manager」を、ダウンロードして、ダブルクリックします。<br><a href="https://www.python.org/downloads/windows/" target="_blank" rel="noopener noreferrer">python.org/downloads/windows</a>' },
+        { q: 'コマンドで入れたいです', a: '先頭が「PS」のターミナルで、次のコマンドを貼り付けて、Enterキーを押します（公式の案内）。' + box('winget install 9NQ7512CXL7T -e --accept-package-agreements --disable-interactivity') },
+        { q: '「python」と入力しても、Storeが開きます', a: 'Windowsの「アプリ実行エイリアス」の設定が、原因のことがあります。スタートメニューで「アプリ実行エイリアスの管理」と入力して、「Python（既定）」が、オンになっているか確認します。オンのときは、一度オフにして、もう一度オンにしてみます（Pythonの公式の案内より）。' },
+        { q: '「認識されません」と出ます', a: 'VS Codeを、いったん完全に閉じて、開きなおして、新しいターミナルで、もう一度試してください。それでもだめなときは、スクリーンショットを保存して、相談してください。' },
+        { q: '時間がかかっています', a: '数分かかることがあります。画面が止まって見えても、待ちます。10分以上、変わらないときは、いったん止めて（CtrlキーとCキー）、もう一度試してください。' }
       ]
     },
     {
       id: 'p2m', only: 'mac', kind: 'pc', tag: 'PCで操作', title: 'MacにPythonを入れる（公式のインストーラー）',
       html:
-        '<p>MacのPythonは、<b>ご自分で</b>、公式のインストーラーで入れます。パスワードの入力が、必要です。</p>' +
+        '<p>MacのPythonは、<b>python.org</b>の、公式のインストーラーで入れます。<b>パスワードの入力</b>が、必要です。</p>' +
         '<ol>' +
-        '<li>ブラウザで、<a href="https://www.python.org/downloads/macos/" target="_blank" rel="noopener noreferrer">python.org/downloads/macos</a> を開いて、「Python for macOS」のインストーラー（<b>.pkg</b>）を、ダウンロードします。</li>' +
+        '<li>ブラウザで、<a href="https://www.python.org/downloads/macos/" target="_blank" rel="noopener noreferrer">python.org/downloads/macos</a> を開きます。</li>' +
+        '<li>「Python for macOS」の、いちばん新しいインストーラー（<b>.pkg</b>）を、ダウンロードします。</li>' +
         '<li>ダウンロードした .pkg を、ダブルクリックします。</li>' +
         '<li>「続ける」を押していきます。使用許諾の画面では、内容を読んで、同意するなら「同意する」を押します。</li>' +
         '<li>「インストール」を押します。<b>Macのログインパスワード</b>を聞かれたら、<b>Macの画面にだけ</b>、ご自分で入力します。</li>' +
         '<li>終わると、「アプリケーション」の中の「Python 3.x」フォルダが開きます。その中の <b>Install Certificates.command</b> を、ダブルクリックします。</li>' +
         '<li>小さなターミナルの窓が開いて、<b>「Successfully installed certifi」</b>と<b>「update complete」</b>と出たら、完了です。窓を閉じます。</li>' +
-        '<li>VS Codeの、ターミナルを<b>新しく</b>開いて、<b>python3 --version</b> を確かめます。</li>' +
+        '<li>VS Codeを、いったん閉じて、開きなおして、ターミナルを<b>新しく</b>開きます。<b>python3 --version</b> で、数字が出るか、確かめます。</li>' +
         '</ol>' +
         '<p class="note warn">パスワードは、Macの画面にだけ入力します。ターミナルやAIの会話には、入れません。</p>' +
         '<p class="note">ここまでの手順は、Pythonの公式の案内（Using Python on macOS）で確認しました。</p>',
       help: [
         { q: '「開発元を確認できません」と出ました', a: '公式サイト（python.org）から、ダウンロードしたファイルか、確認してください。公式のものは、署名されています（公式の案内）。不安なときは、ここで止めてかまいません。' },
         { q: 'Install Certificates.command が見つかりません', a: 'Finderで、「アプリケーション」フォルダの、「Python 3.x」フォルダを開くと、あります。' },
-        { q: 'パスワードがわかりません', a: 'Macに、ふだん、ログインするときの、パスワードです。管理者（Administrator）のアカウントが、必要です。わからないときは、ここで止めて、相談してください。' }
+        { q: 'パスワードがわかりません', a: 'Macに、ふだん、ログインするときの、パスワードです。管理者（Administrator）のアカウントが、必要です。わからないときは、ここで止めて、相談してください。' },
+        { q: 'どれをダウンロードすれば、いいですか？', a: 'python.orgの、macOSのページにある、「Python for macOS」の、いちばん新しいものです。Intel MacもApple シリコンのMacも、同じインストーラーで動きます（公式の案内）。' }
       ]
     },
     {
       id: 'p3', kind: 'pc', tag: 'PCで操作', title: '計算機のプログラムを、作ってもらう',
       html:
-        '<p>AIに、<b>計算機（電卓）</b>のプログラムを作ってもらいます。' + os('Pythonが入っていなければ、AIが、入れます。', 'Pythonは、前の画面で入れたものを使います。') + '</p>' +
+        '<p>AIに、<b>計算機（電卓）</b>のプログラムを作ってもらいます。Pythonは、前の画面で入れたものを使います。</p>' +
         '<ol>' +
         '<li>ターミナルで <b>claude</b> を実行して、会話を始めます。</li>' +
         '<li>下の「コピー」を押して、入力欄に貼り付けて、Enterキーを押します。</li>' +
@@ -379,21 +412,14 @@
         '<li>小さな計算機の窓が、開いたら成功です。</li>' +
         '</ol>' +
         osBlock(
-          box('Pythonが入っていなければ、このPCに入れてください。公式のPython install managerを使ってください。そのあと、Pythonのtkinterを使って、簡単な電卓のプログラムを calc.py という名前で作ってください。足し算・引き算・かけ算・割り算ができる、ボタンのある小さな窓にしてください。作ったら、実行して見せてください。'),
+          box('Pythonのtkinterを使って、簡単な電卓のプログラムを calc.py という名前で作ってください。足し算・引き算・かけ算・割り算ができる、ボタンのある小さな窓にしてください。作ったら、python で、実行して見せてください。'),
           box('Pythonのtkinterを使って、簡単な電卓のプログラムを calc.py という名前で作ってください。足し算・引き算・かけ算・割り算ができる、ボタンのある小さな窓にしてください。作ったら、python3 で、実行して見せてください。')
         ) +
-        os('<p class="note warn"><b>インストールのコマンドは、よく見てください。</b>公式の方法は、<b>winget install 9NQ7512CXL7T</b> のような、Python install managerを入れるものです（公式の案内より）。知らないサイトからダウンロードするコマンドが出たら、「いいえ(No)」を選びます。</p><p>入れるのに、数分かかることがあります。待ちます。</p>',
-           '<p class="note">Pythonを、AIに入れさせる必要は、ありません。もし、AIが、インストールのコマンド（brew、sudo など）を出してきたら、「いいえ(No)」を選んで、「Pythonは、すでに入っています」と伝えてください。</p>'),
+        '<p class="note">Pythonを、AIに入れさせる必要は、ありません。もし、AIが、インストールのコマンド（' + os('winget', 'brew、sudo') + ' など）を出してきたら、「いいえ(No)」を選んで、「Pythonは、すでに入っています」と伝えてください。</p>',
       help: [
         HELP_APPROVE,
-        {
-          os: 'win',
-          q: 'Pythonを、自分で入れる方法',
-          a: 'AIがうまくできないときは、先頭が「PS」のターミナルで、次のコマンドを貼り付けて、Enterキーを押します。終わったら、VS Codeを閉じて開きなおし、新しいターミナルで <b>python</b> と入力して、画面の案内にそって進めます。' +
-             box('winget install 9NQ7512CXL7T -e --accept-package-agreements --disable-interactivity')
-        },
         { os: 'win', q: '窓が開きません／実行できません', a: 'Pythonを入れたあと、ターミナルが、まだ新しい設定を知らないことがあります。<b>VS Codeを閉じて、開きなおし</b>、もう一度 <b>claude</b> を実行して、「calc.py を実行してください」とお願いしてください。' },
-        { os: 'win', q: '「Pythonを入れても、pythonで、ストアが開きます」', a: 'Windowsの「アプリ実行エイリアス」の設定が、原因のことがあります。スタートメニューで「アプリ実行エイリアスの管理」と入力して、「Python（既定）」が、オンになっているか確認します（Pythonの公式の案内より）。わからないときは、画面を保存（スクリーンショット）して、相談してください。' },
+        { os: 'win', q: '「No module named tkinter」と出ました', a: '窓を作る部品（tkinter）が、使えないときに出ます。前の画面の、公式の方法（Python Install Manager）で入れたPythonを、使っているか、確認してください。わからないときは、画面を保存（スクリーンショット）して、相談してください。' },
         { os: 'mac', q: '窓が開きません／「No module named tkinter」と出ました', a: '窓を作る部品（tkinter）が、使えない版のPythonを使っていることがあります。前の画面の、<b>python.orgの公式のインストーラー</b>で入れたPythonを、使ってください。もう一度、前の画面から、やりなおしてください。' },
         { os: 'mac', q: '「python3」で、ちがうPythonが動くようです', a: 'Macには、Apple（アップル）が用意したpython3も入っています。公式の案内では、python.orgのPythonを入れると、ふつうは、そちらが使われます。ターミナルを、新しく開きなおしてから、試してください。' }
       ]
@@ -425,6 +451,7 @@
         { q: 'ファイルの、一部だけを直す。どの「手」？', options: ['Read（読む）', 'Write（書く）', 'Edit（直す）', 'Bash（実行）'], answer: 2, explain: 'Editは、ここだけ直す手です。' },
         { q: 'ファイルを、コピーする（コマンドを実行する）。どの「手」？', options: ['Read（読む）', 'Write（書く）', 'Edit（直す）', 'Bash（実行）'], answer: 3, explain: 'Bashは、コマンドを実行する手です。' },
         { q: 'CLAUDE.md は、いつ読まれる？', options: ['会話を、はじめるとき', 'AIが答えるたびに、必ず', '読まれない'], answer: 0, explain: '公式の案内では、会話のはじめに、読み込まれます。' },
+        { q: 'プログラムを「動かす」ために、パソコンに入れておく道具は？', options: ['Python（プログラムを動かす道具）', 'Word', 'プリンター'], answer: 0, explain: 'DVDを見るのにDVDプレーヤーが必要なように、Pythonのプログラムを動かすには、Pythonが必要です。' },
         { q: 'AIに、プログラムを作って、動かしてもらう。使う「手」は？', options: ['Readだけ', 'WriteとBash', 'Editだけ'], answer: 1, explain: 'プログラムのファイルを作るのがWrite、動かすのがBashです。' }
       ],
       html: '<p>おぼえたことを、クイズで確かめましょう。選ぶと、答えが出ます。点数は、つけません。</p>',

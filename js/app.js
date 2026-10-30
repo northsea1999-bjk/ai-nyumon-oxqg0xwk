@@ -56,7 +56,9 @@
       doneBtn: '完了にする', doneDone: '完了しました',
       checkNote: 'これは、自分で確認する方式です。アプリが自動でチェックしているわけではありません。',
       doneCard: '<b>レッスン0　完了です。おつかれさまでした。</b><br>次は、レッスン1に進みます。レッスン1からは、PCが必要になります。',
-      langBtn: '한국어', osLabel: 'OS（パソコンの種類）を切りかえる'
+      langBtn: '한국어', osLabel: 'OS（パソコンの種類）を切りかえる',
+      glossary: '用語集', glossaryLink: 'ことばの意味が、わからないときは、<a href="#/g">用語集</a>で調べられます。',
+      glossaryIntro: 'この教材に出てくることばを、やさしく説明します。タップすると、意味が出ます。', glossarySearch: 'ことばを さがす', back: '← もどる'
     },
     ko: {
       toc: '목차', tocBack: '← 목차', tocTo: '목차로', tocReturn: '목차로 돌아가기',
@@ -76,7 +78,9 @@
       doneBtn: '완료로 하기', doneDone: '완료했습니다',
       checkNote: '이것은 스스로 확인하는 방식입니다. 앱이 자동으로 검사하는 것은 아닙니다.',
       doneCard: '<b>레슨0　완료입니다. 수고하셨습니다.</b><br>다음은 레슨1로 진행합니다. 레슨1부터는 PC가 필요합니다.',
-      langBtn: '日本語', osLabel: 'OS(컴퓨터 종류) 바꾸기'
+      langBtn: '日本語', osLabel: 'OS(컴퓨터 종류) 바꾸기',
+      glossary: '용어집', glossaryLink: '모르는 말이 나오면 <a href="#/g">용어집</a>에서 찾아볼 수 있습니다.',
+      glossaryIntro: '이 교재에 나오는 말을 쉽게 설명합니다. 누르면 뜻이 나옵니다.', glossarySearch: '말 찾기', back: '← 돌아가기'
     }
   };
   function t(key) { return UI[lang][key]; }
@@ -116,7 +120,7 @@
     ['取扱説明書', 'とりあつかいせつめいしょ'], ['家計簿', 'かけいぼ'], ['合計', 'ごうけい'],
     ['金額', 'きんがく'], ['一覧', 'いちらん'], ['上書き', 'うわがき'], ['予定', 'よてい'],
     ['電卓', 'でんたく'], ['計算', 'けいさん'], ['画面', 'がめん'], ['表示', 'ひょうじ'],
-    ['言語', 'げんご'], ['編集', 'へんしゅう'], ['要件', 'ようけん']
+    ['言語', 'げんご'], ['編集', 'へんしゅう'], ['要件', 'ようけん'], ['用語集', 'ようごしゅう'], ['意味', 'いみ'], ['命令', 'めいれい']
   ];
   var SKIP = /^(PRE|TEXTAREA|INPUT|SELECT|OPTION|BUTTON|RUBY|RT|SCRIPT)$/;
 
@@ -419,7 +423,7 @@
     var sub = (lang === 'ko' && K.subtitle) || C.subtitle;
     crumb.textContent = title;
     setProgress(0, 1);
-    var html = '<h1>' + title + '</h1><p>' + sub + '</p>' + storageNote();
+    var html = '<h1>' + title + '</h1><p>' + sub + '</p>' + storageNote() + '<p class="note">' + t('glossaryLink') + '</p>';
     var lastL = mem.last ? lessonById(mem.last.lesson) : null;
     var lastS = lastL ? lp(lastL.id) : null;
     if (lastL && lastL.steps && lastS && !lastS.done && curIndex(lastL) > 1) {
@@ -450,6 +454,29 @@
     applyRuby(app);
   }
 
+  function renderGlossary() {
+    var list = (lang === 'ko' && K.glossary) || C.glossary || [];
+    crumb.textContent = t('glossary');
+    setProgress(0, 1);
+    var html = '<h1>' + t('glossary') + '</h1><p>' + t('glossaryIntro') + '</p>' +
+      '<div class="form-grid"><label>' + t('glossarySearch') + '<input id="g-filter" type="search" autocomplete="off"></label></div>' +
+      '<div id="g-list">' + list.map(function (g) {
+        return '<details class="help" data-q="' + (g[0] + ' ' + g[2]).replace(/"/g, '') + '"><summary><b>' + g[0] + '</b>' +
+          (g[1] ? ' <small>（' + g[1] + '）</small>' : '') + '</summary><div>' + g[2] + '</div></details>';
+      }).join('') + '</div>';
+    app.innerHTML = html;
+    pager.innerHTML = '<button type="button" class="primary" data-back>' + t('back') + '</button>';
+    var f = document.getElementById('g-filter');
+    f.addEventListener('input', function () {
+      var q = f.value.trim().toLowerCase();
+      [].forEach.call(document.querySelectorAll('#g-list details'), function (d) {
+        d.hidden = !!q && d.getAttribute('data-q').toLowerCase().indexOf(q) < 0;
+      });
+    });
+    applyRuby(app);
+    window.scrollTo(0, 0);
+  }
+
   function renderStep(id, n) {
     var L = lessonById(id);
     if (!L || !L.steps) { go('#/'); return; }
@@ -472,7 +499,7 @@
     if (helps.length) {
       html += '<div class="helpwrap"><h2>' + t('help') + '</h2>' + helps.map(function (h) {
         return '<details class="help"><summary>' + h.q + '</summary><div>' + h.a + '</div></details>';
-      }).join('') + '</div>';
+      }).join('') + '<p class="note">' + t('glossaryLink') + '</p></div>';
     }
     app.innerHTML = html;
 
@@ -515,12 +542,15 @@
 
   function route() {
     syncChrome();
+    if (location.hash === '#/g') { renderGlossary(); return; }
     var m = /^#\/(l\d+b?)\/(\d+)$/.exec(location.hash);
     if (m) renderStep(m[1], parseInt(m[2], 10)); else renderToc();
   }
 
   /* ---------- イベント ---------- */
   document.addEventListener('click', function (e) {
+    var bk = e.target.closest ? e.target.closest('[data-back]') : null;
+    if (bk) { if (history.length > 1) history.back(); else go('#/'); return; }
     var t0 = e.target.closest ? e.target.closest('[data-go]') : null;
     if (t0) { go(t0.getAttribute('data-go')); return; }
     var c = e.target.closest ? e.target.closest('[data-copy]') : null;
