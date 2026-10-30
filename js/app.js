@@ -39,6 +39,7 @@
       copyFail: '自動でコピーできませんでした。文を長押しして選んでください。',
       noStore: 'このブラウザでは、進み具合を保存できません。ページを閉じると、はじめからになります。',
       chipNone: '上のボタンを1つ以上えらんでください。',
+      quizOk: '正解です！', quizNg: 'おしい！ もう一度、選んでみましょう。',
       doneBtn: '完了にする', doneDone: '完了しました',
       checkNote: 'これは、自分で確認する方式です。アプリが自動でチェックしているわけではありません。',
       doneCard: '<b>レッスン0　完了です。おつかれさまでした。</b><br>次は、レッスン1に進みます。レッスン1からは、PCが必要になります。',
@@ -58,6 +59,7 @@
       copyFail: '자동으로 복사하지 못했습니다. 문장을 길게 눌러 선택하세요.',
       noStore: '이 브라우저에서는 진행 상황을 저장할 수 없습니다. 페이지를 닫으면 처음부터 시작합니다.',
       chipNone: '위 버튼을 1개 이상 고르세요.',
+      quizOk: '정답입니다!', quizNg: '아쉬워요! 다시 골라 보세요.',
       doneBtn: '완료로 하기', doneDone: '완료했습니다',
       checkNote: '이것은 스스로 확인하는 방식입니다. 앱이 자동으로 검사하는 것은 아닙니다.',
       doneCard: '<b>레슨0　완료입니다. 수고하셨습니다.</b><br>다음은 레슨1로 진행합니다. 레슨1부터는 PC가 필요합니다.',
@@ -97,7 +99,9 @@
     ['荷物', 'にもつ'], ['会話', 'かいわ'], ['送信', 'そうしん'], ['実行', 'じっこう'],
     ['起動', 'きどう'], ['許可', 'きょか'], ['移動', 'いどう'], ['保存', 'ほぞん'],
     ['設定', 'せってい'], ['確認', 'かくにん'], ['手順', 'てじゅん'], ['作業', 'さぎょう'],
-    ['料金', 'りょうきん'], ['信頼', 'しんらい'], ['架空', 'かくう'], ['支払い', 'しはらい']
+    ['料金', 'りょうきん'], ['信頼', 'しんらい'], ['架空', 'かくう'], ['支払い', 'しはらい'],
+    ['取扱説明書', 'とりあつかいせつめいしょ'], ['家計簿', 'かけいぼ'], ['合計', 'ごうけい'],
+    ['金額', 'きんがく'], ['一覧', 'いちらん'], ['上書き', 'うわがき'], ['予定', 'よてい']
   ];
   var SKIP = /^(PRE|TEXTAREA|INPUT|SELECT|OPTION|BUTTON|RUBY|RT|SCRIPT)$/;
 
@@ -180,7 +184,7 @@
     return {
       id: step.id, kind: step.kind, widget: step.widget, tag: k.tag, title: k.title, html: k.html,
       help: k.help || step.help, chips: step.chips, chipsKo: k.chips, checks: k.checks || step.checks,
-      required: k.required || step.required
+      required: k.required || step.required, quiz: k.quiz || step.quiz
     };
   }
   function doneCardOf(L) {
@@ -270,6 +274,45 @@
       }
     }
     update();
+  }
+
+  /* クイズ：選ぶとすぐ答えが出る。点数はつけない。保存もしない。 */
+  function widgetQuiz(step) {
+    var wrap = document.createElement('div');
+    step.quiz.forEach(function (q, qi) {
+      var card = document.createElement('div');
+      card.className = 'card quiz';
+      var head = document.createElement('p');
+      var strong = document.createElement('b');
+      strong.textContent = 'Q' + (qi + 1) + '. ';
+      head.appendChild(strong);
+      head.appendChild(document.createTextNode(q.q));
+      card.appendChild(head);
+      var opts = document.createElement('div');
+      opts.className = 'chips';
+      var fb = document.createElement('p');
+      fb.className = 'note';
+      fb.setAttribute('aria-live', 'polite');
+      fb.hidden = true;
+      q.options.forEach(function (o, oi) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'chip';
+        b.textContent = o;
+        b.addEventListener('click', function () {
+          var ok = oi === q.answer;
+          b.setAttribute('data-state', ok ? 'ok' : 'ng');
+          b.setAttribute('aria-pressed', ok ? 'true' : 'false');
+          fb.hidden = false;
+          fb.textContent = ok ? t('quizOk') + ' ' + q.explain : t('quizNg');
+        });
+        opts.appendChild(b);
+      });
+      card.appendChild(opts);
+      card.appendChild(fb);
+      wrap.appendChild(card);
+    });
+    return wrap;
   }
 
   function widgetChecks(L, step) {
@@ -384,6 +427,11 @@
 
     if (step.widget === 'form') widgetForm(L);
     if (step.widget === 'chips') widgetChips(L, step);
+    if (step.widget === 'quiz') {
+      var helpQ = app.querySelector('.helpwrap');
+      var quizEl = widgetQuiz(step);
+      if (helpQ) app.insertBefore(quizEl, helpQ); else app.appendChild(quizEl);
+    }
     if (step.widget === 'checks') {
       /* チェックは「困ったとき」より上に置く */
       var help = app.querySelector('.helpwrap');

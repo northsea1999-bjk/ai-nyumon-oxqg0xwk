@@ -129,6 +129,8 @@ a { color: var(--accent); }
 .chip { border-radius: 999px; padding: 8px 16px; min-height: 48px; font-size: 16px; line-height: 1.4; text-align: left; }
 .chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
 
+.chip[data-state="ng"] { background: var(--warn-soft); color: var(--warn); border-color: var(--warn); }
+.quiz p { margin: 0 0 10px; }
 .checks { list-style: none; padding: 0; }
 .checks li { margin: 0 0 10px; }
 .checks label { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
