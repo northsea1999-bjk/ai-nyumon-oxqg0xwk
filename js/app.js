@@ -411,7 +411,7 @@
 
   function route() {
     syncChrome();
-    var m = /^#\/(l\d+)\/(\d+)$/.exec(location.hash);
+    var m = /^#\/(l\d+b?)\/(\d+)$/.exec(location.hash);
     if (m) renderStep(m[1], parseInt(m[2], 10)); else renderToc();
   }
 

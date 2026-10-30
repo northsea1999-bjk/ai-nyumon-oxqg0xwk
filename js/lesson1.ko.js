@@ -40,6 +40,10 @@
        '※ 일본어 Windows에서는 "용어 ‘○○’은(는) 명령, 함수, 스크립트 파일 또는 실행할 수 있는 프로그램 이름으로 인식되지 않습니다"와 같은 뜻의 일본어 문장이 나옵니다.'
   };
   var HELP_ENG = { q: '터미널 글자가 영어예요', a: '괜찮습니다. 표시가 영어여도 하는 일은 같습니다.' };
+  var HELP_APPROVE_C = {
+    q: 'AI가 "허락하시겠습니까?"라고 물어요',
+    a: 'Claude Code는 파일을 만들 때 등에 "해도 될까요?"라고 묻습니다. 연습용 agent1 폴더 안의 일이라면 "예(Yes)"를 고릅니다. 화살표 키(↑↓)로 고르고 Enter 키를 누릅니다. 잘 모르겠으면 "아니요(No)"도 괜찮습니다.'
+  };
   var HELP_APPROVE = {
     q: 'AI가 "허락하시겠습니까?"라고 물어요',
     a: 'AI가 파일을 만들 때 등에 "해도 될까요?"라고 묻습니다. 연습용 agent1 폴더 안의 일이라면 <b>Y</b>(예)를 누릅니다. 잘 모르겠으면 <b>N</b>(아니요)도 괜찮습니다.'
@@ -50,14 +54,15 @@
       tag: '오늘의 목표', title: '레슨1에서 할 수 있게 되는 것',
       html:
         '<p class="note warn"><b>이 레슨은 Windows PC가 필요합니다.</b> 폰이나 태블릿만으로는 진행할 수 없습니다.</p>' +
-        '<p>이 레슨에서는 PC에 "AI 도우미"를 3개 설치해서 쓸 수 있게 만듭니다.</p>' +
+        '<p>이 레슨에서는 PC에 "AI 도우미"를 1개(Claude Code) 설치해서 쓸 수 있게 만듭니다.</p>' +
         '<div class="card goal"><b>목표</b><br>PC 안에서 AI에게 "파일 만들기" "폴더 만들기" "파일 옮기기"를 부탁해서 해내게 할 수 있게 된다.</div>' +
         '<div class="card"><dl class="facts">' +
-        '<dt>걸리는 시간</dt><dd>약 2시간(쉬엄쉬엄 해도 OK)</dd>' +
+        '<dt>걸리는 시간</dt><dd>약 1시간(쉬엄쉬엄 해도 OK)</dd>' +
         '<dt>쓰는 것</dt><dd>Windows PC, 인터넷</dd>' +
-        '<dt>계정</dt><dd>Google, ChatGPT, Claude(Claude는 유료 요금제가 필요합니다)</dd>' +
-        '<dt>돈</dt><dd>Claude Code를 쓸 때만 유료 요금제가 필요합니다. 금액은 공식 화면에서 확인하세요.</dd>' +
+        '<dt>계정</dt><dd>Claude(유료 요금제가 필요합니다)</dd>' +
+        '<dt>돈</dt><dd>Claude Code를 쓰려면 Claude 유료 요금제가 필요합니다. 금액은 공식 화면에서 확인하세요.</dd>' +
         '</dl></div>' +
+        '<p>유료 요금제를 원하지 않는 사람은 먼저 "보너스"의 Antigravity(무료 Google 계정)로 시험해 볼 수 있습니다.</p>' +
         '<p>전부 한 번에 하지 않아도 됩니다. 중간에 그만둬도 "이어서 하기"로 다시 시작할 수 있습니다.</p>' +
         '<p class="note warn">결제와 비밀번호 입력은 반드시 <b>본인이 직접</b> 하세요. 이 교재가 대신 입력하는 일은 없습니다.</p>' +
         '<p class="note dev">절차는 2026년 10월 30일에 각 서비스의 공식 안내로 확인했습니다. 화면은 예고 없이 바뀔 수 있습니다. 일본어 Windows에서의 실제 동작은 아직 확인하지 못했습니다.</p>',
@@ -84,15 +89,14 @@
       tag: '알아 두기', title: '"설치형" AI가 뭔가요?',
       html:
         '<p>브라우저에서 쓰는 AI는 인터넷 저편에 있습니다. "설치형"은 <b>PC 안에 넣어서</b> 쓰는 AI입니다. 그래서 PC 안의 파일을 직접 만질 수 있습니다.</p>' +
-        '<p>오늘은 이 3개를 설치합니다.</p>' +
+        '<p>오늘은 이 1개를 설치합니다.</p>' +
         '<ul class="parts">' +
-        '<li><b>Antigravity</b>Google의 에이전트<br><span>(부르는 이름: agy)</span></li>' +
-        '<li><b>Codex</b>OpenAI의 에이전트<br><span>(부르는 이름: codex)</span></li>' +
         '<li><b>Claude Code</b>Anthropic의 에이전트<br><span>(부르는 이름: claude)</span></li>' +
         '</ul>' +
-        '<p>같은 부탁을 3개에게 해서 비교해 봅니다.</p>',
+        '<p>이 코스의 다음 수업에서도 Claude Code를 씁니다.</p>' +
+        '<p class="note">다른 AI(Google의 Antigravity, OpenAI의 Codex)는 "보너스"에서 시험해 볼 수 있습니다. 하지 않아도 괜찮습니다.</p>',
       help: [
-        { q: '3개나 필요한가요?', a: '비교하면 각각의 차이를 알 수 있습니다. 계정이나 돈 사정으로 설치하지 못하는 것이 있어도 괜찮습니다.' }
+        { q: '1개만으로 괜찮나요?', a: '괜찮습니다. 1개를 확실히 쓸 수 있게 되는 것이 가장 중요합니다.' }
       ]
     },
     s4: {
@@ -319,8 +323,8 @@
         { q: '폴더가 늘어나지 않았어요', a: 'VS Code 왼쪽 표시가 옛날 그대로일 때가 있습니다. 폴더 이름 위에서 마우스를 천천히 움직여 보세요. 그래도 안 나오면 agy에게 "지금 파일과 폴더는 어떻게 되어 있나요?"라고 물어보세요.' }
       ]
     },
-    s19: {
-      tag: 'PC에서 조작', title: 'agy에게 나머지 2개 AI를 설치해 달라고 하기',
+    b19: {
+      tag: 'PC에서 조작', title: 'agy에게 Codex를 설치해 달라고 하기',
       html:
         '<p>여기가 에이전트의 "대단한 점"입니다. AI에게 다른 AI를 설치하게 합니다.</p>' +
         '<ol>' +
@@ -330,34 +334,19 @@
         '<li>끝나면 <b>/exit</b>로 종료합니다.</li>' +
         '</ol>' +
         box(
-          'このPCに、CodexとClaude Codeをインストールしてください。PowerShellで、次の2つのコマンドを、それぞれ実行してください。\n' +
-          '1つ目：' + CMD_CODEX + '\n' +
-          '2つ目：' + CMD_CLAUDE + '\n' +
-          '終わったら、それぞれ --version で、動くかどうか確認してください。', null, '복사') +
-        '<p class="note">뜻: "이 PC에 Codex와 Claude Code를 설치해 주세요. PowerShell에서 다음 2개 명령어를 각각 실행해 주세요. 끝나면 각각 --version으로 동작하는지 확인해 주세요."</p>' +
+          'このPCに、Codexをインストールしてください。PowerShellで、次のコマンドを実行してください。\n' +
+          CMD_CODEX + '\n' +
+          '終わったら、codex --version で、動くかどうか確認してください。', null, '복사') +
+        '<p class="note">뜻: "이 PC에 Codex를 설치해 주세요. PowerShell에서 다음 명령어를 실행해 주세요. 끝나면 codex --version으로 동작하는지 확인해 주세요."</p>' +
         '<p class="note">잘 안 되면 "곤란할 때"에 직접 터미널에 붙여 넣는 방법이 있습니다.</p>',
       help: [
         {
           q: 'agy가 잘 못 했어요(직접 설치하는 방법)',
-          a: '맨 앞이 "PS"인 터미널에 1개씩 붙여 넣고 Enter 키를 누릅니다.<br><b>Codex:</b>' +
-             box(CMD_CODEX, null, '복사') +
-             '<b>Claude Code:</b>' + box(CMD_CLAUDE, null, '복사')
+          a: '맨 앞이 "PS"인 터미널에 붙여 넣고 Enter 키를 누릅니다.<br><b>Codex:</b>' +
+             box(CMD_CODEX, null, '복사')
         },
         HELP_APPROVE
       ]
-    },
-    s20: {
-      tag: 'PC에서 조작', title: 'VS Code를 다시 열고 2개 확인하기',
-      html:
-        '<ol>' +
-        '<li>VS Code를 일단 닫았다가 다시 엽니다.</li>' +
-        '<li>새 터미널을 엽니다.</li>' +
-        '<li>아래 2개를 하나씩 붙여 넣고 Enter 키를 누릅니다.</li>' +
-        '</ol>' +
-        c('codex --version') +
-        c('claude --version') +
-        '<p>각각 숫자가 나오면 성공입니다.</p>',
-      help: [HELP_NOTFOUND]
     },
     s21: {
       tag: 'PC에서 조작', title: 'Codex에 로그인하기',
@@ -384,21 +373,6 @@
         '<p>끝나면 VS Code 왼쪽에 <b>memo-codex</b> 폴더가 생기고 그 안에 <b>jikoshokai-codex.txt</b>가 들어 있으면 성공입니다.</p>',
       help: [HELP_APPROVE, { q: 'Codex 끝내는 법', a: 'Ctrl 키를 누른 채 C를 2번 누르거나, 화면 안내에 따라 종료합니다.' }]
     },
-    s23: {
-      tag: '알아 두기', title: 'Claude 요금제 확인하기',
-      html:
-        '<p>Claude Code를 쓰려면 Claude의 <b>유료 요금제</b>가 필요합니다. 공식 안내에서는 무료 요금제로는 Claude Code를 쓸 수 없습니다.</p>' +
-        '<ol>' +
-        '<li>브라우저에서 <b>claude.ai</b>를 열고 로그인합니다.</li>' +
-        '<li>계정이나 요금제 화면에서 현재 요금제를 확인합니다. 화면의 이름은 바뀔 수 있습니다.</li>' +
-        '</ol>' +
-        '<p class="note warn">결제 입력은 <b>반드시 본인이 직접</b> 공식 화면에서 하세요. 금액과 내용은 그 화면에서 확인하세요. 이 교재는 대신 입력하지 않습니다.</p>' +
-        '<p>오늘은 결제하지 않기로 해도 괜찮습니다. Claude Code 실습은 나중에도 할 수 있습니다. 그 경우 다음 2개 화면을 건너뛰고 "3개를 비교해 보자"로 가세요.</p>',
-      help: [
-        { q: '무료 요금제 그대로면 어떻게 되나요?', a: 'Claude Code에 로그인해도 쓸 수 없습니다. 유료 요금제로 바꾸거나 이 부분을 건너뛰세요.' },
-        { q: '그만두고 싶어지면?', a: '요금제를 해지하는 방법도 공식 화면에서 확인할 수 있습니다. 계약하기 전에 해지 방법도 봐 두면 안심입니다.' }
-      ]
-    },
     s24: {
       tag: 'PC에서 조작', title: 'Claude Code에 로그인하기',
       html:
@@ -415,52 +389,177 @@
         HELP_ENG
       ]
     },
-    s25: {
-      tag: 'PC에서 조작', title: 'Claude Code로 같은 4가지 해 보기',
+    s23: {
+      tag: '알아 두기', title: 'Claude 요금제 확인하기',
       html:
-        '<p>같은 4가지를 순서대로 부탁합니다. 각각 "복사"→ Claude Code 입력란에 붙여 넣기 → Enter 키. 허락을 물으면 화면 안내에 따라 "예"를 고릅니다.</p>' +
-        fourBoxes('claude') +
-        '<p>끝나면 <b>memo-claude</b> 폴더 안에 <b>jikoshokai-claude.txt</b>가 들어 있으면 성공입니다. 끝내는 법은 <b>/exit</b>를 입력하고 Enter 키입니다.</p>',
-      help: [HELP_APPROVE]
+        '<p>Claude Code를 쓰려면 Claude의 <b>유료 요금제</b>가 필요합니다. 공식 안내에서는 무료 요금제로는 Claude Code를 쓸 수 없습니다.</p>' +
+        '<ol>' +
+        '<li>브라우저에서 <b>claude.ai</b>를 열고 로그인합니다.</li>' +
+        '<li>계정이나 요금제 화면에서 현재 요금제를 확인합니다. 화면의 이름은 바뀔 수 있습니다.</li>' +
+        '</ol>' +
+        '<p class="note warn">결제 입력은 <b>반드시 본인이 직접</b> 공식 화면에서 하세요. 금액과 내용은 그 화면에서 확인하세요. 이 교재는 대신 입력하지 않습니다.</p>' +
+        '<p>오늘은 결제하지 않기로 해도 괜찮습니다. 여기서 멈추고, 먼저 "보너스"의 Antigravity(무료 Google 계정)로 같은 연습을 시험해 볼 수 있습니다.</p>' +
+        '<p class="note">이 코스의 다음 수업은 Claude Code를 씁니다. 언제든 돌아와서 이어갈 수 있습니다.</p>',
+      help: [
+        { q: '무료 요금제 그대로면 어떻게 되나요?', a: 'Claude Code에 로그인해도 쓸 수 없습니다. 유료 요금제로 바꾸거나 "보너스"에서 무료 AI를 시험하세요.' },
+        { q: '그만두고 싶어지면?', a: '요금제를 해지하는 방법도 공식 화면에서 확인할 수 있습니다. 계약하기 전에 해지 방법도 봐 두면 안심입니다.' }
+      ]
     },
-    s26: {
-      tag: '알아 두기', title: '3개를 비교해 보자',
+    b20: {
+      tag: 'PC에서 조작', title: 'VS Code를 다시 열고 Codex 확인하기',
       html:
-        '<p>같은 부탁을 3개의 AI에게 했습니다. 다음을 떠올려 보세요.</p>' +
+        '<ol>' +
+        '<li>VS Code를 일단 닫았다가 다시 엽니다.</li>' +
+        '<li>새 터미널을 엽니다.</li>' +
+        '<li>아래 "복사"를 눌러 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '</ol>' +
+        c('codex --version') +
+        '<p>숫자가 나오면 성공입니다.</p>',
+      help: [HELP_NOTFOUND]
+    },
+    c12: {
+      tag: 'PC에서 조작', title: 'Claude Code 설치하기',
+      html:
+        '<p>Claude Code는 Anthropic(앤트로픽)의 에이전트입니다. 터미널에서는 <b>claude</b>라고 부릅니다.</p>' +
+        '<ol>' +
+        '<li>맨 앞이 <b>PS</b>인 터미널을 엽니다.</li>' +
+        '<li>아래 "복사"를 눌러 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '<li>끝날 때까지 잠시 기다립니다. <b>진행 상황은 나오지 않습니다.</b> 화면이 멈춘 것처럼 보여도 기다립니다.</li>' +
+        '</ol>' +
+        c(CMD_CLAUDE) +
+        '<p class="note">1줄입니다. 중간에 줄바꿈하지 말고 그대로 붙여 넣으세요.</p>' +
+        '<p class="note">공식 안내에서 Git이라는 소프트웨어는 "있으면 편리"하지만 없어도 쓸 수 있습니다. 오늘은 설치하지 않아도 됩니다.</p>',
+      help: [
+        { q: '"irm"이 인식되지 않는다고 나와요', a: '맨 앞이 "PS"가 아닌 다른 터미널을 쓰고 있습니다. 앞 화면으로 돌아가 PowerShell을 다시 여세요.' },
+        { q: '"&&" 오류가 나왔어요', a: '이 명령어는 PowerShell용입니다. 맨 앞이 "PS"인 터미널에서 다시 해 보세요.' },
+        { q: '오류가 나왔어요', a: '화면의 글자를 스크린샷으로 저장하세요. 인터넷에 연결되어 있는지도 확인하세요.' }
+      ]
+    },
+    c13: {
+      tag: 'PC에서 조작', title: 'VS Code를 다시 열고 확인하기',
+      html:
+        '<p>설치한 뒤에는 터미널을 <b>새로</b> 열어야 쓸 수 있게 됩니다.</p>' +
+        '<ol>' +
+        '<li>VS Code를 일단 닫습니다.</li>' +
+        '<li>다시 열고 "터미널"→"새 터미널"을 고릅니다.</li>' +
+        '<li>아래 "복사"를 눌러 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '</ol>' +
+        c('claude --version') +
+        term(['PS C:\\Users\\（あなたの名前）\\Desktop\\agent1> claude --version', '（数字のバージョンが出ます）'], TERM) +
+        '<p>숫자가 나오면 성공입니다.</p>',
+      help: [HELP_NOTFOUND, HELP_ENG]
+    },
+    c15: {
+      tag: 'PC에서 조작', title: '실습① Claude Code에게 말 걸기',
+      html:
+        '<p>Claude Code 화면 아래의 글자 넣는 곳에 부탁을 붙여 넣습니다.</p>' +
+        '<ol>' +
+        '<li>"복사"를 누릅니다.</li>' +
+        '<li>입력란에 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '</ol>' +
+        box(four('claude')[0], null, '복사') +
+        '<p class="note">' + KO_FOUR[0] + '</p>' +
+        '<p>답이 오면 성공입니다.</p>',
+      help: [HELP_APPROVE_C]
+    },
+    c16: {
+      tag: 'PC에서 조작', title: '실습② 파일 만들어 달라고 하기',
+      html:
+        '<ol>' +
+        '<li>"복사"를 눌러 입력란에 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '<li>허락을 물으면 "예(Yes)"를 고릅니다.</li>' +
+        '<li>VS Code 왼쪽에 <b>jikoshokai-claude.txt</b>가 늘어나면 성공입니다.</li>' +
+        '</ol>' +
+        box(four('claude')[1], null, '복사') +
+        '<p class="note">' + KO_FOUR[1] + '</p>',
+      help: [HELP_APPROVE_C]
+    },
+    c17: {
+      tag: 'PC에서 조작', title: '실습③ 폴더 만들어 달라고 하기',
+      html:
+        '<ol>' +
+        '<li>"복사"를 눌러 입력란에 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '<li>허락을 물으면 "예(Yes)"를 고릅니다.</li>' +
+        '<li>VS Code 왼쪽에 <b>memo-claude</b> 폴더가 늘어나면 성공입니다.</li>' +
+        '</ol>' +
+        box(four('claude')[2], null, '복사') +
+        '<p class="note">' + KO_FOUR[2] + '</p>',
+      help: [HELP_APPROVE_C]
+    },
+    c18: {
+      tag: 'PC에서 조작', title: '실습④ 파일 옮겨 달라고 하기',
+      html:
+        '<ol>' +
+        '<li>"복사"를 눌러 입력란에 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '<li>허락을 물으면 "예(Yes)"를 고릅니다.</li>' +
+        '<li>jikoshokai-claude.txt가 <b>memo-claude</b> 폴더 안에 들어가면 성공입니다.</li>' +
+        '</ol>' +
+        box(four('claude')[3], null, '복사') +
+        '<p class="note">' + KO_FOUR[3] + '</p>' +
+        '<p>끝나면 <b>/exit</b>를 입력하고 Enter 키를 누르면 종료됩니다.</p>',
+      help: [
+        HELP_APPROVE_C,
+        { q: '폴더가 늘어나지 않았어요', a: 'VS Code 왼쪽 표시가 옛날 그대로일 때가 있습니다. 폴더 이름 위에서 마우스를 천천히 움직여 보세요. 그래도 안 나오면 Claude Code에게 "지금 파일과 폴더는 어떻게 되어 있나요?"라고 물어보세요.' }
+      ]
+    },
+    c19: {
+      tag: '확인', title: '마지막 확인',
+      checks: [
+        'VS Code를 설치하고 agent1 폴더를 열었다',
+        '터미널에서 echo가 동작했다',
+        'Claude Code에게 4가지 부탁(말하기, 파일 만들기, 폴더 만들기, 옮기기)을 했다'
+      ],
+      html:
+        '<p>할 수 있었던 것에 체크를 넣으세요. 3개 모두 넣으면 "완료로 하기"를 누를 수 있습니다.</p>' +
+        '<p class="note">다른 AI도 시험해 보고 싶은 사람은 목차의 "보너스"로 갈 수 있습니다(하지 않아도 괜찮습니다).</p>',
+      help: [
+        { q: '못 한 부분이 있어요', a: '그 단계로 돌아가서 "곤란할 때"를 보세요. 몇 번이든 다시 할 수 있습니다.' }
+      ]
+    },
+    b1: {
+      tag: '보너스', title: '다른 AI도 시험해 보자(선택)',
+      html:
+        '<p class="note warn"><b>이 "보너스"는 하지 않아도 괜찮습니다.</b> 레슨1 앞부분(VS Code 준비와 agent1 폴더)이 끝난 사람용입니다.</p>' +
+        '<p>여기서는 다음 2가지를 시험해 볼 수 있습니다.</p>' +
+        '<ul class="parts">' +
+        '<li><b>Antigravity(agy)</b>Google의 에이전트<br><span>무료 Google 계정으로 쓸 수 있습니다</span></li>' +
+        '<li><b>Codex</b>OpenAI의 에이전트<br><span>ChatGPT 계정이 필요합니다</span></li>' +
+        '</ul>' +
+        '<p>같은 부탁을 순서대로 해서 비교해 봅니다.</p>' +
+        '<p class="note">유료 요금제를 원하지 않는 사람은 먼저 Antigravity만 시험해도 OK입니다.</p>',
+      help: [
+        { q: '보너스는 꼭 해야 하나요?', a: '하지 않아도 괜찮습니다. AI별 차이를 알고 싶은 사람이나 무료로 시험하고 싶은 사람용입니다.' }
+      ]
+    },
+    b26: {
+      tag: '알아 두기', title: '비교해 보자',
+      html:
+        '<p>같은 부탁을 여러 AI에게 했습니다. 다음을 떠올려 보세요.</p>' +
         '<ul>' +
         '<li>어느 것이 가장 <b>알기 쉽다</b>고 느꼈나요?</li>' +
         '<li>허락을 묻는 방식은 어떻게 달랐나요?</li>' +
         '<li>답의 길이나 말투는 어떻게 달랐나요?</li>' +
         '</ul>' +
         '<p>정답은 없습니다. "나에게는 어느 것이 쓰기 편한가"가 중요합니다. 메모해 두면 나중에 도움이 됩니다.</p>' +
-        '<p>VS Code 왼쪽을 보면 <b>jikoshokai-</b> 파일이 3개(agy, codex, claude) 있을 것입니다. 열어서 내용을 비교해 보세요(설치하지 못한 것은 없습니다).</p>',
+        '<p>VS Code 왼쪽을 보면 <b>jikoshokai-</b> 파일이 사용한 개수만큼(agy, codex, claude) 있을 것입니다. 열어서 내용을 비교해 보세요.</p>',
       help: [
-        { q: '2개밖에 못 썼어요', a: '괜찮습니다. 쓸 수 있었던 것만으로 비교하세요.' }
-      ]
-    },
-    s27: {
-      tag: '확인', title: '마지막 확인',
-      required: 3,
-      checks: [
-        'VS Code를 설치하고 agent1 폴더를 열었다',
-        '터미널에서 echo가 동작했다',
-        'agy에게 4가지 부탁(말하기, 파일 만들기, 폴더 만들기, 옮기기)을 했다',
-        'Codex에서도 4가지 부탁을 했다(한 사람만)',
-        'Claude Code에서도 4가지 부탁을 했다(한 사람만)'
-      ],
-      html:
-        '<p>할 수 있었던 것에 체크를 넣으세요. <b>위의 3개</b>에 체크가 들어가면 "완료로 하기"를 누를 수 있습니다. 아래 2개는 계정이나 요금제 사정으로 못 하는 사람도 있으므로 한 사람만 체크합니다.</p>',
-      help: [
-        { q: '못 한 부분이 있어요', a: '그 단계로 돌아가서 "곤란할 때"를 보세요. 몇 번이든 다시 할 수 있습니다.' }
+        { q: '1개밖에 못 썼어요', a: '괜찮습니다. 쓸 수 있었던 것만으로 비교하세요.' }
       ]
     }
   };
 
   window.COURSE_KO.lessons.l1 = {
     title: 'AI 에이전트 이해와 작업 환경 준비',
-    short: 'PC에 AI 도우미 3개를 설치하고 파일을 만들게 한다',
+    short: 'PC에 AI 도우미(Claude Code)를 설치하고 파일을 만들게 한다',
     devices: 'PC',
     doneCard: '<b>레슨1　완료입니다. 수고하셨습니다.</b><br>PC 안에서 AI에게 작업을 부탁할 수 있게 되었습니다. 다음은 레슨2(준비 중)입니다.',
+    steps: steps
+  };
+  window.COURSE_KO.lessons.l1b = {
+    title: '다른 AI도 시험해 보자(보너스·선택)',
+    short: 'Antigravity(무료 Google 계정)와 Codex로 같은 4가지를 해 본다',
+    devices: 'PC',
+    doneCard: '<b>보너스　수고하셨습니다.</b>',
     steps: steps
   };
 })();

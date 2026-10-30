@@ -57,25 +57,26 @@
     a: 'AIがファイルを作るときなどに、「やってもいいですか？」と聞いてきます。内容が練習用の agent1 フォルダの中のことなら、<b>Y</b>（はい）を押します。わからないときは<b>N</b>（いいえ）でも大丈夫です。'
   };
 
-  var lesson1 = {
-    id: 'l1', no: 1, needsPc: true, ready: true, minutes: 120,
-    title: 'AIエージェントの理解と、作業環境のじゅんび',
-    short: 'パソコンに3つのAIの助手を入れて、ファイルを作ってもらう',
-    devices: 'PC',
-    doneCard: '<b>レッスン1　完了です。おつかれさまでした。</b><br>パソコンの中で、AIに作業をお願いできるようになりました。次は、レッスン2（準備中）です。',
-    steps: [
+  var HELP_APPROVE_C = {
+    q: 'AIが「許可しますか？」と聞いてきました',
+    a: 'Claude Codeは、ファイルを作るときなどに、「やってもいいですか？」と聞いてきます。練習用の agent1 フォルダの中のことなら、「はい(Yes)」を選びます。矢印キー（↑↓）で選んで、Enterキーを押します。わからないときは、「いいえ(No)」でも大丈夫です。'
+  };
+
+  /* 全ステップ。レッスン1本体と「おまけ」は、この中から選んで並べる（下の方で組み立てる） */
+  var ALL = [
       {
         id: 's1', kind: 'sample', tag: '今日のゴール', title: 'レッスン1で、できるようになること',
         html:
           '<p class="note warn"><b>このレッスンは、WindowsのPCが必要です。</b>スマホやタブレットだけでは、進められません。</p>' +
-          '<p>このレッスンでは、パソコンに「AIの助手」を3つ入れて、使えるようにします。</p>' +
+          '<p>このレッスンでは、パソコンに「AIの助手」を1つ（Claude Code）入れて、使えるようにします。</p>' +
           '<div class="card goal"><b>ゴール</b><br>パソコンの中で、AIに「ファイルを作る」「フォルダを作る」「ファイルを動かす」をお願いして、やってもらえるようになる。</div>' +
           '<div class="card"><dl class="facts">' +
-          '<dt>かかる時間</dt><dd>約2時間（休みながらでOK）</dd>' +
+          '<dt>かかる時間</dt><dd>約1時間（休みながらでOK）</dd>' +
           '<dt>つかうもの</dt><dd>WindowsのPC、インターネット</dd>' +
-          '<dt>アカウント</dt><dd>Google、ChatGPT、Claude（Claudeは有料プランが必要です）</dd>' +
-          '<dt>お金</dt><dd>Claude Codeを使うときだけ、有料プランが必要です。金額は、公式の画面で確認してください。</dd>' +
+          '<dt>アカウント</dt><dd>Claude（有料プランが必要です）</dd>' +
+          '<dt>お金</dt><dd>Claude Codeを使うには、Claudeの有料プランが必要です。金額は、公式の画面で確認してください。</dd>' +
           '</dl></div>' +
+          '<p>有料プランにしたくない人は、先に「おまけ」の、Antigravity（無料のGoogleアカウント）で試せます。</p>' +
           '<p>全部を一度にやらなくて大丈夫です。途中でやめても、「つづきから」で再開できます。</p>' +
           '<p class="note warn">お支払いやパスワードの入力は、必ず<b>ご自分で</b>してください。この教材が、代わりに入力することはありません。</p>' +
           '<p class="note dev">手順は、2026年10月30日に、各サービスの公式の案内で確認しました。画面は、予告なく変わることがあります。日本語のWindowsでの実際の動きは、まだ確かめていません。</p>',
@@ -102,15 +103,14 @@
         id: 's3', kind: 'know', tag: '知っておこう', title: '「インストール型」のAIって、なに？',
         html:
           '<p>ブラウザで使うAIは、ネットの向こうにあります。「インストール型」は、<b>パソコンの中に入れて</b>使うAIです。だから、パソコンの中のファイルを直接さわれます。</p>' +
-          '<p>今日は、この3つを入れます。</p>' +
+          '<p>今日は、この1つを入れます。</p>' +
           '<ul class="parts">' +
-          '<li><b>Antigravity</b>Googleのエージェント<br><span>（呼び出す名前：agy）</span></li>' +
-          '<li><b>Codex</b>OpenAIのエージェント<br><span>（呼び出す名前：codex）</span></li>' +
           '<li><b>Claude Code</b>Anthropicのエージェント<br><span>（呼び出す名前：claude）</span></li>' +
           '</ul>' +
-          '<p>同じお願いを3つにして、くらべてみます。</p>',
+          '<p>このコースの、このあとの授業でも、Claude Codeを使います。</p>' +
+          '<p class="note">ほかのAI（GoogleのAntigravity、OpenAIのCodex）は、「おまけ」で、試せます。しなくても大丈夫です。</p>',
         help: [
-          { q: '3つも必要ですか？', a: 'くらべることで、それぞれの違いがわかります。アカウントやお金の都合で入れられないものがあっても、大丈夫です。' }
+          { q: '1つだけで大丈夫ですか？', a: '大丈夫です。1つをしっかり使えるようになることが、いちばん大事です。' }
         ]
       },
       {
@@ -225,7 +225,7 @@
       {
         id: 's11', kind: 'pc', tag: 'PCで操作', title: 'Antigravity CLI を入れる',
         html:
-          '<p>1つ目のAIは、Googleの「Antigravity（アンチグラビティ）」です。ターミナルでは <b>agy</b> と呼びます。Googleのアカウントが必要です。</p>' +
+          '<p>Googleの「Antigravity（アンチグラビティ）」を入れます。ターミナルでは <b>agy</b> と呼びます。Googleのアカウントが必要です。</p>' +
           '<ol>' +
           '<li>先頭が <b>PS</b> のターミナルを開きます。</li>' +
           '<li>下の「コピー」を押して、貼り付けて、Enterキーを押します。</li>' +
@@ -333,7 +333,7 @@
         ]
       },
       {
-        id: 's19', kind: 'pc', tag: 'PCで操作', title: 'agyに、ほかの2つのAIを入れてもらう',
+        id: 'b19', kind: 'pc', tag: 'PCで操作', title: 'agyに、Codexを入れてもらう',
         html:
           '<p>ここが、エージェントの「すごいところ」です。AIに、ほかのAIをインストールしてもらいます。</p>' +
           '<ol>' +
@@ -343,33 +343,30 @@
           '<li>終わったら、<b>/exit</b> で終了します。</li>' +
           '</ol>' +
           window.COURSE.copybox(
-            'このPCに、CodexとClaude Codeをインストールしてください。PowerShellで、次の2つのコマンドを、それぞれ実行してください。\n' +
-            '1つ目：' + CMD_CODEX + '\n' +
-            '2つ目：' + CMD_CLAUDE + '\n' +
-            '終わったら、それぞれ --version で、動くかどうか確認してください。'
+            'このPCに、Codexをインストールしてください。PowerShellで、次のコマンドを実行してください。\n' +
+            CMD_CODEX + '\n' +
+            '終わったら、codex --version で、動くかどうか確認してください。'
           ) +
           '<p class="note">うまくいかないときは、「困ったとき」に、自分でターミナルに貼り付ける方法があります。</p>',
         help: [
           {
             q: 'agyがうまくできませんでした（自分でインストールする方法）',
-            a: '先頭が「PS」のターミナルに、1つずつ貼り付けて、Enterキーを押します。<br><b>Codex：</b>' +
-               window.COURSE.copybox(CMD_CODEX) +
-               '<b>Claude Code：</b>' + window.COURSE.copybox(CMD_CLAUDE)
+            a: '先頭が「PS」のターミナルに貼り付けて、Enterキーを押します。<br><b>Codex：</b>' +
+               window.COURSE.copybox(CMD_CODEX)
           },
           HELP_APPROVE
         ]
       },
       {
-        id: 's20', kind: 'pc', tag: 'PCで操作', title: 'VS Codeを開きなおして、2つを確かめる',
+        id: 'b20', kind: 'pc', tag: 'PCで操作', title: 'VS Codeを開きなおして、Codexを確かめる',
         html:
           '<ol>' +
           '<li>VS Codeを、いったん閉じて、もう一度開きます。</li>' +
           '<li>新しいターミナルを開きます。</li>' +
-          '<li>下の2つを、1つずつ貼り付けて、Enterキーを押します。</li>' +
+          '<li>下の「コピー」を押して、貼り付けて、Enterキーを押します。</li>' +
           '</ol>' +
           cmd('codex --version') +
-          cmd('claude --version') +
-          '<p>それぞれ、数字が出れば成功です。</p>',
+          '<p>数字が出れば成功です。</p>',
         help: [HELP_NOTFOUND]
       },
       {
@@ -406,9 +403,10 @@
           '<li>アカウントやプランの画面で、いまのプランを確認します。画面の名前は、変わることがあります。</li>' +
           '</ol>' +
           '<p class="note warn">お支払いの入力は、<b>必ずご自分で</b>、公式の画面で行ってください。金額や内容は、その画面で確認してください。この教材は、代わりに入力しません。</p>' +
-          '<p>今日は払わないことにしても大丈夫です。Claude Codeの実習は、あとからでもできます。その場合は、次の2つの画面を飛ばして、「3つをくらべよう」に進んでください。</p>',
+          '<p>今日は払わないことにしても大丈夫です。ここで止めて、先に「おまけ」の、Antigravity（無料のGoogleアカウント）で、同じ練習を試せます。</p>' +
+          '<p class="note">このコースの、このあとの授業は、Claude Codeを使います。いつでも、戻ってつづけられます。</p>',
         help: [
-          { q: '無料プランのままだと、どうなりますか？', a: 'Claude Codeにログインしても、使えません。有料プランにするか、この部分を飛ばしてください。' },
+          { q: '無料プランのままだと、どうなりますか？', a: 'Claude Codeにログインしても、使えません。有料プランにするか、「おまけ」で、無料のAIを試してください。' },
           { q: 'やめたくなったら？', a: 'プランをやめる方法も、公式の画面で確認できます。契約する前に、やめ方も見ておくと安心です。' }
         ]
       },
@@ -429,51 +427,164 @@
         ]
       },
       {
-        id: 's25', kind: 'pc', tag: 'PCで操作', title: 'Claude Codeで、同じ4つをやってみる',
+        id: 'c12', kind: 'pc', tag: 'PCで操作', title: 'Claude Code を入れる',
         html:
-          '<p>おなじ4つを、順番にお願いします。それぞれ、「コピー」→ Claude Codeの入力欄に貼り付け → Enterキー。許可を聞かれたら、画面の案内にそって「はい」を選びます。</p>' +
-          fourBoxes('claude') +
-          '<p>終わったら、<b>memo-claude</b> フォルダの中に <b>jikoshokai-claude.txt</b> が入っていれば成功です。終わりかたは、<b>/exit</b> と入力してEnterキーです。</p>',
-        help: [HELP_APPROVE]
+          '<p>Claude Codeは、Anthropic（アンソロピック）のエージェントです。ターミナルでは <b>claude</b> と呼びます。</p>' +
+          '<ol>' +
+          '<li>先頭が <b>PS</b> のターミナルを開きます。</li>' +
+          '<li>下の「コピー」を押して、貼り付けて、Enterキーを押します。</li>' +
+          '<li>終わるまで、しばらく待ちます。<b>進み具合は、出ません。</b>画面が止まって見えても、待ちます。</li>' +
+          '</ol>' +
+          cmd(CMD_CLAUDE) +
+          '<p class="note">1行です。途中で改行しないで、そのまま貼り付けてください。</p>' +
+          '<p class="note">公式の案内では、Gitというソフトは「あると便利」ですが、なくても使えます。今日は、入れなくて大丈夫です。</p>',
+        help: [
+          { q: '「irm」が認識されません、と出ました', a: '先頭が「PS」ではない、別のターミナルを使っています。前の画面にもどって、PowerShellを開きなおしてください。' },
+          { q: '「&&」というエラーが出ました', a: 'このコマンドは、PowerShell用です。先頭が「PS」のターミナルで、やりなおしてください。' },
+          { q: 'エラーが出ました', a: '画面の文字を、スクリーンショットで保存してください。インターネットにつながっているかも、確認してください。' }
+        ]
       },
       {
-        id: 's26', kind: 'know', tag: '知っておこう', title: '3つを、くらべてみよう',
+        id: 'c13', kind: 'pc', tag: 'PCで操作', title: 'VS Codeを開きなおして、確かめる',
         html:
-          '<p>同じお願いを、3つのAIにしました。次のことを、思い出してみてください。</p>' +
+          '<p>インストールしたあとは、ターミナルを<b>新しく</b>開かないと、使えるようになりません。</p>' +
+          '<ol>' +
+          '<li>VS Codeを、いったん閉じます。</li>' +
+          '<li>もう一度開いて、「ターミナル」→「新しいターミナル」を選びます。</li>' +
+          '<li>下の「コピー」を押して、貼り付けて、Enterキーを押します。</li>' +
+          '</ol>' +
+          cmd('claude --version') +
+          term(['PS C:\\Users\\（あなたの名前）\\Desktop\\agent1> claude --version', '（数字のバージョンが出ます）']) +
+          '<p>数字が出れば、成功です。</p>',
+        help: [HELP_NOTFOUND, HELP_ENG]
+      },
+      {
+        id: 'c15', kind: 'pc', tag: 'PCで操作', title: '実習① Claude Codeに、話しかける',
+        html:
+          '<p>Claude Codeの画面の下の、文字を入れる場所に、お願いを貼り付けます。</p>' +
+          '<ol>' +
+          '<li>「コピー」を押します。</li>' +
+          '<li>入力欄に貼り付けて、Enterキーを押します。</li>' +
+          '</ol>' +
+          window.COURSE.copybox(four('claude')[0]) +
+          '<p>返事が来たら、成功です。</p>',
+        help: [HELP_APPROVE_C]
+      },
+      {
+        id: 'c16', kind: 'pc', tag: 'PCで操作', title: '実習② ファイルを作ってもらう',
+        html:
+          '<ol>' +
+          '<li>「コピー」を押して、入力欄に貼り付けて、Enterキーを押します。</li>' +
+          '<li>許可を聞かれたら、「はい(Yes)」を選びます。</li>' +
+          '<li>VS Codeの左側に、<b>jikoshokai-claude.txt</b> が増えたら成功です。</li>' +
+          '</ol>' +
+          window.COURSE.copybox(four('claude')[1]),
+        help: [HELP_APPROVE_C]
+      },
+      {
+        id: 'c17', kind: 'pc', tag: 'PCで操作', title: '実習③ フォルダを作ってもらう',
+        html:
+          '<ol>' +
+          '<li>「コピー」を押して、入力欄に貼り付けて、Enterキーを押します。</li>' +
+          '<li>許可を聞かれたら、「はい(Yes)」を選びます。</li>' +
+          '<li>VS Codeの左側に、<b>memo-claude</b> フォルダが増えたら成功です。</li>' +
+          '</ol>' +
+          window.COURSE.copybox(four('claude')[2]),
+        help: [HELP_APPROVE_C]
+      },
+      {
+        id: 'c18', kind: 'pc', tag: 'PCで操作', title: '実習④ ファイルを動かしてもらう',
+        html:
+          '<ol>' +
+          '<li>「コピー」を押して、入力欄に貼り付けて、Enterキーを押します。</li>' +
+          '<li>許可を聞かれたら、「はい(Yes)」を選びます。</li>' +
+          '<li>jikoshokai-claude.txt が、<b>memo-claude</b>フォルダの中に入ったら成功です。</li>' +
+          '</ol>' +
+          window.COURSE.copybox(four('claude')[3]) +
+          '<p>終わったら、<b>/exit</b> と入力して、Enterキーを押すと、終了できます。</p>',
+        help: [
+          HELP_APPROVE_C,
+          { q: 'フォルダが増えていません', a: 'VS Codeの左側の表示が、古いままのことがあります。フォルダの名前の上で、ゆっくり動かしてみてください。それでも出ないときは、Claude Codeに「いま、ファイルとフォルダは、どうなっていますか？」と聞いてみてください。' }
+        ]
+      },
+      {
+        id: 'c19', kind: 'check', tag: '確認', title: 'おわりの確認',
+        widget: 'checks',
+        checks: [
+          'VS Codeを入れて、agent1フォルダを開けた',
+          'ターミナルで、echoが動いた',
+          'Claude Codeに、4つのお願い（話す、ファイルを作る、フォルダを作る、動かす）をできた'
+        ],
+        html:
+          '<p>できたことに、チェックを入れてください。3つとも入ると、「完了にする」を押せます。</p>' +
+          '<p class="note">ほかのAIも試したい人は、目次の「おまけ」へ進めます（しなくても大丈夫です）。</p>',
+        help: [
+          { q: 'できなかったところがあります', a: 'そのステップに戻って、「困ったとき」を見てください。何度でもやり直せます。' }
+        ]
+      },
+      {
+        id: 'b1', kind: 'sample', tag: 'おまけ', title: 'ほかのAIも、試してみよう（任意）',
+        html:
+          '<p class="note warn"><b>この「おまけ」は、しなくても大丈夫です。</b>レッスン1の前半（VS Codeの準備と、agent1フォルダ）が終わっている人向けです。</p>' +
+          '<p>ここでは、次の2つを試せます。</p>' +
+          '<ul class="parts">' +
+          '<li><b>Antigravity（agy）</b>Googleのエージェント<br><span>無料のGoogleアカウントで使えます</span></li>' +
+          '<li><b>Codex</b>OpenAIのエージェント<br><span>ChatGPTのアカウントが必要です</span></li>' +
+          '</ul>' +
+          '<p>同じお願いを、順番にして、くらべてみます。</p>' +
+          '<p class="note">有料プランにしたくない人は、まず、Antigravityだけ試してもOKです。</p>',
+        help: [
+          { q: 'おまけは、やるべきですか？', a: 'しなくて大丈夫です。AIによる違いを知りたい人や、無料で試したい人向けです。' }
+        ]
+      },
+      {
+        id: 'b26', kind: 'know', tag: '知っておこう', title: 'くらべてみよう',
+        html:
+          '<p>同じお願いを、いくつかのAIにしました。次のことを、思い出してみてください。</p>' +
           '<ul>' +
           '<li>どれが、いちばん<b>わかりやすい</b>と感じましたか？</li>' +
           '<li>許可の聞きかたは、どう違いましたか？</li>' +
           '<li>返事の長さや、言葉づかいは、どう違いましたか？</li>' +
           '</ul>' +
           '<p>正解はありません。「自分には、どれが使いやすいか」が、大事です。メモしておくと、あとで役に立ちます。</p>' +
-          '<p>VS Codeの左側を見ると、<b>jikoshokai-</b> のファイルが3つ（agy、codex、claude）あるはずです。開いて、中身をくらべてみましょう（入れなかったものは、ありません）。</p>',
+          '<p>VS Codeの左側を見ると、<b>jikoshokai-</b> のファイルが、使った数だけ（agy、codex、claude）あるはずです。開いて、中身をくらべてみましょう。</p>',
         help: [
-          { q: '2つしか使えませんでした', a: '大丈夫です。使えたものだけで、くらべてください。' }
-        ]
-      },
-      {
-        id: 's27', kind: 'check', tag: '確認', title: 'おわりの確認',
-        widget: 'checks',
-        required: 3,
-        checks: [
-          'VS Codeを入れて、agent1フォルダを開けた',
-          'ターミナルで、echoが動いた',
-          'agyに、4つのお願い（話す、ファイルを作る、フォルダを作る、動かす）をできた',
-          'Codexでも、4つのお願いができた（できた人だけ）',
-          'Claude Codeでも、4つのお願いができた（できた人だけ）'
-        ],
-        html:
-          '<p>できたことに、チェックを入れてください。<b>上の3つ</b>にチェックが入ると、「完了にする」を押せます。下の2つは、アカウントやプランの都合で、できない人もいるので、できた人だけです。</p>',
-        help: [
-          { q: 'できなかったところがあります', a: 'そのステップに戻って、「困ったとき」を見てください。何度でもやり直せます。' }
+          { q: '1つしか使えませんでした', a: '大丈夫です。使えたものだけで、くらべてください。' }
         ]
       }
-    ]
+  ];
+
+  function pick(ids) {
+    return ids.map(function (id) {
+      for (var k = 0; k < ALL.length; k++) { if (ALL[k].id === id) return ALL[k]; }
+      throw new Error('step not found: ' + id);
+    });
+  }
+
+  var lesson1 = {
+    id: 'l1', no: 1, needsPc: true, ready: true, minutes: 60,
+    title: 'AIエージェントの理解と、作業環境のじゅんび',
+    short: 'パソコンにAIの助手（Claude Code）を入れて、ファイルを作ってもらう',
+    devices: 'PC',
+    doneCard: '<b>レッスン1　完了です。おつかれさまでした。</b><br>パソコンの中で、AIに作業をお願いできるようになりました。次は、レッスン2（準備中）です。',
+    steps: pick(['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10',
+                 's23', 'c12', 'c13', 's24', 'c15', 'c16', 'c17', 'c18', 'c19'])
   };
 
-  /* 予定の1番(仮題)を、本物のレッスン1に置きかえる */
+  /* おまけ（任意）：ほかのAIも試す */
+  var bonus = {
+    id: 'l1b', no: '1B', needsPc: true, ready: true, optional: true, minutes: 60,
+    title: 'ほかのAIも試してみよう（おまけ・任意）',
+    short: 'Antigravity（無料のGoogleアカウント）とCodexで、同じ4つをやってみる',
+    devices: 'PC',
+    doneCard: '<b>おまけ　おつかれさまでした。</b>',
+    steps: pick(['b1', 's11', 's12', 's13', 's14', 's15', 's16', 's17', 's18',
+                 'b19', 'b20', 's21', 's22', 'b26'])
+  };
+
+  /* 予定の1番(仮題)を、本物のレッスン1に置きかえ、すぐ後ろにおまけを入れる */
   var C = window.COURSE;
   for (var i = 0; i < C.lessons.length; i++) {
-    if (C.lessons[i].id === 'l1') { C.lessons[i] = lesson1; }
+    if (C.lessons[i].id === 'l1') { C.lessons.splice(i, 1, lesson1, bonus); break; }
   }
 })();
