@@ -71,7 +71,7 @@
           '<p>このレッスンでは、パソコンに「AIの助手」を1つ（Claude Code）入れて、使えるようにします。</p>' +
           '<div class="card goal"><b>ゴール</b><br>パソコンの中で、AIに「ファイルを作る」「フォルダを作る」「ファイルを動かす」をお願いして、やってもらえるようになる。</div>' +
           '<div class="card"><dl class="facts">' +
-          '<dt>かかる時間</dt><dd>約1時間（休みながらでOK）</dd>' +
+          '<dt>かかる時間</dt><dd>約1時間半（休みながらでOK）</dd>' +
           '<dt>つかうもの</dt><dd>WindowsのPC、インターネット</dd>' +
           '<dt>アカウント</dt><dd>Claude（有料プランが必要です）</dd>' +
           '<dt>お金</dt><dd>Claude Codeを使うには、Claudeの有料プランが必要です。金額は、公式の画面で確認してください。</dd>' +
@@ -411,19 +411,56 @@
         ]
       },
       {
-        id: 's24', kind: 'pc', tag: 'PCで操作', title: 'Claude Codeにログインする',
+        id: 'f1', kind: 'pc', tag: 'PCで操作', title: 'Claude Codeを、はじめて起動する',
         html:
+          '<p>はじめて起動すると、選択の画面が、いくつか順番に出ます。1つずつ進めます。</p>' +
           '<ol>' +
-          '<li>下の「コピー」を押して、ターミナルに貼り付けて、Enterキーを押します。</li>' +
-          '<li>画面の案内にそって、ブラウザで、Claudeのアカウントにログインします。</li>' +
-          '<li>「このフォルダを信頼しますか？」と聞かれたら、agent1 は自分で作った練習用フォルダなので、信頼します。</li>' +
+          '<li>ターミナルの先頭が <b>PS</b> で、終わりが <b>agent1&gt;</b> になっているか、確認します。</li>' +
+          '<li>下の「コピー」を押して、貼り付けて、Enterキーを押します。</li>' +
+          '<li>選択の画面では、矢印キー（↑↓）で選んで、Enterキーで決めます。</li>' +
           '</ol>' +
           cmd('claude') +
-          '<p class="note warn">パスワードは、ブラウザの画面にだけ入力します。</p>',
+          '<h2>① 文字の見た目（テーマ）</h2>' +
+          '<p>どれを選んでも大丈夫です。好きなものを選んで、Enterキーを押します。</p>' +
+          '<h2>② ログインの方法</h2>' +
+          '<p>次のように、3つの選択肢が出たら、<b>1番</b>（Claudeのアカウントで、ログインする方法）を選びます。</p>' +
+          term(['Select login method:', '', '❯ 1. Claude account with subscription · Pro, Max, Team, or Enterprise', '  2. Anthropic Console account · API usage billing', '  3. 3rd-party platform · Amazon Bedrock, Microsoft Foundry, or Vertex AI']) +
+          '<p class="note">画面の順番や言葉は、バージョンで変わることがあります。</p>',
         help: [
-          { q: '「プランが必要です」と出ました', a: '無料プランのときの表示です。前の画面を見て、プランを確認してください。' },
-          { q: 'ブラウザが開きません', a: 'ターミナルに出ているアドレスを、自分でブラウザに貼り付けて開いてください。' },
+          { q: '選択の画面が出ません', a: '出ないことも、あります。そのまま、次の画面へ進んでください。' },
+          { q: '「プランが必要です」と出ました', a: '無料プランのときの表示です。前の画面でプランを確認してください。' },
+          HELP_NOTFOUND,
           HELP_ENG
+        ]
+      },
+      {
+        id: 'f2', kind: 'pc', tag: 'PCで操作', title: 'ブラウザでログインして、もどる',
+        html:
+          '<ol>' +
+          '<li>ブラウザが、自動で開きます。ご自分のClaudeアカウントで、ログインします。</li>' +
+          '<li>ターミナルにもどると、「Login successful」のような表示が出ます。Enterキーを押して、進みます。</li>' +
+          '<li>「ターミナルの設定（terminal setup）」の画面が出たら、<b>「Yes, use recommended settings」</b>（おすすめの設定を使う）が選ばれていれば、そのままEnterキーを押します。</li>' +
+          '</ol>' +
+          term(['Use Claude Code\'s terminal setup?', '', '❯ 1. Yes, use recommended settings', '  2. No, maybe later with /terminal-setup']) +
+          '<p class="note warn"><b>パスワードは、ブラウザのログイン画面にだけ</b>入力してください。ターミナルには、入れません。</p>',
+        help: [
+          { q: 'ブラウザが開きません', a: 'ターミナルに出ているアドレスを、自分でブラウザに貼り付けて開いてください。' },
+          { q: 'ログインしたのに、また「ログインしてください」と出ます', a: 'Claude Codeの入力欄に <b>/logout</b> と入力してEnterキー。いったん終了して、もう一度 <b>claude</b> を実行して、ログインしなおします。' },
+          HELP_ENG
+        ]
+      },
+      {
+        id: 'f3', kind: 'pc', tag: 'PCで操作', title: 'フォルダを信頼する（ここは、ちゅうい！）',
+        html:
+          '<p>次のように、「このフォルダを信頼しますか？」と聞かれます。agent1 は、自分で作った練習用のフォルダなので、<b>信頼してOK</b>です。</p>' +
+          term(['Is this a project you created or one you trust?', '', '❯ No, exit', '  Yes, I trust this folder']) +
+          '<p class="note warn"><b>はじめに選ばれているのが、「No, exit」（終了）のことがあります。</b>そのままEnterキーを押すと、終わってしまいます。矢印キーの<b>↓</b>で、<b>「Yes, I trust this folder」</b>に動かしてから、Enterキーを押します。</p>' +
+          '<p>そのあと、「Welcome to Claude Code for VS Code」のような歓迎の画面が出たら、Enterキーで閉じます。</p>' +
+          '<p>文字を入れる欄が出れば、準備完了です。ここまでの選択画面は、<b>はじめの1回だけ</b>です。次からは、すぐに入力欄が出ます。</p>',
+        help: [
+          { q: '終了してしまいました', a: 'もう一度、ターミナルで <b>claude</b> を実行してください。今度は、↓で「Yes, I trust this folder」を選びます。' },
+          { q: '知らない画面が出ました', a: '画面の下に、「Enter to confirm」のような案内が出ていることが多いです。それにそって進めてください。わからないときは、画面を保存（スクリーンショット）して、相談してください。' },
+          { q: '「Auto mode」という表示が出ました', a: 'Claudeが、安全そうな作業は自動で進めて、危ない作業だけ聞いてくる、という設定です。許可を聞かれたら、これまでどおり「はい(Yes)」を選びます。' }
         ]
       },
       {
@@ -456,7 +493,24 @@
           cmd('claude --version') +
           term(['PS C:\\Users\\（あなたの名前）\\Desktop\\agent1> claude --version', '（数字のバージョンが出ます）']) +
           '<p>数字が出れば、成功です。</p>',
-        help: [HELP_NOTFOUND, HELP_ENG]
+        help: [
+          HELP_NOTFOUND,
+          {
+            q: 'VS Codeを開きなおしても、「認識されません」と出ます',
+            a: 'インストールのときの表示に、<b>「Setup notes」</b>と、<b>「…is not in your PATH」</b>（場所が、登録されていない）という文が出ていたら、自分で登録する必要があります。公式の案内では、claudeの場所は <b>C:\\Users\\あなたの名前\\.local\\bin</b> です。<br>' +
+               '① スタートメニューで「環境変数」と入力して、「システム環境変数の編集」を開く。<br>' +
+               '② 「環境変数(N)…」を押す。<br>' +
+               '③ 上の「ユーザー環境変数」の「Path」を選んで、「編集」を押す。<br>' +
+               '④ 「新規」を押して、上の場所（自分の名前の入ったもの）を入力する。<br>' +
+               '⑤ すべての画面を「OK」で閉じる。<br>' +
+               '⑥ <b>VS Codeを完全に閉じて</b>、もう一度開き、新しいターミナルで <b>claude --version</b> を確かめる。'
+          },
+          {
+            q: 'どこが悪いのか、わかりません',
+            a: 'claudeが動くときは、次のコマンドで、インストールの状態を点検できます。' + window.COURSE.copybox('claude doctor')
+          },
+          HELP_ENG
+        ]
       },
       {
         id: 'c15', kind: 'pc', tag: 'PCで操作', title: '実習① Claude Codeに、話しかける',
@@ -501,10 +555,108 @@
           '<li>jikoshokai-claude.txt が、<b>memo-claude</b>フォルダの中に入ったら成功です。</li>' +
           '</ol>' +
           window.COURSE.copybox(four('claude')[3]) +
-          '<p>終わったら、<b>/exit</b> と入力して、Enterキーを押すと、終了できます。</p>',
+          '<p>Claude Codeは、<b>終了しないで</b>、このまま次の画面へ進みます。</p>',
         help: [
           HELP_APPROVE_C,
           { q: 'フォルダが増えていません', a: 'VS Codeの左側の表示が、古いままのことがあります。フォルダの名前の上で、ゆっくり動かしてみてください。それでも出ないときは、Claude Codeに「いま、ファイルとフォルダは、どうなっていますか？」と聞いてみてください。' }
+        ]
+      },
+      {
+        id: 't1', kind: 'pc', tag: 'PCで操作', title: 'ターミナルの基本① いまどこ？ 中に何がある？',
+        html:
+          '<p>ターミナルは、フォルダの中を「歩きまわる」ように使います。まず、「いま、どのフォルダにいるか」と「その中に何があるか」を見てみます。</p>' +
+          '<ol>' +
+          '<li>下の「コピー」を押して、貼り付けて、Enterキーを押します。</li>' +
+          '<li>つづけて、もう1つも、同じようにします。</li>' +
+          '</ol>' +
+          '<h2>いま、いる場所</h2>' +
+          cmd('pwd') +
+          '<h2>中にあるものの、一覧</h2>' +
+          cmd('dir') +
+          term(['PS C:\\Users\\（あなたの名前）\\Desktop\\agent1> pwd', '', 'Path', '----', 'C:\\Users\\（あなたの名前）\\Desktop\\agent1', '', 'PS C:\\Users\\（あなたの名前）\\Desktop\\agent1> dir', '（まだ何も作っていないので、何も出ません）']) +
+          '<p class="note"><b>pwd</b> は「いまいる場所」、<b>dir</b> は「中身の一覧」です。</p>',
+        help: [
+          { q: 'dirで、何も出ません', a: '正しいです。agent1 には、まだ何も入っていません。' },
+          { q: '「認識されません」と出ました', a: '文字を、まちがえて入力していないか、確認してください。「コピー」ボタンで貼り付けると、まちがえません。' },
+          HELP_ENG
+        ]
+      },
+      {
+        id: 't2', kind: 'pc', tag: 'PCで操作', title: 'ターミナルの基本② フォルダを作って、入って、もどる',
+        html:
+          '<p>次の4行を、貼り付けます。1行ずつ、順番に実行されます。</p>' +
+          '<ol>' +
+          '<li>下の「コピー」を押して、貼り付けて、Enterキーを押します。</li>' +
+          '<li>実行が終わるまで、少し待ちます。</li>' +
+          '<li>最後の行の、終わりが <b>agent1&gt;</b> にもどっていれば成功です。</li>' +
+          '</ol>' +
+          cmd('mkdir renshu\ncd renshu\ndir\ncd ..') +
+          term(['PS ...\\agent1> mkdir renshu', 'PS ...\\agent1> cd renshu', 'PS ...\\agent1\\renshu> dir', '（何も出ません）', 'PS ...\\agent1\\renshu> cd ..', 'PS ...\\agent1>'], '見本（こんな流れになります）') +
+          '<h2>よく使う、6つのコマンド</h2>' +
+          '<ul class="parts">' +
+          '<li><b>pwd</b><span>いまいる場所</span></li>' +
+          '<li><b>dir</b><span>中身の一覧</span></li>' +
+          '<li><b>cd 名前</b><span>そのフォルダに入る</span></li>' +
+          '<li><b>cd ..</b><span>ひとつ上にもどる</span></li>' +
+          '<li><b>mkdir 名前</b><span>フォルダを作る</span></li>' +
+          '<li><b>clear</b><span>画面をきれいにする</span></li>' +
+          '</ul>',
+        help: [
+          { q: 'まだ renshu の中にいます', a: 'ターミナルに <b>cd ..</b> と入力して、Enterキーを押すと、ひとつ上にもどります。' },
+          { q: '「すでに存在します」と出ました', a: 'renshu フォルダが、もうあるという意味です。そのまま、次へ進んで大丈夫です。' },
+          HELP_ENG
+        ]
+      },
+      {
+        id: 'w1', kind: 'pc', tag: 'PCで操作', title: 'ことばで頼んで、ウェブページを作ってもらう',
+        html:
+          '<p>ここまでは、ファイルとフォルダを作ってもらいました。次は、<b>目で見えるもの</b>を作ってもらいます。</p>' +
+          '<ol>' +
+          '<li>「コピー」を押して、Claude Codeの入力欄に貼り付けて、Enterキーを押します。</li>' +
+          '<li>許可を聞かれたら、「はい(Yes)」を選びます。</li>' +
+          '<li>VS Codeの左側に、<b>my-page.html</b> が増えたら成功です。</li>' +
+          '</ol>' +
+          window.COURSE.copybox('my-page.html という名前で、とても簡単な自己紹介のウェブページを作ってください。名前は「さくら」、ひとことは「はじめまして、AIを勉強中です」にしてください。背景は白で、名前とひとことだけを、画面の真ん中に大きく表示してください。') +
+          '<p class="note">名前やひとことは、架空のものです。本当の個人情報は、入れません。</p>',
+        help: [
+          HELP_APPROVE_C,
+          { q: 'my-page.html が増えません', a: 'VS Codeの左側の表示が、古いままのことがあります。少し待つか、フォルダの名前の上でマウスを動かしてみてください。AIが、ちがう名前で作ったときは、その名前で進めてください。' }
+        ]
+      },
+      {
+        id: 'w2', kind: 'pc', tag: 'PCで操作', title: 'ブラウザで開いて、見てみよう',
+        html:
+          '<ol>' +
+          '<li>VS Codeの左側で、<b>my-page.html</b> を右クリックします。</li>' +
+          '<li>「エクスプローラーで表示(Reveal in File Explorer)」を選びます。</li>' +
+          '<li>出てきた画面で、<b>my-page.html</b> をダブルクリックします。</li>' +
+          '<li>ブラウザで、ページが開きます。</li>' +
+          '</ol>' +
+          '<h2><span class="tag sample">見本</span>こんな画面になります</h2>' +
+          '<div class="card sample-box" style="text-align:center;padding:36px 16px;"><div style="font-size:30px;font-weight:700;">さくら</div><div style="font-size:18px;">はじめまして、AIを勉強中です</div></div>' +
+          '<p class="note">見た目は、AIによって、少しちがうことがあります。</p>',
+        help: [
+          { q: 'ダブルクリックしても、開きません', a: 'ファイルを右クリックして、「プログラムから開く」で、ブラウザ（ChromeやEdgeなど）を選んでください。' },
+          { q: '文字が、おかしな文字になっています', a: 'Claude Codeに、「my-page.html の文字化けを直してください」とお願いしてください。' },
+          { q: 'ファイルが見つかりません', a: 'VS Codeの左側に、my-page.html があるか、確認してください。なければ、1つ前の画面から、やりなおしてください。' }
+        ]
+      },
+      {
+        id: 'w3', kind: 'pc', tag: 'PCで操作', title: 'ページを直してもらおう',
+        html:
+          '<p>新しく作るのではなく、<b>いまのページを、直してもらいます</b>。Claude Codeの、同じ画面に続けてお願いします。</p>' +
+          '<ol>' +
+          '<li>「コピー」を押して、Claude Codeの入力欄に貼り付けて、Enterキーを押します。</li>' +
+          '<li>許可を聞かれたら、「はい(Yes)」を選びます。</li>' +
+          '<li>ブラウザにもどって、<b>F5</b>キーを押します（ページを読みこみなおします）。</li>' +
+          '</ol>' +
+          window.COURSE.copybox('my-page.html の、文字の色を青にして、背景をうすい黄色にしてください。') +
+          '<p>色が変わっていれば、成功です。</p>' +
+          '<p>時間があれば、自分で、色や言葉を変えて、もう一度お願いしてみましょう。「頼む言葉を変えると、結果も変わる」ことが、わかります。</p>' +
+          '<p>終わったら、Claude Codeに <b>/exit</b> と入力して、Enterキーを押すと、終了できます。</p>',
+        help: [
+          HELP_APPROVE_C,
+          { q: '色が変わりません', a: 'ブラウザで、F5キーを押しましたか？ それでも変わらないときは、Claude Codeに「my-page.html は、変わりましたか？」と聞いてみてください。' }
         ]
       },
       {
@@ -512,11 +664,12 @@
         widget: 'checks',
         checks: [
           'VS Codeを入れて、agent1フォルダを開けた',
-          'ターミナルで、echoが動いた',
-          'Claude Codeに、4つのお願い（話す、ファイルを作る、フォルダを作る、動かす）をできた'
+          'ターミナルで、echo・dir・cd・mkdirが動いた',
+          'Claude Codeに、4つのお願い（話す、ファイルを作る、フォルダを作る、動かす）をできた',
+          'ことばで頼んで、ウェブページを作ってもらい、直してもらえた'
         ],
         html:
-          '<p>できたことに、チェックを入れてください。3つとも入ると、「完了にする」を押せます。</p>' +
+          '<p>できたことに、チェックを入れてください。4つとも入ると、「完了にする」を押せます。</p>' +
           '<p class="note">ほかのAIも試したい人は、目次の「おまけ」へ進めます（しなくても大丈夫です）。</p>',
         help: [
           { q: 'できなかったところがあります', a: 'そのステップに戻って、「困ったとき」を見てください。何度でもやり直せます。' }
@@ -562,13 +715,14 @@
   }
 
   var lesson1 = {
-    id: 'l1', no: 1, needsPc: true, ready: true, minutes: 60,
+    id: 'l1', no: 1, needsPc: true, ready: true, minutes: 90,
     title: 'AIエージェントの理解と、作業環境のじゅんび',
     short: 'パソコンにAIの助手（Claude Code）を入れて、ファイルを作ってもらう',
     devices: 'PC',
     doneCard: '<b>レッスン1　完了です。おつかれさまでした。</b><br>パソコンの中で、AIに作業をお願いできるようになりました。次は、レッスン2（準備中）です。',
-    steps: pick(['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10',
-                 's23', 'c12', 'c13', 's24', 'c15', 'c16', 'c17', 'c18', 'c19'])
+    steps: pick(['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 't1', 't2', 's10',
+                 's23', 'c12', 'c13', 'f1', 'f2', 'f3',
+                 'c15', 'c16', 'c17', 'c18', 'w1', 'w2', 'w3', 'c19'])
   };
 
   /* おまけ（任意）：ほかのAIも試す */

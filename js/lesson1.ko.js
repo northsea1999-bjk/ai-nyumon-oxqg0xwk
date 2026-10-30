@@ -57,7 +57,7 @@
         '<p>이 레슨에서는 PC에 "AI 도우미"를 1개(Claude Code) 설치해서 쓸 수 있게 만듭니다.</p>' +
         '<div class="card goal"><b>목표</b><br>PC 안에서 AI에게 "파일 만들기" "폴더 만들기" "파일 옮기기"를 부탁해서 해내게 할 수 있게 된다.</div>' +
         '<div class="card"><dl class="facts">' +
-        '<dt>걸리는 시간</dt><dd>약 1시간(쉬엄쉬엄 해도 OK)</dd>' +
+        '<dt>걸리는 시간</dt><dd>약 1시간 30분(쉬엄쉬엄 해도 OK)</dd>' +
         '<dt>쓰는 것</dt><dd>Windows PC, 인터넷</dd>' +
         '<dt>계정</dt><dd>Claude(유료 요금제가 필요합니다)</dd>' +
         '<dt>돈</dt><dd>Claude Code를 쓰려면 Claude 유료 요금제가 필요합니다. 금액은 공식 화면에서 확인하세요.</dd>' +
@@ -373,22 +373,6 @@
         '<p>끝나면 VS Code 왼쪽에 <b>memo-codex</b> 폴더가 생기고 그 안에 <b>jikoshokai-codex.txt</b>가 들어 있으면 성공입니다.</p>',
       help: [HELP_APPROVE, { q: 'Codex 끝내는 법', a: 'Ctrl 키를 누른 채 C를 2번 누르거나, 화면 안내에 따라 종료합니다.' }]
     },
-    s24: {
-      tag: 'PC에서 조작', title: 'Claude Code에 로그인하기',
-      html:
-        '<ol>' +
-        '<li>아래 "복사"를 눌러 터미널에 붙여 넣고 Enter 키를 누릅니다.</li>' +
-        '<li>화면 안내에 따라 브라우저에서 Claude 계정에 로그인합니다.</li>' +
-        '<li>"이 폴더를 신뢰하시겠습니까?"라고 물으면 agent1은 직접 만든 연습용 폴더이므로 신뢰합니다.</li>' +
-        '</ol>' +
-        c('claude') +
-        '<p class="note warn">비밀번호는 브라우저 화면에만 입력합니다.</p>',
-      help: [
-        { q: '"요금제가 필요합니다"라고 나와요', a: '무료 요금제일 때의 표시입니다. 앞 화면을 보고 요금제를 확인하세요.' },
-        { q: '브라우저가 안 열려요', a: '터미널에 나온 주소를 직접 브라우저에 붙여 넣어 여세요.' },
-        HELP_ENG
-      ]
-    },
     s23: {
       tag: '알아 두기', title: 'Claude 요금제 확인하기',
       html:
@@ -447,7 +431,24 @@
         c('claude --version') +
         term(['PS C:\\Users\\（あなたの名前）\\Desktop\\agent1> claude --version', '（数字のバージョンが出ます）'], TERM) +
         '<p>숫자가 나오면 성공입니다.</p>',
-      help: [HELP_NOTFOUND, HELP_ENG]
+      help: [
+        HELP_NOTFOUND,
+        {
+          q: 'VS Code를 다시 열어도 "인식되지 않습니다"라고 나와요',
+          a: '설치할 때의 표시에 <b>"Setup notes"</b>와 <b>"…is not in your PATH"</b>(위치가 등록되지 않음)라는 문장이 나왔다면 직접 등록해야 합니다. 공식 안내에서 claude의 위치는 <b>C:\Users\내이름\.local\bin</b>입니다.<br>' +
+             '① 시작 메뉴에서 "환경 변수"를 입력해 "시스템 환경 변수 편집"을 엽니다.<br>' +
+             '② "환경 변수(N)…"를 누릅니다.<br>' +
+             '③ 위쪽 "사용자 변수"의 "Path"를 선택하고 "편집"을 누릅니다.<br>' +
+             '④ "새로 만들기"를 누르고 위의 위치(내 이름이 들어간 것)를 입력합니다.<br>' +
+             '⑤ 모든 창을 "확인"으로 닫습니다.<br>' +
+             '⑥ <b>VS Code를 완전히 닫았다가</b> 다시 열고, 새 터미널에서 <b>claude --version</b>을 확인합니다.'
+        },
+        {
+          q: '어디가 문제인지 모르겠어요',
+          a: 'claude가 동작할 때는 다음 명령어로 설치 상태를 점검할 수 있습니다.' + box('claude doctor', null, '복사')
+        },
+        HELP_ENG
+      ]
     },
     c15: {
       tag: 'PC에서 조작', title: '실습① Claude Code에게 말 걸기',
@@ -496,21 +497,176 @@
         '</ol>' +
         box(four('claude')[3], null, '복사') +
         '<p class="note">' + KO_FOUR[3] + '</p>' +
-        '<p>끝나면 <b>/exit</b>를 입력하고 Enter 키를 누르면 종료됩니다.</p>',
+        '<p>Claude Code는 <b>종료하지 말고</b> 이대로 다음 화면으로 진행합니다.</p>',
       help: [
         HELP_APPROVE_C,
         { q: '폴더가 늘어나지 않았어요', a: 'VS Code 왼쪽 표시가 옛날 그대로일 때가 있습니다. 폴더 이름 위에서 마우스를 천천히 움직여 보세요. 그래도 안 나오면 Claude Code에게 "지금 파일과 폴더는 어떻게 되어 있나요?"라고 물어보세요.' }
+      ]
+    },
+    f1: {
+      tag: 'PC에서 조작', title: 'Claude Code를 처음 실행하기',
+      html:
+        '<p>처음 실행하면 선택 화면이 몇 개 순서대로 나옵니다. 하나씩 진행합니다.</p>' +
+        '<ol>' +
+        '<li>터미널의 맨 앞이 <b>PS</b>이고 끝이 <b>agent1&gt;</b>인지 확인합니다.</li>' +
+        '<li>아래 "복사"를 눌러 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '<li>선택 화면에서는 화살표 키(↑↓)로 고르고 Enter 키로 정합니다.</li>' +
+        '</ol>' +
+        c('claude') +
+        '<h2>① 글자 모양(테마)</h2>' +
+        '<p>어느 것을 골라도 괜찮습니다. 좋아하는 것을 골라 Enter 키를 누릅니다.</p>' +
+        '<h2>② 로그인 방법</h2>' +
+        '<p>다음처럼 선택지가 3개 나오면 <b>1번</b>(Claude 계정으로 로그인하는 방법)을 고릅니다.</p>' +
+        term(['Select login method:', '', '❯ 1. Claude account with subscription · Pro, Max, Team, or Enterprise', '  2. Anthropic Console account · API usage billing', '  3. 3rd-party platform · Amazon Bedrock, Microsoft Foundry, or Vertex AI'], TERM) +
+        '<p class="note">화면의 순서나 말은 버전에 따라 바뀔 수 있습니다.</p>',
+      help: [
+        { q: '선택 화면이 안 나와요', a: '안 나올 수도 있습니다. 그대로 다음 화면으로 진행하세요.' },
+        { q: '"요금제가 필요합니다"라고 나와요', a: '무료 요금제일 때의 표시입니다. 앞 화면에서 요금제를 확인하세요.' },
+        HELP_NOTFOUND,
+        HELP_ENG
+      ]
+    },
+    f2: {
+      tag: 'PC에서 조작', title: '브라우저에서 로그인하고 돌아오기',
+      html:
+        '<ol>' +
+        '<li>브라우저가 자동으로 열립니다. 본인의 Claude 계정으로 로그인합니다.</li>' +
+        '<li>터미널로 돌아오면 "Login successful" 같은 표시가 나옵니다. Enter 키를 눌러 진행합니다.</li>' +
+        '<li>"터미널 설정(terminal setup)" 화면이 나오면, <b>"Yes, use recommended settings"</b>(추천 설정 사용)가 선택되어 있으면 그대로 Enter 키를 누릅니다.</li>' +
+        '</ol>' +
+        term(['Use Claude Code\'s terminal setup?', '', '❯ 1. Yes, use recommended settings', '  2. No, maybe later with /terminal-setup'], TERM) +
+        '<p class="note warn"><b>비밀번호는 브라우저 로그인 화면에만</b> 입력하세요. 터미널에는 넣지 않습니다.</p>',
+      help: [
+        { q: '브라우저가 안 열려요', a: '터미널에 나온 주소를 직접 브라우저에 붙여 넣어 여세요.' },
+        { q: '로그인했는데 또 "로그인하세요"라고 나와요', a: 'Claude Code 입력란에 <b>/logout</b>을 입력하고 Enter 키. 일단 종료한 뒤 다시 <b>claude</b>를 실행해서 로그인을 다시 합니다.' },
+        HELP_ENG
+      ]
+    },
+    f3: {
+      tag: 'PC에서 조작', title: '폴더를 신뢰하기(여기는 주의!)',
+      html:
+        '<p>다음처럼 "이 폴더를 신뢰하시겠습니까?"라고 묻습니다. agent1은 직접 만든 연습용 폴더이므로 <b>신뢰해도 OK</b>입니다.</p>' +
+        term(['Is this a project you created or one you trust?', '', '❯ No, exit', '  Yes, I trust this folder'], TERM) +
+        '<p class="note warn"><b>처음 선택되어 있는 것이 "No, exit"(종료)일 때가 있습니다.</b> 그대로 Enter 키를 누르면 끝나 버립니다. 화살표 키 <b>↓</b>로 <b>"Yes, I trust this folder"</b>로 옮긴 다음 Enter 키를 누릅니다.</p>' +
+        '<p>그다음 "Welcome to Claude Code for VS Code" 같은 환영 화면이 나오면 Enter 키로 닫습니다.</p>' +
+        '<p>글자를 넣는 칸이 나오면 준비 완료입니다. 여기까지의 선택 화면은 <b>처음 한 번만</b> 나옵니다. 다음부터는 바로 입력란이 나옵니다.</p>',
+      help: [
+        { q: '종료되어 버렸어요', a: '터미널에서 <b>claude</b>를 다시 실행하세요. 이번에는 ↓로 "Yes, I trust this folder"를 고릅니다.' },
+        { q: '모르는 화면이 나왔어요', a: '화면 아래에 "Enter to confirm" 같은 안내가 나와 있는 경우가 많습니다. 그것에 따라 진행하세요. 잘 모르겠으면 화면을 저장(스크린샷)해서 상담하세요.' },
+        { q: '"Auto mode"라는 표시가 나왔어요', a: 'Claude가 안전해 보이는 작업은 자동으로 진행하고, 위험한 작업만 묻는 설정입니다. 허락을 물으면 지금까지처럼 "예(Yes)"를 고릅니다.' }
+      ]
+    },
+    t1: {
+      tag: 'PC에서 조작', title: '터미널 기초① 지금 어디? 안에 뭐가 있나?',
+      html:
+        '<p>터미널은 폴더 안을 "돌아다니듯" 씁니다. 먼저 "지금 어느 폴더에 있나"와 "그 안에 뭐가 있나"를 봅니다.</p>' +
+        '<ol>' +
+        '<li>아래 "복사"를 눌러 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '<li>이어서 나머지 하나도 같은 방법으로 합니다.</li>' +
+        '</ol>' +
+        '<h2>지금 있는 곳</h2>' +
+        c('pwd') +
+        '<h2>안에 있는 것의 목록</h2>' +
+        c('dir') +
+        term(['PS C:\\Users\\（あなたの名前）\\Desktop\\agent1> pwd', '', 'Path', '----', 'C:\\Users\\（あなたの名前）\\Desktop\\agent1', '', 'PS C:\\Users\\（あなたの名前）\\Desktop\\agent1> dir', '（まだ何も作っていないので、何も出ません）'], TERM) +
+        '<p class="note"><b>pwd</b>는 "지금 있는 곳", <b>dir</b>는 "안에 있는 것의 목록"입니다.</p>',
+      help: [
+        { q: 'dir에서 아무것도 안 나와요', a: '맞습니다. agent1에는 아직 아무것도 들어 있지 않습니다.' },
+        { q: '"인식되지 않습니다"라고 나와요', a: '글자를 잘못 입력하지 않았는지 확인하세요. "복사" 버튼으로 붙여 넣으면 틀리지 않습니다.' },
+        HELP_ENG
+      ]
+    },
+    t2: {
+      tag: 'PC에서 조작', title: '터미널 기초② 폴더 만들고, 들어가고, 돌아오기',
+      html:
+        '<p>다음 4줄을 붙여 넣습니다. 한 줄씩 차례로 실행됩니다.</p>' +
+        '<ol>' +
+        '<li>아래 "복사"를 눌러 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '<li>실행이 끝날 때까지 잠시 기다립니다.</li>' +
+        '<li>마지막 줄의 끝이 <b>agent1&gt;</b>로 돌아와 있으면 성공입니다.</li>' +
+        '</ol>' +
+        c('mkdir renshu\ncd renshu\ndir\ncd ..') +
+        term(['PS ...\\agent1> mkdir renshu', 'PS ...\\agent1> cd renshu', 'PS ...\\agent1\\renshu> dir', '（何も出ません）', 'PS ...\\agent1\\renshu> cd ..', 'PS ...\\agent1>'], '견본(이런 흐름이 됩니다)') +
+        '<p class="note">뜻: renshu(연습)라는 폴더를 만들고 → 그 안으로 들어가고 → 내용을 보고 → 한 단계 위로 돌아옵니다.</p>' +
+        '<h2>자주 쓰는 6가지 명령어</h2>' +
+        '<ul class="parts">' +
+        '<li><b>pwd</b><span>지금 있는 곳</span></li>' +
+        '<li><b>dir</b><span>안에 있는 것의 목록</span></li>' +
+        '<li><b>cd 이름</b><span>그 폴더로 들어가기</span></li>' +
+        '<li><b>cd ..</b><span>한 단계 위로 돌아가기</span></li>' +
+        '<li><b>mkdir 이름</b><span>폴더 만들기</span></li>' +
+        '<li><b>clear</b><span>화면 깨끗이 하기</span></li>' +
+        '</ul>',
+      help: [
+        { q: '아직 renshu 안에 있어요', a: '터미널에 <b>cd ..</b>를 입력하고 Enter 키를 누르면 한 단계 위로 돌아옵니다.' },
+        { q: '"이미 존재합니다"라고 나와요', a: 'renshu 폴더가 이미 있다는 뜻입니다. 그대로 다음으로 진행해도 괜찮습니다.' },
+        HELP_ENG
+      ]
+    },
+    w1: {
+      tag: 'PC에서 조작', title: '말로 부탁해서 웹페이지 만들게 하기',
+      html:
+        '<p>지금까지는 파일과 폴더를 만들게 했습니다. 이번에는 <b>눈에 보이는 것</b>을 만들게 합니다.</p>' +
+        '<ol>' +
+        '<li>"복사"를 눌러 Claude Code 입력란에 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '<li>허락을 물으면 "예(Yes)"를 고릅니다.</li>' +
+        '<li>VS Code 왼쪽에 <b>my-page.html</b>이 늘어나면 성공입니다.</li>' +
+        '</ol>' +
+        box('my-page.html という名前で、とても簡単な自己紹介のウェブページを作ってください。名前は「さくら」、ひとことは「はじめまして、AIを勉強中です」にしてください。背景は白で、名前とひとことだけを、画面の真ん中に大きく表示してください。', null, '복사') +
+        '<p class="note">뜻: "my-page.html이라는 이름으로 아주 간단한 자기소개 웹페이지를 만들어 주세요. 이름은 \'사쿠라\', 한마디는 \'처음 뵙겠습니다, AI를 공부 중입니다\'로 해 주세요. 배경은 흰색으로, 이름과 한마디만 화면 가운데에 크게 표시해 주세요."</p>' +
+        '<p class="note">이름과 한마디는 가상의 것입니다. 진짜 개인정보는 넣지 않습니다.</p>',
+      help: [
+        HELP_APPROVE_C,
+        { q: 'my-page.html이 안 늘어나요', a: 'VS Code 왼쪽 표시가 옛날 그대로일 때가 있습니다. 잠시 기다리거나 폴더 이름 위에서 마우스를 움직여 보세요. AI가 다른 이름으로 만들었다면 그 이름으로 진행하세요.' }
+      ]
+    },
+    w2: {
+      tag: 'PC에서 조작', title: '브라우저에서 열어서 보자',
+      html:
+        '<ol>' +
+        '<li>VS Code 왼쪽에서 <b>my-page.html</b>을 오른쪽 클릭합니다.</li>' +
+        '<li>"탐색기에서 표시(Reveal in File Explorer)"를 고릅니다.</li>' +
+        '<li>나온 화면에서 <b>my-page.html</b>을 더블클릭합니다.</li>' +
+        '<li>브라우저에서 페이지가 열립니다.</li>' +
+        '</ol>' +
+        '<h2><span class="tag sample">견본</span>이런 화면이 됩니다</h2>' +
+        '<div class="card sample-box" style="text-align:center;padding:36px 16px;"><div style="font-size:30px;font-weight:700;">さくら</div><div style="font-size:18px;">はじめまして、AIを勉強中です</div></div>' +
+        '<p class="note">모양은 AI에 따라 조금 다를 수 있습니다.</p>',
+      help: [
+        { q: '더블클릭해도 안 열려요', a: '파일을 오른쪽 클릭해서 "연결 프로그램"으로 브라우저(Chrome, Edge 등)를 고르세요.' },
+        { q: '글자가 이상한 글자로 나와요', a: 'Claude Code에게 "my-page.html의 글자 깨짐을 고쳐 주세요"라고 부탁하세요.' },
+        { q: '파일을 찾을 수 없어요', a: 'VS Code 왼쪽에 my-page.html이 있는지 확인하세요. 없으면 한 화면 앞에서 다시 하세요.' }
+      ]
+    },
+    w3: {
+      tag: 'PC에서 조작', title: '페이지를 고쳐 달라고 하자',
+      html:
+        '<p>새로 만드는 것이 아니라 <b>지금 페이지를 고치게</b> 합니다. Claude Code의 같은 화면에 이어서 부탁합니다.</p>' +
+        '<ol>' +
+        '<li>"복사"를 눌러 Claude Code 입력란에 붙여 넣고 Enter 키를 누릅니다.</li>' +
+        '<li>허락을 물으면 "예(Yes)"를 고릅니다.</li>' +
+        '<li>브라우저로 돌아가 <b>F5</b> 키를 누릅니다(페이지를 다시 불러옵니다).</li>' +
+        '</ol>' +
+        box('my-page.html の、文字の色を青にして、背景をうすい黄色にしてください。', null, '복사') +
+        '<p class="note">뜻: "my-page.html의 글자 색을 파란색으로, 배경을 연한 노란색으로 해 주세요."</p>' +
+        '<p>색이 바뀌어 있으면 성공입니다.</p>' +
+        '<p>시간이 있으면 직접 색이나 말을 바꿔서 한 번 더 부탁해 보세요. "부탁하는 말을 바꾸면 결과도 바뀐다"는 것을 알 수 있습니다.</p>' +
+        '<p>끝나면 Claude Code에 <b>/exit</b>를 입력하고 Enter 키를 누르면 종료됩니다.</p>',
+      help: [
+        HELP_APPROVE_C,
+        { q: '색이 안 바뀌어요', a: '브라우저에서 F5 키를 눌렀나요? 그래도 안 바뀌면 Claude Code에게 "my-page.html은 바뀌었나요?"라고 물어보세요.' }
       ]
     },
     c19: {
       tag: '확인', title: '마지막 확인',
       checks: [
         'VS Code를 설치하고 agent1 폴더를 열었다',
-        '터미널에서 echo가 동작했다',
-        'Claude Code에게 4가지 부탁(말하기, 파일 만들기, 폴더 만들기, 옮기기)을 했다'
+        '터미널에서 echo·dir·cd·mkdir가 동작했다',
+        'Claude Code에게 4가지 부탁(말하기, 파일 만들기, 폴더 만들기, 옮기기)을 했다',
+        '말로 부탁해서 웹페이지를 만들게 하고 고치게 했다'
       ],
       html:
-        '<p>할 수 있었던 것에 체크를 넣으세요. 3개 모두 넣으면 "완료로 하기"를 누를 수 있습니다.</p>' +
+        '<p>할 수 있었던 것에 체크를 넣으세요. 4개 모두 넣으면 "완료로 하기"를 누를 수 있습니다.</p>' +
         '<p class="note">다른 AI도 시험해 보고 싶은 사람은 목차의 "보너스"로 갈 수 있습니다(하지 않아도 괜찮습니다).</p>',
       help: [
         { q: '못 한 부분이 있어요', a: '그 단계로 돌아가서 "곤란할 때"를 보세요. 몇 번이든 다시 할 수 있습니다.' }
