@@ -7,10 +7,10 @@
   }
 
   /* コピーできる文の箱。コピーされるのは <pre> の中の文字だけ。 */
-  function copybox(text, id) {
+  function copybox(text, id, label) {
     return '<div class="copybox noruby"' + (id ? ' id="' + id + '"' : '') + '>' +
       '<pre>' + esc(text) + '</pre>' +
-      '<div class="bar"><button type="button" class="primary small" data-copy>コピー</button>' +
+      '<div class="bar"><button type="button" class="primary small" data-copy>' + (label || 'コピー') + '</button>' +
       '<span class="msg" aria-live="polite"></span></div></div>';
   }
 
@@ -194,6 +194,7 @@
     title: 'AI入門',
     subtitle: 'はじめてでも、ひとりで進められるAIの授業',
     lessons: [lesson0].concat(future),
-    starter: STARTER
+    starter: STARTER,
+    copybox: copybox
   };
 })();
