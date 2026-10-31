@@ -34,7 +34,7 @@
         '<div class="card"><dl class="facts">' +
         '<dt>かかる時間</dt><dd>約1時間30分（休みながらでOK）</dd>' +
         '<dt>つかうもの</dt><dd>VS Code、agent1フォルダ、Claude Code（レッスン1・2で用意したもの）</dd>' +
-        '<dt>おまけ（任意）</dt><dd>Claude in Chrome：AIに、ブラウザを操作してもらう。Chromeか Edge が必要です。</dd>' +
+        '<dt>おまけ（任意）</dt><dd>Claude in Chrome：AIに、ブラウザを操作してもらう。Chromeか Edge が必要です' + os('', '（Safariでは、使えません）') + '。</dd>' +
         '</dl></div>' +
         '<p class="note warn">練習は、<b>agent1 フォルダの中だけ</b>で行います。本当の個人情報や、大事なファイルは、入れません。</p>',
       help: [
@@ -55,7 +55,7 @@
         '<p>文字を入れる欄が出れば、準備完了です。<b>このレッスンは、ずっと、この画面で進めます。</b></p>',
       help: [
         { os: 'win', q: '「認識されません」と出ました', a: 'VS Codeを、いったん完全に閉じて、もう一度開いて、新しいターミナルで試してください。' },
-        { os: 'mac', q: '「command not found」と出ました', a: 'VS Codeを、いったん完全に終了して（Command＋Q）、もう一度開いて、新しいターミナルで試してください。' },
+        { os: 'mac', q: '「command not found」と出ました', a: 'VS Codeを、⌘（Command）キーとQキーで、いったん完全に終了して、もう一度開いて、新しいターミナルで試してください。' },
         { q: '「このフォルダを信頼しますか？」と出ました', a: '矢印キーの↓で、「Yes, I trust this folder」を選んでから、Enterキーを押します。最初に選ばれているのが「No, exit」のことがあるので、注意してください。' },
         HELP_ENG
       ]
@@ -221,7 +221,7 @@
         '</ul>' +
         '<p class="note warn">きまりをやぶると、<b>次にClaude Codeを起動したときに</b>、「Settings Error」が出ます（公式の案内）。次の画面では、コピーして貼り付けるので、安心してください。</p>',
       help: [
-        { q: '「ホーム」フォルダって、どこですか？', a: 'Windowsは C:\\Users\\（あなたの名前）、Macは「Finder」の左側にある、家のマークが付いた、自分の名前のフォルダです。今日は、自分で探す必要は、ありません。' },
+        { q: '「ホーム」フォルダって、どこですか？', a: os('Windowsは <b>C:\\Users\\（あなたの名前）</b> です。', 'Finderの、上のメニューの「移動」→「ホーム」で開く、家のマークが付いた、自分の名前のフォルダです。') + '今日は、自分で探す必要は、ありません。' },
         { q: 'JSONが、むずかしいです', a: '今日は、コピーした文字を貼り付けるだけで大丈夫です。意味は、少しずつ、わかれば十分です。' }
       ]
     },
@@ -246,10 +246,10 @@
         '<p>VS Codeで、<b>settings.json</b> を自分で作って、「secret.txt は読ませない」というルールと、「いつも Manual で始める」という設定を書きます。</p>' +
         '<ol>' +
         '<li>VS Codeの左側のファイル一覧の、<b>何もないところ</b>（ファイル名の下の、空いているところ）で、' + os('右クリック', 'Controlキーを押しながらクリック（または2本指でクリック）') + 'して、「新しいファイル」を選びます。</li>' +
-        '<li>名前の欄に、次のとおり入力して、Enterキーを押します（<b>先頭の「.」と、「/」も、そのまま</b>）。' +
+        '<li>名前の欄に、次のとおり入力して、Enterキーを押します（<b>先頭の「.」と、「/」も、そのまま</b>。英字の入力にしてから打つか、下の「コピー」で写して、' + os('Ctrlキー', '⌘（Command）キー') + 'とVキーで貼り付けます）。' +
         cmd('.claude/settings.json') + '</li>' +
         '<li>空のファイルが開きます。下の「コピー」を押して、中に貼り付けます。</li>' +
-        '<li>' + os('CtrlキーとSキー', 'CommandキーとSキー') + 'で、保存します。</li>' +
+        '<li>' + os('CtrlキーとSキー', '⌘（Command）キーとSキー') + 'で、保存します。</li>' +
         '</ol>' +
         box('{\n  "permissions": {\n    "defaultMode": "manual",\n    "deny": ["Read(./secret.txt)"]\n  }\n}') +
         '<p class="note">意味：<b>defaultMode</b>＝起動したときのモード、<b>manual</b>＝毎回聞く。<b>deny</b>＝禁止、<b>Read</b>＝読む手、<b>./secret.txt</b>＝いまのフォルダの secret.txt。つまり「このフォルダでは、いつも Manual で始める。secret.txt を読むのは、禁止」です。</p>' +
@@ -320,7 +320,7 @@
     {
       id: 'c17', kind: 'know', tag: '知っておこう（おまけ）', title: 'Claude in Chrome って、なに？（任意）',
       html:
-        '<p class="note"><b>この2つの画面は、「任意」です。</b>Chromeかエッジ（Edge）を使っている人だけ、やってみてください。やらなくても、レッスン3は終えられます。</p>' +
+        '<p class="note"><b>この2つの画面は、「任意」です。</b>Chromeかエッジ（Edge）を使っている人だけ、やってみてください。やらなくても、レッスン3は終えられます。' + os('', 'Macに最初から入っている<b>Safari</b>では、使えません。') + '</p>' +
         '<p><b>Claude in Chrome</b> は、Claude Codeに、<b>ご自分のブラウザを操作してもらう</b>しくみです。ページを開く・クリックする・文字を入れる、などができます。</p>' +
         '<div class="card goal"><b>必要なもの（公式の案内）</b><br>・Google Chrome か Microsoft Edge（ほかのChromium系でも可）<br>・Claude in Chrome の拡張機能（ブラウザに追加するもの）<br>・Claude Code と、有料プラン<br>・<code>/login</code> でのログイン（APIキーでは動きません）</div>' +
         '<h2>気をつけること</h2>' +
@@ -351,7 +351,7 @@
         '<p>「Claude in Chrome wants to…」という許可の画面が出たら、内容を読んでから、選びます。終わったら、<b>/chrome</b> と入力すると、つながっているか（Status: Enabled など）が、見られます。</p>' +
         '<p class="note warn">AIが、ブラウザで何をしているか、見ていてください。おかしなことをしたら、すぐ<b>Escキー</b>で止めます。</p>',
       help: [
-        { q: '拡張機能が見つからないと言われます', a: '公式の案内では、まず、Chromeを、いったん閉じて、開きなおします。それでもだめなら、/chrome を開いて「Reconnect extension」を選びます。それでもだめなら、Claude CodeとChromeを、どちらも再起動します。' },
+        { q: '拡張機能が見つからないと言われます', a: '公式の案内では、まず、Chromeを、' + os('いったん閉じて', '⌘（Command）キーとQキーで終了して') + '、開きなおします。それでもだめなら、/chrome を開いて「Reconnect extension」を選びます。それでもだめなら、Claude CodeとChromeを、どちらも再起動します。' },
         { q: '起動したときに「Claude in Chrome extension detected」と出ました', a: '拡張機能が、もう入っているという意味です。<b>「Yes, use my browser」</b>を選ぶと、つながります（これからも、標準でつながる設定になります）。' },
         { q: 'エラーで、進めません', a: 'ここで、止めてかまいません。この画面は、任意です。' },
         HELP_APPROVE
