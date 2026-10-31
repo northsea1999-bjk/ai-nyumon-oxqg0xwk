@@ -296,7 +296,11 @@
         '<li>끝날 때까지 잠시 기다립니다. 진행 상황이 안 나올 수도 있습니다.</li>' +
         '</ol>' +
         cOs(CMD_AGY, CMD_AGY_MAC) +
-        '<p class="note">1줄입니다. 중간에 줄바꿈하지 말고 그대로 붙여 넣으세요.</p>',
+        '<p class="note">1줄입니다. 중간에 줄바꿈하지 말고 그대로 붙여 넣으세요.</p>' +
+        '<div class="os-mac"><h2>Mac은 이어서 "위치 등록"</h2>' +
+        '<p>Mac에서는 설치가 끝나면 이어서 다음 2줄을 <b>1줄씩</b> 붙여 넣고 ' + ENTER + '를 누릅니다. agy의 위치를 Mac에 등록합니다(설치 표시에 "not in your PATH"가 나올 때 필요합니다).</p>' +
+        box(PATH_MAC_1, null, '복사') + box(PATH_MAC_2, null, '복사') +
+        '<p class="note">아무것도 안 나오면 성공입니다. 끝이 "$"인 터미널을 쓰는 사람은 Claude Code를 설치하는 화면의 "곤란할 때"에 있는 bash용 2줄을 씁니다.</p></div>',
       help: [
         { os: 'win', q: '"irm"이 인식되지 않는다고 나와요', a: '맨 앞이 "PS"가 아닌 다른 터미널을 쓰고 있습니다. 앞 화면으로 돌아가 PowerShell을 다시 여세요.' },
         { q: '오류가 나왔어요', a: '화면의 글자를 스크린샷으로 저장하세요. 인터넷에 연결되어 있는지도 확인하세요.' }
@@ -491,7 +495,7 @@
         '<div class="os-mac"><h2>Mac은 이어서 "위치 등록"</h2>' +
         '<p>Mac에서는 설치가 끝나면 이어서 다음 2줄을 <b>1줄씩</b> 붙여 넣고 ' + ENTER + '를 누릅니다. claude의 위치를 Mac에 등록합니다(공식 안내에 따르면 설치는 위치를 알려 줄 뿐 등록하지는 않습니다).</p>' +
         box(PATH_MAC_1, null, '복사') + box(PATH_MAC_2, null, '복사') +
-        '<p class="note">아무것도 안 나오면 성공입니다. 끝이 "$"인 터미널을 쓰는 사람은 아래 "곤란할 때"의 bash용 2줄을 씁니다.</p></div>',
+        '<p class="note">아무것도 안 나오면 성공입니다(레슨1B에서 이미 등록한 사람도 한 번 더 해도 괜찮습니다). 끝이 "$"인 터미널을 쓰는 사람은 아래 "곤란할 때"의 bash용 2줄을 씁니다.</p></div>',
       help: [
         { os: 'win', q: '"irm"이 인식되지 않는다고 나와요', a: '맨 앞이 "PS"가 아닌 다른 터미널을 쓰고 있습니다. 앞 화면으로 돌아가 PowerShell을 다시 여세요.' },
         { os: 'win', q: '"&&" 오류가 나왔어요', a: '이 명령어는 PowerShell용입니다. 맨 앞이 "PS"인 터미널에서 다시 해 보세요.' },
@@ -575,7 +579,8 @@
         '<ol>' +
         '<li>"복사"를 눌러 입력란에 붙여 넣고 Enter 키를 누릅니다.</li>' +
         '<li>허락을 물으면 "예(Yes)"를 고릅니다.</li>' +
-        '<li>VS Code 왼쪽에 <b>intro-claude.txt</b>가 늘어나면 성공입니다.</li>' +
+        '<li>VS Code 왼쪽에 <b>intro-claude.txt</b>가 늘어나면 <b>클릭해서 엽니다</b>.</li>' +
+        '<li>안에 자기소개가 3줄 적혀 있으면 성공입니다. AI가 "했습니다"라고 해도 <b>내 눈으로 확인하는 것</b>이 중요합니다.</li>' +
         '</ol>' +
         box(four('claude')[1], null, '복사'),
       help: [HELP_APPROVE_C]
@@ -597,7 +602,8 @@
         '<ol>' +
         '<li>"복사"를 눌러 입력란에 붙여 넣고 Enter 키를 누릅니다.</li>' +
         '<li>허락을 물으면 "예(Yes)"를 고릅니다.</li>' +
-        '<li>intro-claude.txt가 <b>memo-claude</b> 폴더 안에 들어가면 성공입니다.</li>' +
+        '<li>VS Code 왼쪽에서 <b>memo-claude</b> 폴더 이름을 클릭해 열고, 안에 intro-claude.txt가 있는지 확인합니다.</li>' +
+        '<li>agent1 바로 아래(memo-claude 밖)에서는 intro-claude.txt가 <b>없어졌는지</b>도 확인합니다. 둘 다 맞으면 성공입니다.</li>' +
         '</ol>' +
         box(four('claude')[3], null, '복사') +
         '<p>Claude Code는 <b>종료하지 말고</b> 이대로 다음 화면으로 진행합니다.</p>',

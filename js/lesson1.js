@@ -326,7 +326,11 @@
           '<li>終わるまで、しばらく待ちます。進み具合が出ないこともあります。</li>' +
           '</ol>' +
           cmdOs(CMD_AGY, CMD_AGY_MAC) +
-          '<p class="note">1行です。途中で改行しないで、そのまま貼り付けてください。</p>',
+          '<p class="note">1行です。途中で改行しないで、そのまま貼り付けてください。</p>' +
+          '<div class="os-mac"><h2>Macは、つづけて「場所の登録」</h2>' +
+          '<p>Macでは、インストールが終わったら、つづけて、次の2行を、<b>1行ずつ</b>貼り付けて、' + ENTER + 'を押します。agy の場所を、Macに登録します（インストールの表示に「not in your PATH」と出るときに必要です）。</p>' +
+          window.COURSE.copybox(PATH_MAC_1) + window.COURSE.copybox(PATH_MAC_2) +
+          '<p class="note">何も出なければ、成功です。終わりが「$」のターミナルの人は、Claude Codeを入れる画面の「困ったとき」にある、bash用の2行を使います。</p></div>',
         help: [
           { os: 'win', q: '「irm」が認識されません、と出ました', a: '先頭が「PS」ではない、別のターミナルを使っています。前の画面にもどって、PowerShellを開きなおしてください。' },
           { q: 'エラーが出ました', a: '画面の文字を、スクリーンショットで保存してください。インターネットにつながっているかも、確認してください。' }
@@ -575,7 +579,7 @@
           '<div class="os-mac"><h2>Macは、つづけて「場所の登録」</h2>' +
           '<p>Macでは、インストールが終わったら、つづけて、次の2行を、<b>1行ずつ</b>貼り付けて、' + ENTER + 'を押します。claudeの場所を、Macに登録します（公式の案内では、インストールは場所を教えるだけで、登録はしません）。</p>' +
           window.COURSE.copybox(PATH_MAC_1) + window.COURSE.copybox(PATH_MAC_2) +
-          '<p class="note">何も出なければ、成功です。終わりが「$」のターミナルの人は、下の「困ったとき」の、bash用の2行を使います。</p></div>',
+          '<p class="note">何も出なければ、成功です（レッスン1Bで、すでに登録した人も、もう一度して大丈夫です）。終わりが「$」のターミナルの人は、下の「困ったとき」の、bash用の2行を使います。</p></div>',
         help: [
           { os: 'win', q: '「irm」が認識されません、と出ました', a: '先頭が「PS」ではない、別のターミナルを使っています。前の画面にもどって、PowerShellを開きなおしてください。' },
           { os: 'win', q: '「&&」というエラーが出ました', a: 'このコマンドは、PowerShell用です。先頭が「PS」のターミナルで、やりなおしてください。' },
@@ -659,7 +663,8 @@
           '<ol>' +
           '<li>「コピー」を押して、入力欄に貼り付けて、Enterキーを押します。</li>' +
           '<li>許可を聞かれたら、「はい(Yes)」を選びます。</li>' +
-          '<li>VS Codeの左側に、<b>jikoshokai-claude.txt</b> が増えたら成功です。</li>' +
+          '<li>VS Codeの左側に、<b>jikoshokai-claude.txt</b> が増えたら、<b>クリックして開きます</b>。</li>' +
+          '<li>中に、自己紹介が3行書いてあれば、成功です。AIが「できました」と言っても、<b>自分の目で確かめる</b>のが大事です。</li>' +
           '</ol>' +
           window.COURSE.copybox(four('claude')[1]),
         help: [HELP_APPROVE_C]
@@ -681,7 +686,8 @@
           '<ol>' +
           '<li>「コピー」を押して、入力欄に貼り付けて、Enterキーを押します。</li>' +
           '<li>許可を聞かれたら、「はい(Yes)」を選びます。</li>' +
-          '<li>jikoshokai-claude.txt が、<b>memo-claude</b>フォルダの中に入ったら成功です。</li>' +
+          '<li>VS Codeの左側で、<b>memo-claude</b> フォルダの名前をクリックして開き、中に jikoshokai-claude.txt があるか確かめます。</li>' +
+          '<li>agent1 のすぐ下（memo-claude の外）からは、jikoshokai-claude.txt が<b>なくなっている</b>ことも確かめます。両方そうなら、成功です。</li>' +
           '</ol>' +
           window.COURSE.copybox(four('claude')[3]) +
           '<p>Claude Codeは、<b>終了しないで</b>、このまま次の画面へ進みます。</p>',
