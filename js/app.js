@@ -237,7 +237,8 @@
         out = {
           id: step.id, kind: step.kind, widget: step.widget, tag: k.tag, title: k.title, html: k.html,
           help: k.help || step.help, chips: k.chips || step.chips, checks: k.checks || step.checks,
-          required: k.required || step.required, quiz: k.quiz || step.quiz
+          required: k.required || step.required, quiz: k.quiz || step.quiz,
+          checkIds: step.checkIds, legacyCheckIds: step.legacyCheckIds
         };
       }
     }
@@ -377,12 +378,21 @@
       '<p class="note">' + t('checkNote') + '</p>';
     app.appendChild(wrap);
     var ul = wrap.querySelector('ul'), btn = wrap.querySelector('#done-btn'), msg = wrap.querySelector('#done-msg');
+    /* checkIds があるときは、チェックを「名前」で保存する（並びを変えても、前のチェックが別の項目に付かないように）。
+       前の版の「番号」の保存は、legacyCheckIds（前の並び）で、名前に移す */
+    var ids = step.checkIds;
+    if (ids && !st.checkMap) {
+      var legacy = step.legacyCheckIds || ids;
+      st.checkMap = {};
+      (st.checks || []).forEach(function (on, i) { if (on && legacy[i]) st.checkMap[legacy[i]] = true; });
+      save();
+    }
     var boxes = step.checks.map(function (text, i) {
       var li = document.createElement('li');
       var label = document.createElement('label');
       var cb = document.createElement('input');
       cb.type = 'checkbox';
-      cb.checked = !!(st.checks && st.checks[i]);
+      cb.checked = ids ? !!st.checkMap[ids[i]] : !!(st.checks && st.checks[i]);
       var span = document.createElement('span');
       span.textContent = text;
       label.appendChild(cb);
@@ -390,7 +400,12 @@
       li.appendChild(label);
       ul.appendChild(li);
       cb.addEventListener('change', function () {
-        st.checks = boxes.map(function (b) { return b.checked; });
+        if (ids) {
+          st.checkMap = {};
+          boxes.forEach(function (b, j) { if (b.checked) st.checkMap[ids[j]] = true; });
+        } else {
+          st.checks = boxes.map(function (b) { return b.checked; });
+        }
         save();
         refresh();
       });
