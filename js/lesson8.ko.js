@@ -79,7 +79,7 @@
         { q: '이미 계정이 있어요', a: '그 계정으로 로그인해 두세요. 다음으로 넘어가도 됩니다.' },
         { q: '퍼즐이나 "사람인가요?" 확인이 나와요', a: '화면 안내에 따라 직접 답하세요. AI에게는 시키지 않습니다.' },
         { q: '확인 코드가 안 와요', a: '스팸 메일함을 보세요. 학원이나 가게처럼 여럿이 쓰는 와이파이에서 잘 안 되면 스마트폰 핫스팟 등 다른 연결로 해 보세요.' },
-        { q: '2단계 인증은 필요한가요?', a: '공식 안내에 따르면 만들 때 꼭 해야 하는 것은 아니지만 강하게 권장됩니다. 익숙해지면 설정해 두면 안심입니다.' }
+        { q: '2단계 인증은 필요한가요?', a: '공식 안내에 따르면 만들 때 꼭 해야 하는 것은 아니지만 강하게 권장됩니다. 나중에 GitHub에서 "2단계 인증을 설정하세요"라는 메일이 오면 안내된 기한(45일) 안에 직접 설정합니다.' }
       ]
     },
     i4: {
@@ -89,7 +89,7 @@
         '<div class="os-win">' +
         '<ol>' +
         '<li>Claude Code가 실행 중이면 입력란에 <b>/exit</b>를 넣고 Enter 키를 누릅니다.</li>' +
-        '<li>VS Code 터미널(맨 앞이 "PS")에 아래 "복사"를 눌러 붙여 넣고 Enter 키를 누릅니다. <b>Git</b>이 설치됩니다(git-scm.com 공식 안내에 있는 방법).' + box('winget install --id Git.Git -e --source winget') + '</li>' +
+        '<li>VS Code 터미널(맨 앞이 "PS")에 아래 "복사"를 눌러 붙여 넣고 Enter 키를 누릅니다. <b>Git</b>이 설치됩니다(git-scm.com 공식 안내에 있는 방법. 가장 새 버전보다 조금 오래된 것일 수 있지만 이 레슨에서는 문제없습니다).' + box('winget install --id Git.Git -e --source winget') + '</li>' +
         '<li>끝나면 다음을 붙여 넣고 Enter 키를 누릅니다. <b>GitHub CLI</b>가 설치됩니다(GitHub CLI 공식 안내).' + box('winget install --id GitHub.cli --source winget') + '</li>' +
         '<li>각 명령어 도중에 "이 앱이 디바이스를 변경할 수 있도록 허용하시겠어요?"가 나오면 "예"를 누릅니다(두 번 나올 수 있습니다).</li>' +
         '<li><b>VS Code를 완전히 닫았다가 다시 엽니다</b>(새 도구를 터미널이 찾을 수 있게 하기 위해서입니다).</li>' +
@@ -171,7 +171,8 @@
         '<li>허락을 물으면 내용을 읽고 cafe-landing에 관한 일이면 "Yes"를 고릅니다.</li>' +
         '<li>마지막에 <b>github.com/(사용자 이름)/cafe-landing</b> 같은 주소를 알려 주면 완성입니다.</li>' +
         '</ol>' +
-        '<p class="note">AI는 Git 기록(git init·git add·git commit)을 한 뒤 gh repo create로 저장소를 만들고 푸시합니다. 공식 안내에 따르면 저장소를 만들어 푸시하려면 먼저 커밋이 있어야 합니다.</p>',
+        '<p class="note">AI는 Git 기록(git init·git add·git commit)을 한 뒤 gh repo create로 저장소를 만들고 푸시합니다. 먼저 커밋이 없으면 푸시할 수 없습니다.</p>' +
+        '<p class="note"><b>.gitignore</b>(깃이그노어)는 "이 파일은 넣지 않는다"는 목록 파일입니다. 컴퓨터가 자동으로 만드는 파일을 GitHub로 보내지 않게 합니다.</p>',
       help: [
         HELP_APPROVE,
         { q: 'agent1 폴더에서 git init을 하려고 해요', a: '"아니요(No)"를 고르고 "cafe-landing 안에서만 해 주세요"라고 전합니다. agent1에는 CLAUDE.md나 스킬처럼 넣지 않아도 되는 것도 들어 있기 때문입니다.' },
@@ -223,12 +224,12 @@
       tag: 'PC에서 조작', title: '내용을 확인하고 나서 공개하기',
       html:
         '<p><b>GitHub Pages</b>(깃허브 페이지스)를 쓰면 저장소의 페이지를 인터넷에 공개할 수 있습니다. 공식 안내에 따르면 무료 요금제에서는 <b>저장소를 공개(public)로 해야</b> 합니다. 공개하면 <b>파일도 전부 누구나 볼 수 있습니다</b>.</p>' +
-        '<div class="card goal"><b>공개하기 전에 직접 확인하기</b><br>□ 파일은 index.html과 README.md뿐<br>□ 이름·주소·전화번호·이메일 주소가 들어 있지 않다<br>□ 비밀번호나 "열쇠"가 들어 있지 않다<br>□ 공개해도 부끄럽지 않은 내용<br>□ <b>예전 커밋(Commits)</b>에도 개인정보가 들어간 적이 없다</div>' +
+        '<div class="card goal"><b>공개하기 전에 직접 확인하기</b><br>□ 파일은 index.html·README.md·.gitignore(넣지 않을 파일 목록)뿐<br>□ 이름·주소·전화번호·이메일 주소가 들어 있지 않다<br>□ 비밀번호나 "열쇠"가 들어 있지 않다<br>□ 공개해도 부끄럽지 않은 내용<br>□ <b>예전 커밋(Commits)</b>에도 개인정보가 들어간 적이 없다</div>' +
         '<p class="note warn">공개하면 <b>지금 파일뿐 아니라 예전 커밋 기록도 전부</b> 보입니다. 나중에 고쳐도 예전 기록에는 남습니다. 개인정보가 한 번이라도 들어갔다면 공개하지 말고 저장소를 새로 만드세요.</p>' +
         '<ol>' +
         '<li>저장소 페이지와 시계 표시(Commits)의 기록에서 위의 5가지를 확인합니다. 마음에 걸리는 곳이 있으면 먼저 AI에게 고치게 합니다.</li>' +
         '<li>괜찮으면 다음 글을 복사해서 보냅니다.' +
-        box('gh를 써서 cafe-landing 저장소를 공개(public)로 바꾸고 GitHub Pages로 공개해 주세요. 명령어에는 저장소 이름을 "사용자이름/cafe-landing" 형식으로 넣어 주세요. 공개하는 곳은 main 브랜치의 맨 위(/)로 해 주세요. 끝나면 공개 주소를 알려 주세요.') +
+        box('gh를 써서 cafe-landing 저장소를 공개(public)로 바꾸고 GitHub Pages로 공개해 주세요. 명령어에는 저장소 이름을 "사용자이름/cafe-landing" 형식으로 넣어 주세요. 공개하는 곳은 main 브랜치의 맨 위(/)로 해 주세요. 공개 작업이 끝났는지 확인한 뒤 공개 주소를 알려 주세요.') +
         '</li>' +
         '<li>"공개로 바꾸는" 명령어의 허락을 물으면 <b>저장소 이름이 cafe-landing인지</b> 확인하고 "Yes"를 고릅니다.</li>' +
         '</ol>' +
@@ -263,14 +264,17 @@
       html:
         '<p>GitHub에는 세계 여러 사람이 만든 도구가 아주 많습니다. 무언가를 만들고 싶어지면 <b>먼저 "이미 있지 않은지" 찾는</b> 것이 지름길입니다(레슨7의 라이브러리와 같은 생각).</p>' +
         '<ol>' +
-        '<li>브라우저에서 <b>GitHub 트렌딩</b>(그날 인기 있는 저장소)을 열고 둘러봅니다.<br><a href="https://github.com/trending" target="_blank" rel="noopener">github.com/trending 열기</a></li>' +
+        '<li>브라우저에서 <b>GitHub 트렌딩</b>(그날 인기 있는 저장소)을 열고 둘러봅니다. 위쪽 "Date range"로 기간을, "Language"로 언어를 좁힐 수 있습니다.<br><a href="https://github.com/trending" target="_blank" rel="noopener">github.com/trending 열기</a></li>' +
         '<li>마음에 드는 것이 있으면 <b>Star(☆)</b>를 눌러 봅니다. 공식 안내에 따르면 Star는 "나중에 찾기 쉽게 하는" 책갈피이고, 만든 사람에게 "고마워요"를 전하는 뜻도 됩니다. 누른 것은 github.com/stars에서 볼 수 있습니다.</li>' +
         '<li>Claude Code로 돌아와서 다음 글을 복사해서 보냅니다.' +
         box('PDF 자료를 핵심만 정리한 요약 노트로 바꾸는 도구를 만들고 싶습니다. 만들기 전에 쓸 수 있는 라이브러리나 오픈소스가 이미 있는지 웹과 GitHub에서 조사해 주세요. 설치는 하지 마세요. 후보 3개를 만든 사람·스타 수·최근 업데이트·할 수 있는 일과 함께 표로 알려 주세요.') +
         '</li>' +
         '<li>조사하기 위한 허락(WebSearch·gh search 등)을 물으면 내용을 읽고 "Yes"를 고릅니다.</li>' +
         '</ol>' +
-        '<p class="note">남의 공개 저장소는 클론해서 <b>읽으며 배우는</b> 데도 쓸 수 있습니다. "이 저장소의 README를 읽고 무엇을 할 수 있는지 쉽게 설명해 주세요"라고 부탁하기만 해도 공부가 됩니다.</p>' +
+        '<li>후보가 나오면 설치하기 전에 <b>설명서(README)를 읽게 합니다</b>. 다음 글을 복사해서 보냅니다(아무것도 설치하지 않습니다).' +
+        box('gh repo view microsoft/markitdown으로 README를 읽고 어떤 도구인지, 어떻게 쓰는지, 주의할 점은 무엇인지 쉽게 설명해 주세요. 설치는 하지 마세요.') +
+        '</li>' +
+        '<p class="note">남의 공개 저장소는 <b>읽으며 배우는</b> 데도 쓸 수 있습니다. 마음에 드는 저장소가 있으면 같은 방법으로 README 설명을 부탁해 보세요.</p>' +
         '<div class="card goal"><b>남이 만든 것을 설치하기 전에 볼 곳</b><br>· <b>누가 만들었는지</b>(회사·잘 알려진 사람인지)<br>· <b>스타 수</b>와 <b>최근에도 고쳐지고 있는지</b><br>· <b>README</b>에 사용법과 할 수 있는 일이 적혀 있는지<br>· 수상하면 <b>설치하지 않는다</b></div>',
       help: [
         { q: '트렌딩이 온통 영어예요', a: '괜찮습니다. 보기만 해도 충분합니다. 모르는 것은 AI에게 "이 저장소는 무엇인가요?"라고 물을 수 있습니다.' },
@@ -283,8 +287,8 @@
         '<p>앞 화면에서 Microsoft가 만든 <b>markitdown</b>(마크잇다운)이 나왔을지도 모릅니다. PDF·워드·엑셀·파워포인트 등을 AI가 읽기 쉬운 글자(Markdown)로 바꾸는 도구입니다. <b>해 보고 싶은 사람만</b> 시험합니다.</p>' +
         '<ol>' +
         '<li>연습용 파일을 하나 준비해서 agent1에 넣습니다. <b>개인정보가 없고 글자가 있는</b> PDF나 워드로 합니다(예: 내가 만든 메모, 공개된 안내문).</li>' +
-        '<li>Claude Code에 <b>/exit</b>를 넣어 끝내고 Python 버전을 확인합니다.' + cmdOs('python --version', 'python3 --version') + '<b>3.15 이상</b>이면 markitdown이 아직 지원하지 않으므로 <b>이 화면은 건너뜁니다</b>(공식 안내에 따르면 3.10~3.14에서 쓸 수 있습니다).</li>' +
-        '<li>3.14 이하라면 다음을 붙여 넣고 ' + os('Enter', 'Return') + ' 키를 누릅니다(공식 안내의 이름 그대로 직접 설치합니다).' + cmdOs('python -m pip install "markitdown[all]"', 'python3 -m pip install "markitdown[all]"') + '</li>' +
+        '<li>Claude Code에 <b>/exit</b>를 넣어 끝내고 Python 버전을 확인합니다.' + cmdOs('python --version', 'python3 --version') + '<b>3.10~3.14</b>일 때만 계속합니다. 그 밖(3.15 이상, 3.9 이하)이면 markitdown이 지원하지 않으므로 <b>이 화면은 건너뜁니다</b>(공식 안내에 따르면 3.10~3.14에서 쓸 수 있습니다).</li>' +
+        '<li>3.10~3.14라면 다음을 붙여 넣고 ' + os('Enter', 'Return') + ' 키를 누릅니다(공식 안내의 이름 그대로 직접 설치합니다).' + cmdOs('python -m pip install "markitdown[all]"', 'python3 -m pip install "markitdown[all]"') + '</li>' +
         '<li><b>claude -c</b>로 Claude Code로 돌아갑니다.' + cmd('claude -c') + '</li>' +
         '<li>다음 글의 "파일이름"을 바꿔서 보냅니다.' +
         box('markitdown은 이미 설치해 두었습니다. markitdown을 써서 파일이름 을 Markdown으로 바꿔 주세요. 그다음 중요한 부분만 요약 노트(요약.md)로 만들어 주세요.') +
@@ -302,6 +306,11 @@
       tag: 'PC에서 조작', title: 'Claude 데스크톱 앱 설치하기',
       html:
         '<p>VS Code 말고 <b>Claude 데스크톱 앱</b>에서도 Claude Code를 쓸 수 있습니다. 버튼으로 조작할 수 있어서 간단한 작업에 편리합니다.</p>' +
+        '<ul class="parts">' +
+        '<li><b>브라우저의 claude.ai(채팅)</b>이야기만 한다<br><span>안전을 위해 내 컴퓨터 폴더에는 들어가지 못한다</span></li>' +
+        '<li><b>데스크톱 앱의 "Code"</b>버튼으로 조작<br><span>내 폴더를 골라 작업을 맡길 수 있다</span></li>' +
+        '<li><b>VS Code+Claude Code(CLI)</b>글자로 조작<br><span>파일을 보면서 작업을 맡길 수 있다</span></li>' +
+        '</ul>' +
         '<ol>' +
         '<li>브라우저에서 <b>claude.com/download</b>를 엽니다.<br><a href="https://claude.com/download" target="_blank" rel="noopener">claude.com/download 열기</a></li>' +
         '<li>' + os('<b>Windows</b> 다운로드를 누릅니다. 내려받은 파일을 더블클릭하고 안내에 따라 설치합니다.', '<b>macOS</b> 다운로드를 누릅니다. 내려받은 파일(.dmg)을 열고 Claude 아이콘을 "응용 프로그램" 폴더에 넣습니다.') + '</li>' +
@@ -314,6 +323,7 @@
         { q: '이미 Claude 앱이 있어요', a: '새 버전으로 업데이트한 뒤 그대로 쓰세요.' },
         { q: '쿠키(Cookie) 확인이 나와요', a: '고를 수 있으면 "필요한 것만" 쪽을 고릅니다.' },
         { os: 'win', q: '어느 Windows를 고르면 되나요?', a: '보통은 "Windows"(x64)입니다. "ARM64"는 일부 얇은 노트북용입니다.' },
+        { os: 'mac', q: '"인터넷에서 다운로드한 앱입니다"라고 나와요', a: 'claude.com에서 내려받은 것이라면 "열기"를 누릅니다.' },
         { os: 'mac', q: 'Intel Mac에서도 쓸 수 있나요?', a: '공식 안내에 따르면 Mac판은 Intel과 Apple 실리콘 어느 쪽에서도 쓸 수 있습니다.' },
         HELP_ENG
       ]
@@ -335,7 +345,7 @@
         '<li><b>Auto</b>Claude가 위험하지 않은지 판단해서 진행한다<br><span>위험한 것은 막는다</span></li>' +
         '<li><b>Bypass permissions</b>전혀 묻지 않는다<br><span>설정에서 허락하지 않으면 나오지 않는다. <b>이 교재에서는 쓰지 않는다</b></span></li>' +
         '</ul>' +
-        '<p class="note">모델(AI 종류)을 고르는 버튼도 있습니다. 이 교재에서는 처음 그대로 두면 됩니다.</p>',
+        '<p class="note">모델(AI 종류)을 고르는 버튼도 있습니다. 체크 표시가 붙은 것이 지금 쓰는 모델입니다. 이 교재에서는 처음 그대로 두면 됩니다.</p>',
       help: [
         { q: '화면의 말이 조금 달라요', a: '앱이 한국어로 표시되어 있으면 "수동"처럼 한국어 이름으로 나올 수 있습니다. 버전에 따라서도 이름이 조금 다릅니다(예전 버전에서는 "Ask permissions" 등이었습니다). "바꾸기 전에 묻는" 것을 고르세요.' },
         { q: '"Bypass permissions"를 써도 되나요?', a: '이 교재에서는 쓰지 않습니다. 공식 안내에서도 설정에서 특별히 허락하지 않으면 나오지 않는 것입니다.' }
@@ -350,10 +360,10 @@
         '<li>입력란에 <b>/</b>(슬래시)를 넣습니다. 쓸 수 있는 명령어 목록이 나옵니다.</li>' +
         '<li>이어서 <b>card</b>를 넣어 <b>/card</b>로 만듭니다. 레슨7에서 만든 <b>cardnews</b>가 나오면 스킬도 그대로 쓸 수 있다는 것을 알 수 있습니다(공식 안내).</li>' +
         '</ol>' +
-        '<p class="note">입력란의 "+"에서 파일이나 사진을 붙여서 부탁할 수도 있습니다.</p>' +
+        '<p class="note">입력란의 "+"에서 파일이나 사진을 붙여서 부탁하거나, 커넥터(레슨6)나 플러그인(레슨7)을 볼 수 있습니다.</p>' +
         '<h2>어느 쪽을 쓸까?</h2>' +
         '<ul class="parts">' +
-        '<li><b>데스크톱 앱</b>버튼으로 알기 쉽다<br><span>한 번에 끝나는 간단한 작업에 맞다</span></li>' +
+        '<li><b>데스크톱 앱</b>버튼으로 알기 쉽다. 왼쪽 줄은 <b>대화 목록</b>이라 파일 목록은 나오지 않는다<br><span>한 번에 끝나는 간단한 작업에 맞다</span></li>' +
         '<li><b>VS Code</b>파일을 보면서 작업할 수 있다<br><span>파일이 늘어나는 긴 작업에 맞다</span></li>' +
         '</ul>',
       help: [
@@ -371,7 +381,7 @@
         '</ul>' +
         '<ol>' +
         '<li>브라우저에서 <b>claude.ai/code</b>를 열고 로그인합니다.<br><a href="https://claude.ai/code" target="_blank" rel="noopener">claude.ai/code 열기</a></li>' +
-        '<li>GitHub와 연결하는 안내가 나오면 그에 따라 <b>GitHub로 로그인하고 허락</b>합니다(공식 안내).</li>' +
+        '<li>GitHub와 연결하는 안내가 나오면 그에 따라 <b>GitHub로 로그인하고 허락</b>합니다(공식 안내). 입력란 근처의 "Default"는 작업하는 환경의 이름입니다. 그대로 두면 됩니다.</li>' +
         '<li><b>Claude GitHub App</b>을 설치하는 화면이 되면 주소가 <b>github.com/apps/claude</b>이고 만든 곳이 <b>anthropics</b>(Anthropic)인지 확인합니다. 이 화면이 안 나오면("Skip"으로 넘어갔을 때 등) 다음 링크를 직접 엽니다.<br><a href="https://github.com/apps/claude/installations/new" target="_blank" rel="noopener">github.com/apps/claude/installations/new 열기</a></li>' +
         '<li>저장소를 고르는 곳에서 <b>"Only select repositories"</b>(고른 저장소만)를 고르고 <b>cafe-landing</b>만 골라 "Install"을 누릅니다.</li>' +
         '</ol>' +
@@ -390,16 +400,17 @@
         '<li>claude.ai/code 입력란 근처에서 저장소를 고르는 곳을 누르고 <b>cafe-landing</b>을 고릅니다.</li>' +
         '<li>다음 글을 복사해서 보냅니다.' + box('이 저장소의 내용을 간단히 설명해 주세요.') + '</li>' +
         '<li>설명이 나오면 다음 글을 복사해서 보냅니다.' +
-        box('페이지 맨 위에 "클라우드에서 고쳤습니다"라는 한 줄을 넣어 주세요. 끝나면 어디를 바꿨는지 보여 주세요. 머지는 하지 마세요.') +
+        box('페이지 맨 위에 "클라우드에서 고쳤습니다"라는 한 줄을 넣어 주세요. 끝나면 어디를 바꿨는지 보여 주세요. 머지는 하지 마세요. main 브랜치에는 직접 푸시하지 말고 새 브랜치에서 작업해 주세요.') +
         '</li>' +
-        '<li>끝나면 바뀐 곳(<b>차이</b>)을 볼 수 있습니다. 빨간 줄은 지운 곳, 초록 줄은 더한 곳입니다.</li>' +
+        '<li>끝나면 바뀐 곳(<b>차이</b>)을 볼 수 있습니다. 바뀐 파일이나 숫자(+1 등)를 누르면 열립니다. 빨간 줄은 지운 곳, 초록 줄은 더한 곳입니다.</li>' +
         '<li>괜찮으면 <b>"Create PR"</b>(변경 제안 만들기)을 누릅니다(공식 안내).</li>' +
         '</ol>' +
         '<p class="note"><b>PR</b>(풀 리퀘스트)은 "이렇게 바꾸고 싶습니다"라는 <b>제안</b>입니다. 아직 페이지는 바뀌지 않았습니다. <b>합칠지(머지) 말지는 내가 정합니다</b>.</p>' +
         '<p class="note">클라우드 세션의 모드는 Auto·Accept edits·Plan 중에서 고를 수 있습니다(공식 안내). 인터넷 속의 다른 컴퓨터에서 움직이므로 내 컴퓨터의 파일은 바뀌지 않습니다.</p>',
       help: [
         { q: 'cafe-landing이 안 나와요', a: '앞 화면에서 Claude GitHub App에 cafe-landing을 골랐는지 확인하세요.' },
-        { q: '"Create PR"을 눌렀더니 GitHub 화면이 됐어요', a: '그 화면에서 초록색 "Create pull request"를 누르면 제안이 만들어집니다. 이미 제안(PR)이 만들어져 있다면 그대로 다음 화면으로 넘어갑니다.' },
+        { q: '"Create PR"을 누른 뒤 GitHub 화면이 열렸을 때는?', a: '보통은 그대로 제안(PR)이 만들어집니다. GitHub 화면이 열렸을 때는 그 화면에서 초록색 "Create pull request"를 누르면 제안이 만들어집니다. 이미 제안(PR)이 만들어져 있다면 그대로 다음 화면으로 넘어갑니다.' },
+        { q: 'main에 직접 푸시했다고 해요', a: '머지 없이 페이지가 바뀌었을 수 있습니다. 공개 페이지를 보고 문제가 없으면 그대로 다음으로 넘어갑니다. 다음부터는 "새 브랜치에서"라고 다시 전합니다.' },
         { q: '브라우저를 닫아 버렸어요', a: '괜찮습니다. 공식 안내에 따르면 작업은 계속되고 있습니다. claude.ai/code를 다시 열면 왼쪽 목록에 남아 있습니다.' },
         { q: '사용량이 드나요?', a: '네. 공식 안내에 따르면 평소 Claude와 같은 요금제 사용량에서 쓰입니다.' }
       ]
@@ -419,6 +430,7 @@
       help: [
         { q: '"Merge pull request"가 안 눌려요', a: '조금 기다렸다가 페이지를 다시 읽어 들이세요. 그래도 안 되면 제안 화면 맨 아래의 메시지를 AI에게 보여 주고 물어보세요.' },
         { q: '머지하고 싶지 않아요', a: '"Close pull request"로 제안을 닫을 수 있습니다. 페이지는 바뀌지 않습니다.' },
+        { q: 'claude -c로 생각과 다른 대화가 나왔어요', a: '그대로 써도 괜찮습니다. 신경 쓰이면 /exit한 뒤 claude로 새로 시작합니다.' },
         HELP_APPROVE
       ]
     },
@@ -427,10 +439,11 @@
       html:
         '<p><b>리모트 컨트롤</b>을 쓰면 <b>컴퓨터에서 실행 중인 Claude Code</b>의 대화를 스마트폰에서 보거나 이어서 부탁할 수 있습니다. 작업은 컴퓨터 안에서 이루어집니다. <b>스마트폰이 없는 사람은 읽기만</b> 해도 됩니다.</p>' +
         '<ol>' +
+        '<li>VS Code의 Claude Code를 준비합니다(멈춰 있으면 <b>claude -c</b>로 실행합니다).</li>' +
         '<li>스마트폰에 <b>Claude 앱</b>을 설치하고 같은 계정으로 로그인합니다. Claude Code에서 <b>/mobile</b>을 넣으면 앱 설치용 QR 코드가 나옵니다(공식 안내).</li>' +
-        '<li>VS Code의 Claude Code에서(멈춰 있으면 <b>claude -c</b>로 실행해서) <b>/rc</b>를 넣고 ' + os('Enter', 'Return') + ' 키를 누릅니다(/remote-control과 같습니다).' + cmd('/rc') + '</li>' +
-        '<li>처음에는 확인 창이 나옵니다. <b>"Enable Remote Control"</b>을 고릅니다. 연결되면 입력란 아래에 <b>/rc active</b>가 나옵니다(공식 안내).</li>' +
-        '<li>스마트폰 Claude 앱에서 왼쪽 위 메뉴(≡)를 열고 <b>"Code"</b>를 엽니다. <b>컴퓨터 표시에 초록 점</b>이 붙은 대화가 지금 컴퓨터의 대화입니다(공식 안내).</li>' +
+        '<li>Claude Code에서 <b>/rc</b>를 넣고 ' + os('Enter', 'Return') + ' 키를 누릅니다(/remote-control과 같습니다).' + cmd('/rc') + '</li>' +
+        '<li>처음에는 확인 창이 나옵니다. <b>"Enable Remote Control"</b>을 고릅니다. 연결되면 화면 아래쪽에 <b>/rc active</b>가 나옵니다(공식 안내). 터미널이 좁으면 안 나오므로 그때는 터미널을 넓힙니다.</li>' +
+        '<li>스마트폰으로 연결합니다. 가장 쉬운 방법은 컴퓨터에서 <b>/rc</b>를 한 번 더 넣고, 나오는 <b>QR 코드를 스마트폰 카메라로 찍는</b> 것입니다. 또는 Claude 앱에서 "Code"를 엽니다(화면 아래 탭이나 왼쪽 위 메뉴 ≡ 안에 있습니다). <b>컴퓨터 표시에 초록 점</b>이 붙은 대화가 지금 컴퓨터의 대화입니다(공식 안내).</li>' +
         '<li>스마트폰에서 다음 글을 보내 봅니다. "cafe-landing 안에 어떤 파일이 있는지 알려 주세요". 컴퓨터 화면에도 같은 대화가 나옵니다. 컴퓨터가 Manual 모드이므로 허락이 필요할 때는 스마트폰에서도 묻습니다.</li>' +
         '<li>끝나면 컴퓨터에서 <b>/rc</b>를 한 번 더 넣고, 나오는 화면에서 <b>연결을 끊는</b> 항목(Disconnect 등)을 고릅니다. Claude Code 대화는 그대로 남습니다.</li>' +
         '</ol>' +
@@ -453,12 +466,14 @@
         '<li><b>스마트폰</b>/rc 중에는 컴퓨터 대화를 볼 수 있다 / 클라우드 대화도 볼 수 있다<br><span>밖에서 확인할 때</span></li>' +
         '</ul>' +
         '<p class="note">"내 컴퓨터 폴더를 쓸 수 있다"와 "컴퓨터를 꺼도 계속된다"는 딱 반대입니다.</p>' +
+        '<p class="note">오늘은 연습용 cafe-landing만 넣었지만, 만든 스킬(.claude/skills) 등도 <b>비공개 저장소</b>에 넣어 두면 백업이 됩니다. 그때도 개인정보나 "열쇠"가 들어 있지 않은지 먼저 확인합니다.</p>' +
         '<h2>뒷정리</h2>' +
         '<ul class="parts">' +
         '<li><b>/rc</b>쓰지 않을 때는 연결을 끊어 둔다<br><span>/rc를 한 번 더 넣고 연결 끊기</span></li>' +
         '<li><b>Claude GitHub App</b>쓰지 않게 되면 뺀다<br><span>GitHub의 "Settings" → "Applications" → "Installed GitHub Apps" → Claude의 "Configure" → 맨 아래 "Uninstall". 같은 화면의 "Authorized GitHub Apps"에서도 Claude를 "Revoke"</span></li>' +
         '<li><b>claude.ai와 GitHub의 연결</b>쓰지 않게 되면 끊는다<br><span>claude.ai/customize/connectors에서 GitHub 연결 끊기(공식 안내)</span></li>' +
         '<li><b>공개 페이지</b>그만두고 싶어지면 멈춘다<br><span>저장소의 "Settings" → "Pages" → "Unpublish site"</span></li>' +
+        '<li><b>GitHub CLI 로그인</b>컴퓨터를 남에게 넘길 때는 로그아웃<br><span>터미널에서 gh auth logout</span></li>' +
         '</ul>',
       help: [
         { q: 'cafe-landing을 지워도 되나요?', a: '네. 연습용이므로 필요 없으면 저장소 "Settings" 맨 아래에서 지울 수 있습니다. 지우면 바로 보이지 않게 됩니다(공식 안내에 따르면 90일 안에는 되살릴 수 있는 경우도 있습니다). 잘 확인한 뒤 직접 합니다.' }
