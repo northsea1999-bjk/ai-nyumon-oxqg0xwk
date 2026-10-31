@@ -385,11 +385,13 @@
         'Notionのページを、PDFかMarkdownで書き出した（できた人だけ）'
       ],
       checkIds: ['notion', 'page', 'fill', 'cleanup', 'calendar', 'drive', 'mail', 'export'],
-      legacyCheckIds: ['notion', 'page', 'fill', 'calendar', 'drive', 'mail', 'cleanup', 'export'],
+      /* 前の版では「Googleの練習を飛ばした人も、チェックしてかまいません」だったので、Googleの3つ（4〜6番目）は移さない */
+      legacyCheckIds: ['notion', 'page', 'fill', null, null, null, 'cleanup', 'export'],
       required: 4,
       html:
         '<p>できたことに、チェックを入れてください。<b>上の4つ</b>に入ると、「完了にする」を押せます。下の4つは、できた人だけです。<b>やっていないものは、空けたまま</b>にします。</p>' +
-        '<p class="note">Googleの練習を飛ばした人や、Googleのコネクタで「できない」と言われた人は、そのチェックを空けておきます。それでも、レッスン6は完了できます。</p>',
+        '<p class="note">Googleの練習を飛ばした人や、Googleのコネクタで「できない」と言われた人は、そのチェックを空けておきます。それでも、レッスン6は完了できます。</p>' +
+        '<p class="note">前の版でチェックを入れていた人へ：Googleの3つは、チェックが外れています。本当にやった練習だけ、もう一度チェックしてください。</p>',
       help: [
         { q: 'できなかったところがあります', a: 'そのステップに戻って、「困ったとき」を見てください。何度でもやり直せます。' }
       ]

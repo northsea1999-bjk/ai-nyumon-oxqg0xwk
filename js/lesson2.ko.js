@@ -174,13 +174,13 @@
       html:
         '<p>AI는 파일을 만질 때 4가지 "손(도구)"을 구분해서 씁니다.</p>' +
         '<ul class="parts">' +
-        '<li><b>Read(읽기)</b>파일의 내용을 읽는다<br><span>허락이 필요 없습니다</span></li>' +
-        '<li><b>Write(쓰기)</b>새 파일을 만든다<br><span>같은 이름이 있으면 덮어쓰기. 허락 필요</span></li>' +
-        '<li><b>Edit(고치기)</b>파일의 일부만 고친다<br><span>허락 필요</span></li>' +
-        '<li><b>명령 실행</b>명령어(글자 명령)를 실행한다<br><span>허락 필요. 화면에는 ' + os('<b>PowerShell</b>이나 <b>Bash</b>', '<b>Bash</b>') + '로 나옵니다</span></li>' +
+        '<li><b>Read(읽기)</b>파일의 내용을 읽는다<br><span>보통 허락을 묻지 않습니다</span></li>' +
+        '<li><b>Write(쓰기)</b>새 파일을 만든다<br><span>같은 이름이 있으면 덮어쓰기. 보통 허락을 묻습니다</span></li>' +
+        '<li><b>Edit(고치기)</b>파일의 일부만 고친다<br><span>보통 허락을 묻습니다</span></li>' +
+        '<li><b>명령 실행</b>명령어(글자 명령)를 실행한다<br><span>대부분 허락을 묻습니다(목록 보기처럼 읽기만 하는 명령은 묻지 않고 실행될 수도 있음). 화면에는 ' + os('<b>PowerShell</b>이나 <b>Bash</b>', '<b>Bash</b>') + '로 나옵니다</span></li>' +
         '</ul>' +
         '<div class="card"><b>AI의 작업 흐름</b><br>① <b>본다</b>(Read) → ② <b>생각한다</b> → ③ <b>손을 쓴다</b>(Write／Edit／명령 실행) → ④ <b>결과를 본다</b> → ⑤ 부족하면 <b>되풀이한다</b></div>' +
-        '<p class="note">허락이 필요한지는 공식 안내로 확인했습니다. Read 외에는 "해도 될까요?"라고 묻습니다.</p>' +
+        '<p class="note">"해도 될까요?"라고 묻는지는 <b>무엇을 하는지</b>와 <b>모드·설정</b>에 따라 달라집니다(공식 안내). 파일 목록 보기처럼 읽기만 하는 명령은 묻지 않고 실행될 수도 있습니다. 묻지 않았을 때도 화면에 나온 내용은 읽습니다.</p>' +
         '<p class="note">네 번째 손은 컴퓨터에 따라 이름이 다르게 보입니다. ' + os('Windows에서는 허락 화면에 "PowerShell"로 나올 수도, "Bash"로 나올 수도 있습니다.', 'Mac에서는 허락 화면에 "Bash"로 나옵니다.') + ' 둘 다 같은 <b>"명령어를 실행하는 손"</b>입니다. 이름이 아니라 <b>무엇을 실행하는지</b>를 보고 답합니다.</p>',
       help: [
         { q: os('"PowerShell"이나 "Bash"가 뭔가요?', '"Bash"가 뭔가요?'), a: '컴퓨터에 글자 명령(커맨드)을 실행시키는 도구의 이름입니다. AI의 "명령 실행" 손이 이것을 씁니다. 파일 목록 보기, 복사 등을 할 수 있습니다. 오늘은 안전한 것만 시험합니다.' }
@@ -530,7 +530,7 @@
     a20: {
       tag: '퀴즈', title: '4가지 "손"과 CLAUDE.md 퀴즈',
       quiz: [
-        { q: '파일 내용을 읽기만 하고 바꾸지 않는다. 어느 "손"?', options: ['Read(읽기)', 'Write(쓰기)', 'Edit(고치기)', '명령 실행(PowerShell·Bash 등)'], answer: 0, explain: 'Read는 읽기만 합니다. 허락도 필요 없습니다.' },
+        { q: '파일 내용을 읽기만 하고 바꾸지 않는다. 어느 "손"?', options: ['Read(읽기)', 'Write(쓰기)', 'Edit(고치기)', '명령 실행(PowerShell·Bash 등)'], answer: 0, explain: 'Read는 읽기만 합니다. 보통 허락도 묻지 않습니다.' },
         { q: '완전히 새 파일을 만든다. 어느 "손"?', options: ['Read(읽기)', 'Write(쓰기)', 'Edit(고치기)', '명령 실행(PowerShell·Bash 등)'], answer: 1, explain: 'Write는 새로 만듭니다. 같은 이름이 있으면 덮어씁니다.' },
         { q: '파일의 일부만 고친다. 어느 "손"?', options: ['Read(읽기)', 'Write(쓰기)', 'Edit(고치기)', '명령 실행(PowerShell·Bash 등)'], answer: 2, explain: 'Edit는 여기만 고치는 손입니다.' },
         { q: '파일을 복사한다(명령어를 실행한다). 어느 "손"?', options: ['Read(읽기)', 'Write(쓰기)', 'Edit(고치기)', '명령 실행(PowerShell·Bash 등)'], answer: 3, explain: '명령어를 실행하는 손입니다. 화면에는 PowerShell이나 Bash로 나옵니다.' },
